@@ -1,0 +1,28 @@
+/* Create this file: components/auth/phoneInput.css */
+/* This styles the react-phone-number-input library */
+
+.phone-input-container .PhoneInputInput {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  font-size: 1.125rem; 
+  font-weight: 600;
+  padding: 1rem; /* 16px */
+  color: #104079; 
+}
+
+.phone-input-container .PhoneInputCountry {
+  padding: 12px 14px;
+}
+
+.phone-input-container .PhoneInput {
+  border: 1px solid #d1d5db; 
+  border-radius: 0.8rem; 
+  overflow: hidden;
+}
+
+.phone-input-container .PhoneInput:focus-within {
+  border-color: #4CD2F6;
+  box-shadow: 0 0 0 2px #4CD2F6;
+}
+
