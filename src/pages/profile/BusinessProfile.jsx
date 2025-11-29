@@ -1,5 +1,5 @@
 import React from 'react'
-import ProfileHeader from '../../components/common/profileHeader'
+import ProfileHeader from '../../components/common/ProfileHeader'
 import AccountOverview from '../../components/common/AccountOverview'
 import QuickActions from '../../components/common/QuickActions'
 import Navbar from '../../components/layout/Navbar'
