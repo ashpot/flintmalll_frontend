@@ -13,14 +13,14 @@ const ProfileHeader = ({ user }) => {
     >
       <div className="flex flex-col sm:flex-row items-center sm:space-x-4 gap-2 sm:gap-0">
         <img 
-          src={profilePhoto} 
-          alt={user.name} 
+          src={user.photo_url} 
+          alt={user.first_name} 
           className="w-16 h-16 rounded-full" 
         />
         <div className="text-center sm:text-left">
           <div className="flex flex-col sm:flex-row items-center sm:space-x-2 gap-1 sm:gap-0">
             <h1 className="text-2xl sm:text-[28px] font-semibold text-[#1E1E1E]">
-              {user.name}
+              {user.first_name} {user.last_name}
             </h1>
             {isBusiness ? (
               <span className="flex items-center space-x-2 border border-[#7EE4A8] bg-[#E9FAF1] text-[#0DAC4F] text-sm sm:text-lg font-medium px-2.5 py-1 rounded-full">

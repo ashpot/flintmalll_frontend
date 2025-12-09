@@ -8,6 +8,9 @@ const AccountDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
+  const currentUser = JSON.parse(localStorage.getItem("currentUser")); 
+  
+
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -44,13 +47,19 @@ const AccountDropdown = () => {
               <p
                 className="flex items-center gap-3 p-2 rounded-lg"
               >
-                <img
+                {currentUser.photo_url == null?
+                (<img
                   src={UserAvatar}
                   alt="User"
                   className="w-10 h-10 border border-primaryDull rounded-full bg-gray-200 object-cover"
-                />
+                />)
+                : (<img
+                  src={currentUser.photo_url}
+                  alt="User"
+                  className="w-10 h-10 border border-primaryDull rounded-full bg-gray-200 object-cover"
+                />)}
                 <span className="text-lg font-semibold text-[#666666]">
-                  Bruno Benson
+                  {currentUser.first_name} {currentUser.last_name}
                 </span>
               </p>
             </li>

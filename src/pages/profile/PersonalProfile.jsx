@@ -5,7 +5,11 @@ import QuickActions from '../../components/common/QuickActions'
 import Navbar from '../../components/layout/Navbar'
 import ContactDetails from '../../components/common/ContactDetails'
 
-const PersonalProfile = ({ user }) => {
+
+
+const PersonalProfile = () => {
+  const currentUser = JSON.parse(localStorage.getItem("currentUser")); 
+
   return (
     <div className='bg-[#F7F7F7] min-h-screen'>
       <Navbar rightContent={
@@ -19,17 +23,18 @@ const PersonalProfile = ({ user }) => {
         <div className="max-w-4xl mx-auto space-y-6">
 
           {/* 3. Pass the user prop down */}
-          <ProfileHeader user={user} />
+          <ProfileHeader user={currentUser} />
 
           {/* 4. ADD THE CONTACTDETAILS COMPONENT HERE */}
           <ContactDetails 
-            email={user.email}
-            phone={user.phone}
-            address={user.address}
+            email={currentUser.email}
+            phone={currentUser.phone}
+            address={currentUser.address}
           />
           
           {/* 5. Pass the stats prop down */}
-          <AccountOverview stats={user.stats} />
+          <AccountOverview /*stats={user.stats}*/ />
+          
           
           <QuickActions />
 

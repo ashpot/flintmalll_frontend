@@ -203,7 +203,8 @@ const AdCard = ({
   image,
   title,
   price,
-  location,
+  city,
+  state,
   condition,
   timePosted,
   views,
@@ -214,7 +215,7 @@ const AdCard = ({
   const [isFavorited, setIsFavorited] = useState(false);
 
   const handleCardClick = () => {
-    navigate(`/productdetails/${id}`);
+    navigate(`/product-details/${id}`);
   };
 
   const handleFavoriteClick = (e) => {
@@ -286,7 +287,7 @@ const AdCard = ({
           <div className="flex justify-between items-center font-medium text-[#666666] text-sm mb-2">
             <span className="flex items-center">
               <IoLocationOutline className="mr-1.5" />
-              {location}
+              {city}, {state}
             </span>
             <span className="flex items-center">
               <IoCubeOutline className="mr-1.5" />

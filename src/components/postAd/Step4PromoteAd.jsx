@@ -99,7 +99,7 @@ const PricingCard = ({
 
 // 2. This is the main Step 4 component
 // It receives onNext from the PostAdFlow
-const Step4_Promote = ({ onNext }) => {
+const Step4_Promote = ({ formData, setFormData, onNext }) => {
   // COPIED state and plans from your BoostAds.jsx
   const [enhancedDuration, setEnhancedDuration] = useState(14);
   const [premiumDuration, setPremiumDuration] = useState(14);

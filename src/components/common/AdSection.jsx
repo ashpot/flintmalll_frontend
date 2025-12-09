@@ -43,12 +43,13 @@ const AdSection = ({ title, ads, adType }) => {
           <AdCard
             key={ad.id}
             id={ad.id}
-            image={ad.image}
+            image={ad.cover_photo}
             title={ad.title}
             price={ad.price}
-            location={ad.location}
-            condition={ad.condition}
-            timePosted={ad.timePosted}
+            city={ad.city}
+            state={ad.state}
+            condition={ad.attributes.condition}
+            timePosted={ad.date_added}
             views={ad.views}
             isVerified={ad.isVerified}
             adType={adType} // 3. Pass the 'adType' prop to the card

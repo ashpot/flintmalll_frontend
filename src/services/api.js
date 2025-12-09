@@ -1,0 +1,14 @@
+export const API_LIVE_URL = "https://flintmall.com/api/v1/rest-auth";
+export const API_LOCAL_URL = "http://127.0.0.1:8000/api/v1/rest-auth";
+export const API_TEST_URL = "https://billwev.pythonanywhere.com/api/v1/rest-auth";
+
+export const API_BASE_URL = API_LOCAL_URL;
+
+export const API_ENDPOINTS = {
+  LOGIN: `${API_BASE_URL}/signin/`,
+  HOMEDATA: `${API_BASE_URL}/home/`,
+  SIGNUP: `${API_BASE_URL}/signup/`,
+  CATEGORIES: `${API_BASE_URL}/categories/`,
+  SUBCATEGORIES: `${API_BASE_URL}/sub_categories/`,
+  CATEGORY_PARAMETERS: `${API_BASE_URL}/category_parameters/`,
+};

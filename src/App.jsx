@@ -62,8 +62,8 @@ function App() {
         <Route index element={<LandingPage />} />
         <Route path='/login' element={<SignIn />} />
         <Route path='/signup' element={<SignUp />} />
-        <Route path='/addphonenumber' element={<AddPhoneNumber />} />
-        <Route path='/forgotpassword' element={<ForgotPassword />} />
+        <Route path='/add-phone-number' element={<AddPhoneNumber />} />
+        <Route path='/forgot-password' element={<ForgotPassword />} />
         <Route path='/category/vehicles' element={<Vehicles />} />
         <Route path='/category/vehicles/cars' element={<Cars />} />
         <Route path='/gadgets' element={<GadgetsLandingPage />} />
@@ -74,7 +74,7 @@ function App() {
         <Route path='/payment-method' element={<PaymentMethod />} />
         <Route path='/profile' element={<ProfilePage />} />
         <Route path='/post-ad' element={<PostAdFlow />} />
-        <Route path='/productdetails' element={<ProductDetails />} />
+        <Route path='/product-details' element={<ProductDetails />} />
         <Route path='privacy-policy' element={<PrivacyPolicy />} />
 
         {/* DASHBOARD AUTH ROUTES  */}

@@ -168,8 +168,8 @@ const CategoryCarousel = ({ title, categories = [], basePath = '/category/' }) =
             >
               <div className="w-24 h-24 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden shadow-sm group-hover:shadow-md transition">
                 <img
-                  src={cat.image}
-                  alt={cat.label}
+                  src={cat.photo_url}
+                  alt={cat.title}
                   className="object-contain w-full h-full"
                 />
               </div>
