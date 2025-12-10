@@ -2,7 +2,7 @@ export const API_LIVE_URL = "https://flintmall.com/api/v1/rest-auth";
 export const API_LOCAL_URL = "http://127.0.0.1:8000/api/v1/rest-auth";
 export const API_TEST_URL = "https://billwev.pythonanywhere.com/api/v1/rest-auth";
 
-export const API_BASE_URL = API_LOCAL_URL;
+export const API_BASE_URL = API_TEST_URL;
 
 export const API_ENDPOINTS = {
   LOGIN: `${API_BASE_URL}/signin/`,
