@@ -4,6 +4,7 @@ import { LuCircleUserRound } from "react-icons/lu";
 import { IoIosNotifications } from "react-icons/io";
 import { TbTag } from "react-icons/tb";
 import CategoryCarousel from '../../components/common/CategoryCarousel';
+
 import HomeAppliances from '../../assets/images/Home Appliances.png'
 import Fashion from '../../assets/images/Fashion.png'
 import Gadgets from '../../assets/images/Gadgets.png'
@@ -15,9 +16,9 @@ import Laptop from '../../assets/images/Laptop.jpg'
 import AdSection from '../../components/common/AdSection'
 import AccountDropdown from '../../components/layout/AccountDropdown';
 
-const Vehicles = () => {
+const SubcategoryDetails = () => {
 	const categories = [
-		{ label: "Cars", image: Vehicless },
+		{ label: "Vehicles", image: Vehicless },
 		{ label: "Property", image: Property },
 		{ label: "Gadgets", image: Gadgets },
 		{ label: "Home Appliances", image: HomeAppliances },
@@ -207,11 +208,11 @@ const Vehicles = () => {
 			}
 		/>
 		<div className='mt-10'>
-			<p className='w-[85%] mx-auto mb-5 text-lg font-medium'>Home/Vehicles </p>
-			<CategoryCarousel title="Vehicle Categories" categories={categories} basePath='/category/vehicles/cars' />
+			<p className='w-[85%] mx-auto mb-5 text-lg font-medium'>Home/Vehicles/Cars </p>
+			<CategoryCarousel title="Top Brands" categories={categories} basePath='/category/vehicles/cars' />
 			<div className="space-y-10 mb-10">
 				<AdSection title="Premium Ads" ads={premiumAds} adType="premium" />
-				<AdSection title="Recent Ads" ads={recentAds} adType="trending"/>
+				<AdSection title="Recent Ads" ads={recentAds} adType="trending" />
 			</div>
 		</div>
 		
@@ -220,4 +221,4 @@ const Vehicles = () => {
   )
 }
 
-export default Vehicles
+export default SubcategoryDetails

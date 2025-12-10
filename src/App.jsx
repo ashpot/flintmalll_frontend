@@ -13,8 +13,8 @@ import SettingsLayout from './components/layout/SettingsLayout';
 import LandingPage from './pages/home/LandingPage'
 import SignIn from './pages/auth/SignIn'
 import SignUp from './pages/auth/SignUp'
-import Vehicles from './pages/home/Vehicles'
-import Cars from './pages/home/Cars'
+import CategoryDetails from './pages/home/CategoryDetails'
+import SubcategoryDetails from './pages/home/SubcategoryDetails'
 import GadgetsLandingPage from './pages/gadgets/GadgetsLandingPage'
 import Phones from './pages/gadgets/Phones'
 import Laptops from './pages/gadgets/Laptops'
@@ -64,8 +64,8 @@ function App() {
         <Route path='/signup' element={<SignUp />} />
         <Route path='/add-phone-number' element={<AddPhoneNumber />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
-        <Route path='/category/vehicles' element={<Vehicles />} />
-        <Route path='/category/vehicles/cars' element={<Cars />} />
+        <Route path='/category/:id' element={<CategoryDetails />} />
+        <Route path='/sucategory/:id' element={<SubcategoryDetails />} />
         <Route path='/gadgets' element={<GadgetsLandingPage />} />
         <Route path='/gadgets/phones' element={<Phones />} />
         <Route path='/gadgets/laptops' element={<Laptops />} />
@@ -74,7 +74,7 @@ function App() {
         <Route path='/payment-method' element={<PaymentMethod />} />
         <Route path='/profile' element={<ProfilePage />} />
         <Route path='/post-ad' element={<PostAdFlow />} />
-        <Route path='/product-details' element={<ProductDetails />} />
+        <Route path='/product-details/:id' element={<ProductDetails />} />
         <Route path='privacy-policy' element={<PrivacyPolicy />} />
 
         {/* DASHBOARD AUTH ROUTES  */}

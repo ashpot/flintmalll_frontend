@@ -383,10 +383,15 @@ const ProductOverview = ({ formData, sellerData }) => {
         </ul>
       </div>
 
-	  <AdSection  title="Similar Ads" ads={similarAds} />
+	  
 
     </div>
   );
 };
 
 export default ProductOverview;
+
+
+/*
+<AdSection  title="Similar Ads" ads={similarAds} />
+*/

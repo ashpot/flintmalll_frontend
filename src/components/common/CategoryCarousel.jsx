@@ -163,7 +163,7 @@ const CategoryCarousel = ({ title, categories = [], basePath = '/category/' }) =
           
           <div key={cat.id || index} className="px-2">
             <Link
-              to={`${basePath}`}
+              to={`${basePath}/${cat.id}/`}
               className="flex flex-col items-center cursor-pointer group"
             >
               <div className="w-24 h-24 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden shadow-sm group-hover:shadow-md transition">
@@ -174,7 +174,7 @@ const CategoryCarousel = ({ title, categories = [], basePath = '/category/' }) =
                 />
               </div>
               <span className="mt-3 font-medium text-lg text-[#1E1E1E] text-center group-hover:underline decoration-[#666666] decoration-2 underline-offset-4">
-                {cat.label}
+                {cat.title}
               </span>
             </Link>
           </div>

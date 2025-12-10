@@ -48,7 +48,7 @@ const AdSection = ({ title, ads, adType }) => {
             price={ad.price}
             city={ad.city}
             state={ad.state}
-            condition={ad.attributes.condition}
+            condition={ad.attributes.condition || ""}
             timePosted={ad.date_added}
             views={ad.views}
             isVerified={ad.isVerified}

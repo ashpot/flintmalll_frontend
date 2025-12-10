@@ -4,7 +4,6 @@ import { LuCircleUserRound } from "react-icons/lu";
 import { IoIosNotifications } from "react-icons/io";
 import { TbTag } from "react-icons/tb";
 import ProductOverview from '../../components/common/ProductOverview';
-import AdSection from '../../components/common/AdSection';
 import AccountDropdown from '../../components/layout/AccountDropdown';
 
 const ProductDetails = () => {
