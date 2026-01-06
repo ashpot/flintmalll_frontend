@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { MdOutlineChevronRight } from 'react-icons/md';
+import Navbar from '../../components/layout/Navbar';
 
 // A reusable single FAQ item
 const FaqItem = ({ question, answer }) => {
@@ -36,11 +37,12 @@ const Faq = () => {
   ];
 
   return (
-    <div className="mt-12">
+    <div>
+      <Navbar />
       <h2 className="text-center text-[28px] font-bold text-primary mb-1">Frequently Asked Questions</h2>
       <p className="text-center font-medium text-lg text-[#666666] mb-6">Get answers to common questions about posting ads.</p>
       
-      <div className="bg-white p-6 rounded-lg shadow-sm">
+      <div className="bg-white p-6 px-24 rounded-lg shadow-sm">
         {faqData.map((item, index) => (
           <FaqItem key={index} question={item.q} answer={item.a} />
         ))}

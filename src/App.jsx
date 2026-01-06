@@ -27,6 +27,8 @@ import AddPhoneNumber from './pages/auth/AddPhoneNumber'
 import ForgotPassword from './pages/auth/ForgotPassword'
 import ProductDetails from './pages/productDetails/ProductDetails'
 import PrivacyPolicy from './pages/home/PrivacyPolicy'
+import Faq from './pages/home/Faq';
+import TermsOfService from './pages/home/TermsOfService';
 
 // --- Dashboard Auth Pages (No Sidebar) ---
 import SignupPage from './pages/dashboard/auth/Signup'
@@ -65,7 +67,7 @@ function App() {
         <Route path='/add-phone-number' element={<AddPhoneNumber />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
         <Route path='/category/:id' element={<CategoryDetails />} />
-        <Route path='/sucategory/:id' element={<SubcategoryDetails />} />
+        <Route path='/subcategory/:id' element={<SubcategoryDetails />} />
         <Route path='/gadgets' element={<GadgetsLandingPage />} />
         <Route path='/gadgets/phones' element={<Phones />} />
         <Route path='/gadgets/laptops' element={<Laptops />} />
@@ -75,7 +77,9 @@ function App() {
         <Route path='/profile' element={<ProfilePage />} />
         <Route path='/post-ad' element={<PostAdFlow />} />
         <Route path='/product-details/:id' element={<ProductDetails />} />
-        <Route path='privacy-policy' element={<PrivacyPolicy />} />
+        <Route path='/privacy-policy' element={<PrivacyPolicy />} />
+        <Route path='/FAQ' element={<Faq />} />
+        <Route path='/terms-of-service' element={<TermsOfService />} />
 
         {/* DASHBOARD AUTH ROUTES  */}
         

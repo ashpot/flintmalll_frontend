@@ -172,7 +172,7 @@ const Footer = () => {
                 <ul className="space-y-2 md:space-y-4 font-medium text-xs md:text-lg">
                   <li><a href="">Help Center</a></li>
                   <li><a href="">Safety Tips</a></li>
-                  <li><a href="">FAQs</a></li>
+                  <li><a href="/FAQ">FAQs</a></li>
                   <li><a href="">Report Abuse</a></li>
                 </ul>
               </div>
@@ -214,7 +214,7 @@ const Footer = () => {
             </p>
             <div className="font-normal text-xs md:text-sm space-x-5 mt-4 md:mt-0">
               <a href="/privacy-policy">Privacy Policy</a>
-              <a href="">Terms of Service</a>
+              <a href="/terms-of-service">Terms of Service</a>
             </div>
           </div>
         </div>
