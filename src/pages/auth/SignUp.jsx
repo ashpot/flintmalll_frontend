@@ -65,6 +65,7 @@ const SignUp = () => {
 
   return (
     <div>
+      <title>Flintmall - SignUp</title>
         <Navbar 
             rightContent={<a href="/login" className='text-black text-lg font-medium'>Already have an account? <span className='text-primary'>Sign In</span></a>}
         />

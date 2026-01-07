@@ -2,17 +2,17 @@ import React from 'react';
 import Navbar from '../../components/layout/Navbar';
 
 // for paragraphs
-const P = ({ children }) => (
+export const P = ({ children }) => (
   <p className="text-lg font-semibold mb-6 leading-relaxed">{children}</p>
 );
 
 // headings
-const H1 = ({ children }) => (
+export const H1 = ({ children }) => (
   <h1 className=" text-4xl sm:text-3xl font-bold mt-12 mb-6 text-[#1E1E1E]">{children}</h1>
 );
 
 // disc lists
-const UL = ({ children }) => (
+export const UL = ({ children }) => (
   <ul className="list-disc list-inside space-y-2 mb-6 ml-4 sm:text-lg text-base">
     {children}
   </ul>
@@ -21,6 +21,7 @@ const UL = ({ children }) => (
 const TermsOfService = () => {
   return (
     <div className="bg-white min-h-screen text-[#1E1E1E]">
+      <title>Flintmall - Terms of Service</title>
       <Navbar />
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 sm:py-16 py-12">
         <h1 className="sm:text-6xl text-5xl font-bold text-[#1E1E1E] sm:mb-10 mb-7">Terms Of Service</h1>

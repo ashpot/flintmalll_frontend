@@ -38,6 +38,7 @@ const Faq = () => {
 
   return (
     <div>
+    <title>Flintmall - FAQ</title>
       <Navbar />
       <h2 className="text-center text-[28px] font-bold text-primary mb-1">Frequently Asked Questions</h2>
       <p className="text-center font-medium text-lg text-[#666666] mb-6">Get answers to common questions about posting ads.</p>

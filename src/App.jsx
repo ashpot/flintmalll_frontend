@@ -29,6 +29,8 @@ import ProductDetails from './pages/productDetails/ProductDetails'
 import PrivacyPolicy from './pages/home/PrivacyPolicy'
 import Faq from './pages/home/Faq';
 import TermsOfService from './pages/home/TermsOfService';
+import SafetyTips from './pages/home/SafetyTips';
+
 
 // --- Dashboard Auth Pages (No Sidebar) ---
 import SignupPage from './pages/dashboard/auth/Signup'
@@ -80,6 +82,7 @@ function App() {
         <Route path='/privacy-policy' element={<PrivacyPolicy />} />
         <Route path='/FAQ' element={<Faq />} />
         <Route path='/terms-of-service' element={<TermsOfService />} />
+        <Route path='/safety-tips' element={<SafetyTips />} />
 
         {/* DASHBOARD AUTH ROUTES  */}
         

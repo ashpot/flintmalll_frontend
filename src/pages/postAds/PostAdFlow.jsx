@@ -302,7 +302,7 @@ const PostAdFlow = () => {
 
   return (
     <div className="bg-[#F7F7F7] min-h-screen flex flex-col">
-
+      <title>Flintmall - Post Ad</title>
       <Navbar
         rightContent={
           <div className='flex items-center gap-4 text-lg font-medium cursor-pointer'>

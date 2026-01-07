@@ -58,6 +58,7 @@ const SignIn = () => {
 
   return (
     <div>
+      <title>Flintmall - SignIn</title>
       <Navbar 
         rightContent={
           <a href="/signup" className="text-black text-lg font-medium">

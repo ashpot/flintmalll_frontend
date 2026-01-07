@@ -12,6 +12,7 @@ const PersonalProfile = () => {
 
   return (
     <div className='bg-[#F7F7F7] min-h-screen'>
+      <title>Flintmall - Account Settings</title>
       <Navbar rightContent={
 				<div className='text-[#1E1E1E] text-lg font-medium space-x-6 '>
 					<a href=""className='cursor-pointer hover:text-secondary'>Browse</a>

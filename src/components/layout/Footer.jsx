@@ -171,7 +171,7 @@ const Footer = () => {
                 </h4>
                 <ul className="space-y-2 md:space-y-4 font-medium text-xs md:text-lg">
                   <li><a href="">Help Center</a></li>
-                  <li><a href="">Safety Tips</a></li>
+                  <li><a href="/safety-tips">Safety Tips</a></li>
                   <li><a href="/FAQ">FAQs</a></li>
                   <li><a href="">Report Abuse</a></li>
                 </ul>
