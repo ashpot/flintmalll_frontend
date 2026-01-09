@@ -4,6 +4,7 @@ import AccountOverview from '../../components/common/AccountOverview'
 import QuickActions from '../../components/common/QuickActions'
 import Navbar from '../../components/layout/Navbar'
 import ContactDetails from '../../components/common/ContactDetails'
+import SmallFooter from '../../components/layout/SmallFooter';
 
 
 
@@ -42,13 +43,7 @@ const PersonalProfile = () => {
         </div>
       </main>
 
-      <footer className='w-[80%] md:max-w-5xl mx-auto pt-9 pb-6 md:flex md:justify-between '>
-        <p className='font-medium md:text-lg text-sm mt-5'>&copy; 2025 Flintmall. <span className='ml-2'>All Rights Reserved</span></p>
-        <div className='font-medium md:text-lg text-sm mt-5 space-x-5'>
-          <a href="/privacy-policy">Privacy Policy</a>
-          <a href="">Terms of Service</a>
-        </div>
-      </footer>
+      <SmallFooter />
       
     </div>
   )

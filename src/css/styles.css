@@ -11,3 +11,10 @@
 html {
   scroll-behavior: smooth;
 }
+
+.center{
+  position: absolute;
+  top: 85%;
+  left: 50%;
+  transform: translateX(-50%);
+}

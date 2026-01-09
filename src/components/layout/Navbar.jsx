@@ -8,7 +8,7 @@ const Navbar = ({ centerContent, rightContent }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="relative flex items-center justify-between px-6 md:px-24 py-4 md:py-8 shadow-sm bg-white">
+    <nav className="relative flex items-center justify-between px-6 md:px-36 py-4 md:py-8 shadow-sm bg-white">
       
       <div onClick={() => navigate('/')} className="cursor-pointer z-20">
         <img src={Logo} alt="Logo" className="w-32 md:w-[40%]" />

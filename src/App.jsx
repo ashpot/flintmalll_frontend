@@ -1,4 +1,3 @@
-import React from 'react'
 import './css/styles.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
@@ -8,6 +7,7 @@ import AdManagementLayout from './components/layout/AdManagement';
 import PaymentsLayout from './components/layout/PaymentLayout';
 import SupportLayout from './components/layout/SupportLayout';
 import SettingsLayout from './components/layout/SettingsLayout';
+import EditProfile from './components/layout/EditProfile';
 
 // --- Public Pages ---
 import LandingPage from './pages/home/LandingPage'
@@ -131,6 +131,7 @@ function App() {
          
         </Route>
         <Route path='profile-settings' element={<ProfileSettings />} />
+        <Route path='/edit-profile' element={<EditProfile />} />
       </Routes>
     </BrowserRouter>
   )
