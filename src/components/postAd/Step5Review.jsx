@@ -24,7 +24,8 @@ const SpecItem = ({ icon, label, value }) => (
 );
 
 const Step5_Review = ({ onNext, goToStep, formData, sellerData }) => { 
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
+  const features = localStorage.getItem('parameters') || [];
   
   const mockFormData = {
     category: 'Gadgets • Phones',
@@ -193,7 +194,7 @@ const Step5_Review = ({ onNext, goToStep, formData, sellerData }) => {
       <div className='border-t border-[#B7B7B7] my-10'>
         <h2 className="text-[28px] font-bold text-[#1E1E1E] mt-10 mb-6">About this Product</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-8">
-          <SpecItem icon={<MdOutlinePhoneIphone size={24} />} label="Brand" value={data.data.brand} />
+          <SpecItem icon={<MdOutlinePhoneIphone size={24} />} label={features.label} value={data.data.brand} />
           <SpecItem icon={<FaTag size={24} />} label="Model" value={data.data.model} />
           <SpecItem icon={<MdOutlineStorage size={24} />} label="Storage" value={data.storage} />
           <SpecItem icon={<RiRam2Fill size={24} />} label="RAM" value={data.ram} />

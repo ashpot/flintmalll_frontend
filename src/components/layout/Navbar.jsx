@@ -14,8 +14,8 @@ const Navbar = ({ centerContent, rightContent }) => {
         <img src={Logo} alt="Logo" className="w-32 md:w-[40%]" />
       </div>
 
-      <div className="hidden md:flex items-center gap-8">
-        <div>{centerContent}</div>
+      <div className="hidden md:flex justify-between gap-5 items-center w-[90%]">
+        <div className='flex-1'>{centerContent}</div>
         <div>{rightContent}</div>
       </div>
 

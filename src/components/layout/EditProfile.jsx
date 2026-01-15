@@ -5,7 +5,7 @@ import EditPersonal from '../common/EditPersonal';
 import EditBusiness from '../common/EditBusiness';
 
 /*
-this components renders handles rendering of either the editpersonal or EditBusiness
+this components renders handles rendering of either the EditPersonal or EditBusiness
  depends on the current user type info
 */
 
@@ -23,8 +23,7 @@ const EditProfile = () => {
 				</div>
       } />
       <main className='min-h-screen max-w-6xl mx-auto space-y-6 py-10'>
-        <EditBusiness />
-        {/* <EditPersonal /> */}
+        {currentUser.type === 'Individual' ? <EditPersonal /> : <EditBusiness />}
       </main>
       <SmallFooter />
     </div>

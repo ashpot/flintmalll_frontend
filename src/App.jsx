@@ -8,6 +8,8 @@ import PaymentsLayout from './components/layout/PaymentLayout';
 import SupportLayout from './components/layout/SupportLayout';
 import SettingsLayout from './components/layout/SettingsLayout';
 import EditProfile from './components/layout/EditProfile';
+import SavedItems from './components/common/SavedItems';
+import MyAds from './components/common/MyAds';
 
 // --- Public Pages ---
 import LandingPage from './pages/home/LandingPage'
@@ -56,6 +58,7 @@ import ActionHistory from './pages/dashboard/Support/ActionHistory';
 import Categories from './pages/dashboard/Settings/Categories';
 import AdminRoles from './pages/dashboard/Settings/AdminRoles';
 import ProfileSettings from './pages/dashboard/ProfileSettings';
+
 
 function App() {
 
@@ -132,6 +135,8 @@ function App() {
         </Route>
         <Route path='profile-settings' element={<ProfileSettings />} />
         <Route path='/edit-profile' element={<EditProfile />} />
+        <Route path='/saved-items' element={<SavedItems />} />
+        <Route path='/manage-ads' element={<MyAds />} />
       </Routes>
     </BrowserRouter>
   )

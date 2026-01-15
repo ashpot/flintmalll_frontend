@@ -3,16 +3,19 @@ import { FaCamera } from 'react-icons/fa6';
 import profilePhoto from '/src/assets/images/profilePhoto.png';
 import { useState } from 'react';
 import { cn } from '../../lib/Utils';
+import { IoIosArrowBack } from "react-icons/io";
+import { useNavigate } from 'react-router-dom';
+
 const H1 = ({children})=>{
     return(
-        <h1 className="mb-10 text-center text-[var(--color-primary)] text-3xl font-bold tracking-[0.015]">
+        <h1 className="text-center mb-10 text-center text-[var(--color-primary)] text-xl xs:text-2xl sm:text-3xl font-bold tracking-[0.015]">
             {children}
         </h1>
     )
 }
 const Label = ({children})=>{
     return (
-        <label className='mb-2 text-[var(--color-label)] font-semibold'>
+        <label className='mb-2 text-[var(--color-label)] font-semibold text-base sm:text-lg'>
             {children}
         </label>
     )
@@ -40,10 +43,16 @@ const EditPersonal = () => {
     const [mail, setMail] = useState('');
     const [address, setAddress] = useState('');
     const [dob, setDob] = useState('');
+
+    const navigate = useNavigate();
   return (
-    <div className="bg-white p-6 rounded-3xl">
-        <section>
-            <H1>Edit Profile</H1>
+    <div className="bg-white sm:p-6 p-4 sm:rounded-3xl">
+        <section className='relative'>
+                <button onClick={()=>navigate('/profile')} className='flex items-center sm:gap-1 absolute -left-4 top-1'>
+                    <IoIosArrowBack size={25}/>
+                    <span className='font-bold sm:text-lg'>Back</span>
+                </button>
+                <H1>Edit Profile</H1>
 
                 {/* image container start */}
             <div className='flex justify-center mb-10'>
@@ -55,15 +64,15 @@ const EditPersonal = () => {
                 <img 
                     src={profilePhoto} 
                     alt="user avatar" 
-                    className='w-28 h-28 rounded-full'
+                    className='sm:w-28 sm:h-28 w-24 h-24 rounded-full'
                 />
                 </div>    
             </div>
             {/* image container end */}
 
             <form>
-                <section className='flex flex-col gap-8 mb-14'>
-                    <div className="flex justify-between gap-8">
+                <section className='flex flex-col gap-5 sm:gap-8 mb-14'>
+                    <div className="flex justify-between flex-col sm:flex-row gap-5 sm:gap-8">
                     <div className='flex flex-col w-full'>
                         <Label>First Name</Label>
                         <Input 
@@ -84,7 +93,7 @@ const EditPersonal = () => {
                     </div>
                 </div>
 
-                <div className="flex justify-between gap-8">
+                <div className="flex justify-between flex-col sm:flex-row gap-5 sm:gap-8">
                     <div className='flex flex-col w-full'>
                         <Label>Phone Number</Label>
                         <Input 
@@ -105,7 +114,7 @@ const EditPersonal = () => {
                     </div>
                 </div>        
 
-                <div className="flex justify-between gap-8">
+                <div className="flex justify-between flex-col sm:flex-row gap-5 sm:gap-8">
                     <div className='flex flex-col w-full'>
                         <Label>Address</Label>
                         <Input 
@@ -143,7 +152,7 @@ const EditPersonal = () => {
                        <button
                         type='submit'
                         disabled={false}
-                        className="w-[45%] px-4 py-4 font-medium text-lg rounded-2xl text-white transition bg-[--color-submit] hover:bg-[--color-submit]/50"
+                        className="sm:w-[45%] w-full sm:py-4 py-3 font-medium text-lg rounded-2xl text-white transition bg-[--color-submit] hover:bg-[--color-submit]/50"
                        >
                         Save
                        </button>
