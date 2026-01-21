@@ -3,9 +3,11 @@ import profilePhoto from '../../assets/images/profilePhoto.png';
 import { FaUser } from "react-icons/fa6";
 import { IoIosNotifications } from "react-icons/io";
 import { MdVerified, MdMessage } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileHeader = ({ user }) => {
   const isBusiness = user.accountType === 'personal';
+  const navigate = useNavigate();
 
   return (
     <div className="bg-white p-6 rounded-2xl shadow-sm 
@@ -41,7 +43,7 @@ const ProfileHeader = ({ user }) => {
       </div>
 
       <div className="flex space-x-4 justify-center sm:justify-normal">
-        <button className="p-3 bg-[#E7ECF2] rounded-full hover:bg-gray-200 relative">
+        <button onClick={()=>navigate('/Notifications')} className="p-3 bg-[#E7ECF2] rounded-full hover:bg-gray-200 relative">
           <IoIosNotifications size={28} className="text-[#285386]" />
           {user.notifications > 0 && (
             <span className="absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"></span>

@@ -37,7 +37,9 @@ const MyAds = () => {
             </section>
 
             <section className='space-y-6'>
-                <PublishedCard />
+                {
+                  activeTab === 'published' ? <PublishedCard /> : <PendingCard/>
+                }
             </section>
         </main>
       <SmallFooter />

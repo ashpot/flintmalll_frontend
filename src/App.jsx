@@ -58,6 +58,7 @@ import ActionHistory from './pages/dashboard/Support/ActionHistory';
 import Categories from './pages/dashboard/Settings/Categories';
 import AdminRoles from './pages/dashboard/Settings/AdminRoles';
 import ProfileSettings from './pages/dashboard/ProfileSettings';
+import Notification from './pages/Notification/Notification';
 
 
 function App() {
@@ -137,6 +138,9 @@ function App() {
         <Route path='/edit-profile' element={<EditProfile />} />
         <Route path='/saved-items' element={<SavedItems />} />
         <Route path='/manage-ads' element={<MyAds />} />
+        <Route path='/promote-ads' element={<BoostAds />} />
+        <Route path='/payment-method' element={<PaymentMethod />} />
+        <Route path='/Notifications' element={<Notification />} />
       </Routes>
     </BrowserRouter>
   )

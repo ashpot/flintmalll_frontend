@@ -7,9 +7,11 @@ import {
 import { cn } from '../../lib/Utils';
 import product from '/src/assets/images/g-shock.jpg';
 import { GoClock } from "react-icons/go";
+import { useNavigate } from "react-router-dom";
 
 export const PublishedCard = () => {
-    const conditionClass = 'px-3 py-[5px] text-xs rounded-full font-medium'
+    const conditionClass = 'px-3 py-[5px] text-xs rounded-full font-medium';
+    const navigate = useNavigate();
   return (
     <div className="relative sm:w-[95%] xl:w-full w-[95%] mx-auto bg-white rounded-2xl sm:p-8 p-3 pt-8 flex sm:flex-row flex-col items-center">
       {/* left */}
@@ -55,7 +57,7 @@ export const PublishedCard = () => {
           {/* Actions */}
           <div className="flex sm:flex-row flex-col sm:items-center gap-3">
             <button className="flex items-center bg-sky-500 text-white rounded-lg text-sm font-medium hover:bg-sky-600 transition">
-                <div className='flex justify-center items-center border px-4 py-2 w-full gap-3'>
+                <div onClick={()=>navigate('/promote-ads')} className='flex justify-center items-center border px-4 py-2 w-full gap-3'>
                     <FiTrendingUp size={16} />
                     Promote
                 </div>
