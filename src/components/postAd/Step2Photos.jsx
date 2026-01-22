@@ -19,9 +19,9 @@ const Step2_Photos = ({ formData, setFormData, onNext }) => {
   }, [formData.images]);
 
   // Cleanup previews on unmount
-  useEffect(() => {
-    return () => images.forEach((img) => URL.revokeObjectURL(img.preview));
-  }, [images]);
+  // useEffect(() => {
+  //   return () => images.forEach((img) => URL.revokeObjectURL(img.preview));
+  // }, [images]);
 
   // --- Dropzone ---
   const onDrop = (acceptedFiles) => {

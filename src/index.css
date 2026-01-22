@@ -2,3 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+
+/* --------- added global color variables for edit page ui --------- */
+:root {
+  --color-primary: rgba(40, 83, 134, 1);
+  --color-label: rgba(64, 102, 148, 1);
+  --color-placeholder: rgba(112, 140, 175, 1);
+  --color-border: rgba(207, 217, 228, 1);
+  --color-submit: rgb(40, 83, 134);
+  --color-header: rgb(16, 64, 121);
+  --color-toggle: rgba(231, 236, 242, 1);
+  --color-toggle-btn: rgba(0, 190, 243, 1);
+}

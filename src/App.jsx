@@ -1,4 +1,3 @@
-import React from 'react'
 import './css/styles.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
@@ -8,6 +7,9 @@ import AdManagementLayout from './components/layout/AdManagement';
 import PaymentsLayout from './components/layout/PaymentLayout';
 import SupportLayout from './components/layout/SupportLayout';
 import SettingsLayout from './components/layout/SettingsLayout';
+import EditProfile from './components/layout/EditProfile';
+import SavedItems from './components/common/SavedItems';
+import MyAds from './components/common/MyAds';
 
 // --- Public Pages ---
 import LandingPage from './pages/home/LandingPage'
@@ -27,6 +29,10 @@ import AddPhoneNumber from './pages/auth/AddPhoneNumber'
 import ForgotPassword from './pages/auth/ForgotPassword'
 import ProductDetails from './pages/productDetails/ProductDetails'
 import PrivacyPolicy from './pages/home/PrivacyPolicy'
+import Faq from './pages/home/Faq';
+import TermsOfService from './pages/home/TermsOfService';
+import SafetyTips from './pages/home/SafetyTips';
+
 
 // --- Dashboard Auth Pages (No Sidebar) ---
 import SignupPage from './pages/dashboard/auth/Signup'
@@ -52,6 +58,8 @@ import ActionHistory from './pages/dashboard/Support/ActionHistory';
 import Categories from './pages/dashboard/Settings/Categories';
 import AdminRoles from './pages/dashboard/Settings/AdminRoles';
 import ProfileSettings from './pages/dashboard/ProfileSettings';
+import Notification from './pages/Notification/Notification';
+
 
 function App() {
 
@@ -65,7 +73,7 @@ function App() {
         <Route path='/add-phone-number' element={<AddPhoneNumber />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
         <Route path='/category/:id' element={<CategoryDetails />} />
-        <Route path='/sucategory/:id' element={<SubcategoryDetails />} />
+        <Route path='/subcategory/:id' element={<SubcategoryDetails />} />
         <Route path='/gadgets' element={<GadgetsLandingPage />} />
         <Route path='/gadgets/phones' element={<Phones />} />
         <Route path='/gadgets/laptops' element={<Laptops />} />
@@ -75,7 +83,10 @@ function App() {
         <Route path='/profile' element={<ProfilePage />} />
         <Route path='/post-ad' element={<PostAdFlow />} />
         <Route path='/product-details/:id' element={<ProductDetails />} />
-        <Route path='privacy-policy' element={<PrivacyPolicy />} />
+        <Route path='/privacy-policy' element={<PrivacyPolicy />} />
+        <Route path='/FAQ' element={<Faq />} />
+        <Route path='/terms-of-service' element={<TermsOfService />} />
+        <Route path='/safety-tips' element={<SafetyTips />} />
 
         {/* DASHBOARD AUTH ROUTES  */}
         
@@ -124,6 +135,12 @@ function App() {
          
         </Route>
         <Route path='profile-settings' element={<ProfileSettings />} />
+        <Route path='/edit-profile' element={<EditProfile />} />
+        <Route path='/saved-items' element={<SavedItems />} />
+        <Route path='/manage-ads' element={<MyAds />} />
+        <Route path='/promote-ads' element={<BoostAds />} />
+        <Route path='/payment-method' element={<PaymentMethod />} />
+        <Route path='/Notifications' element={<Notification />} />
       </Routes>
     </BrowserRouter>
   )

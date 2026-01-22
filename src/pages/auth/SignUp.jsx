@@ -65,6 +65,7 @@ const SignUp = () => {
 
   return (
     <div>
+      <title>Flintmall - SignUp</title>
         <Navbar 
             rightContent={<a href="/login" className='text-black text-lg font-medium'>Already have an account? <span className='text-primary'>Sign In</span></a>}
         />
@@ -229,7 +230,7 @@ const SignUp = () => {
                         Privacy Policy
                     </a>
                     <span>|</span>
-                    <a href="#" className="hover:underline">
+                    <a href="/terms-of-service" className="hover:underline">
                         Terms of Service
                     </a>
                 </div>

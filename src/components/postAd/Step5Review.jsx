@@ -24,8 +24,9 @@ const SpecItem = ({ icon, label, value }) => (
 );
 
 const Step5_Review = ({ onNext, goToStep, formData, sellerData }) => { 
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
+  const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
+  const features = localStorage.getItem('parameters') || [];
+  
   const mockFormData = {
     category: 'Gadgets • Phones',
     title: 'Apple iPhone 13 Pro 256GB - Gold (Unlocked)',
@@ -56,11 +57,17 @@ const Step5_Review = ({ onNext, goToStep, formData, sellerData }) => {
 
   const data = formData || mockFormData;
   const seller = sellerData || mockSellerData;
-  const imagesToShow = Array.isArray(data.images) && data.images.length > 0 ? data.images : [];
-
+  // const imagesToShow = (Array.isArray(data.images) && data.images.length > 0) ? data.images : [];
+  const imagesToShow = (data.images && data.images.length > 0) ? data.images : mockFormData.images;
+  
+  // Helper to get the correct source (Handles both Object from Step 2 and String from Mock)
+  const getImgSrc = (img) => {
+    if (!img) return '';
+    return typeof img === 'string' ? img: img.preview 
+  }
   const nextImage = () => {
     if (imagesToShow.length > 0) {
-      setCurrentImageIndex((prevIndex) => (prevIndex === imagesToShow.length - 1 ? 0 : prevIndex + 1));
+      setCurrentImageIndex((prevIndex) => ((prevIndex === imagesToShow.length - 1) ? 0 : prevIndex + 1));
     }
   };
 
@@ -86,13 +93,14 @@ const Step5_Review = ({ onNext, goToStep, formData, sellerData }) => {
           <div className="relative w-full h-[400px] bg-gray-100 rounded-2xl overflow-hidden">
             {imagesToShow.length > 0 ? (
               <img 
-                src={imagesToShow[currentImageIndex]} 
+                src={getImgSrc(imagesToShow[currentImageIndex])} 
                 alt="Ad preview" 
                 className="w-full h-full object-cover"
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center text-[#666666]">No Images Provided</div>
             )}
+
             {imagesToShow.length > 1 && (
               <>
                 <button onClick={prevImage} className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/70 rounded-full p-2 hover:bg-white focus:outline-none focus:ring-2 focus:ring-cyan-500">
@@ -103,6 +111,7 @@ const Step5_Review = ({ onNext, goToStep, formData, sellerData }) => {
                 </button>
               </>
             )}
+
             <button className="absolute top-3 right-3 bg-white/70 rounded-full p-2 hover:bg-white focus:outline-none focus:ring-2 focus:ring-cyan-500">
               <MdFavoriteBorder size={24} className="text-gray-700" />
             </button>
@@ -115,7 +124,7 @@ const Step5_Review = ({ onNext, goToStep, formData, sellerData }) => {
               {imagesToShow.map((imgSrc, index) => (
                 <img
                   key={index}
-                  src={imgSrc}
+                  src={getImgSrc(imgSrc)}
                   alt={`thumbnail ${index + 1}`}
                   onClick={() => setCurrentImageIndex(index)}
                   className={`w-[calc(20%-0.4rem)] h-20 object-cover rounded-lg cursor-pointer border-2 ${ 
@@ -138,11 +147,11 @@ const Step5_Review = ({ onNext, goToStep, formData, sellerData }) => {
               {data.priceType === 'Negotiable' && (
                 <span className="bg-cyan-100 text-cyan-700 text-xs font-semibold px-3 py-1 rounded-full">{data.priceType}</span>
               )}
-              <span className="bg-orange-100 text-orange-700 text-xs font-semibold px-3 py-1 rounded-full">{data.condition}</span>
+              <span className="bg-orange-100 text-orange-700 text-xs font-semibold px-3 py-1 rounded-full">{data.data.condition}</span>
             </div>
             <div className="flex items-center text-[#666666]">
               <MdLocationOn className="mr-2 flex-shrink-0" />
-              <span className="text-sm font-semibold text-[#666666]">{data.location}</span>
+              <span className="text-sm font-semibold text-[#666666]">{data.state}</span>
             </div>
           </div>
           
@@ -185,8 +194,8 @@ const Step5_Review = ({ onNext, goToStep, formData, sellerData }) => {
       <div className='border-t border-[#B7B7B7] my-10'>
         <h2 className="text-[28px] font-bold text-[#1E1E1E] mt-10 mb-6">About this Product</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-8">
-          <SpecItem icon={<MdOutlinePhoneIphone size={24} />} label="Brand" value={data.brand} />
-          <SpecItem icon={<FaTag size={24} />} label="Model" value={data.model} />
+          <SpecItem icon={<MdOutlinePhoneIphone size={24} />} label={features.label} value={data.data.brand} />
+          <SpecItem icon={<FaTag size={24} />} label="Model" value={data.data.model} />
           <SpecItem icon={<MdOutlineStorage size={24} />} label="Storage" value={data.storage} />
           <SpecItem icon={<RiRam2Fill size={24} />} label="RAM" value={data.ram} />
           <SpecItem icon={<TbBattery3Filled size={24} />} label="Battery" value={data.battery} />

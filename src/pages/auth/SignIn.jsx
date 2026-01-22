@@ -58,6 +58,7 @@ const SignIn = () => {
 
   return (
     <div>
+      <title>Flintmall - SignIn</title>
       <Navbar 
         rightContent={
           <a href="/signup" className="text-black text-lg font-medium">
@@ -161,7 +162,7 @@ const SignIn = () => {
           <div className="flex justify-center gap-3 mt-1">
             <a href="/privacy-policy" className="hover:underline">Privacy Policy</a>
             <span>|</span>
-            <a href="#" className="hover:underline">Terms of Service</a>
+            <a href="/terms-of-service" className="hover:underline">Terms of Service</a>
           </div>
         </footer>
       </div>

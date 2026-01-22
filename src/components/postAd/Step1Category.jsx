@@ -45,9 +45,9 @@ const Step1_Category = ({ formData, setFormData, onNext }) => {
     const selectedCategory = e.target.value;
 
     setFormData({
-                  ...formData,
-                  category: selectedCategory,
-                  subcategory: ""
+        ...formData,
+        category: selectedCategory,
+        subcategory: ""
     });
 
     if (!selectedCategory) return;
@@ -107,10 +107,6 @@ const Step1_Category = ({ formData, setFormData, onNext }) => {
 
             <select
               className="w-full p-3 border border-[#CFD9E4] text-[#666666] text-lg font-semibold rounded-2xl"
-              /*
-              value={selectedCategory}
-              onChange={handleCategoryChange}
-              */
              value={formData.category}
           onChange= {handleCategoryChange}
             >

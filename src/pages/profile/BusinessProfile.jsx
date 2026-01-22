@@ -8,6 +8,7 @@ import BusinessInfo from '../../components/common/BusinessInfo'
 const BusinessProfile = ({ user }) => {
   return (
 	<div className='bg-[#F7F7F7] min-h-screen'>
+		<title>Flintmall - Account settings</title>
 		<Navbar 
 			rightContent={
 				<div className='text-[#1E1E1E] text-lg font-medium space-x-6 '>
