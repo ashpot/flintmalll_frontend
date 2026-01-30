@@ -6,9 +6,8 @@ import { MdVerified, MdMessage } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 
 const ProfileHeader = ({ user }) => {
-  const isBusiness = user.accountType === 'personal';
   const navigate = useNavigate();
-
+  const isBusiness = user.type === 'Business';
   return (
     <div className="bg-white p-6 rounded-2xl shadow-sm 
       flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4"
@@ -36,9 +35,9 @@ const ProfileHeader = ({ user }) => {
               </span>
             )} 
           </div>
-          <p className="text-base sm:text-lg font-medium text-[#666666]">
+          {/* <p className="text-base sm:text-lg font-medium text-[#666666]">
             {user.subtitle}
-          </p>
+          </p> */}
         </div>
       </div>
 
@@ -49,7 +48,7 @@ const ProfileHeader = ({ user }) => {
             <span className="absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"></span>
           )}
         </button>
-        <button className="p-3 bg-[#E7ECF2] rounded-full hover:bg-gray-200 relative">
+        <button onClick={()=>navigate('/Chats')} className="p-3 bg-[#E7ECF2] rounded-full hover:bg-gray-200 relative">
           <MdMessage size={28} className="text-[#285386]" />
           {user.messages > 0 && (
              <span className="absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"></span>

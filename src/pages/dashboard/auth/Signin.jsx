@@ -1,10 +1,8 @@
-
 import React, { useState } from 'react';
 import logo from '../../../assets/images/Logo.png'
 import signupImage from '../../../assets/images/signupImage.png';
 import { FaEyeSlash } from 'react-icons/fa';
 import { IoEyeSharp } from 'react-icons/io5';
-// import { adminSignin } from "../../services/authService";
 import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
@@ -42,7 +40,7 @@ const LoginPage = () => {
     setError("");
     setFieldErrors({});
 
-    // ✅ Run client-side validation
+    //client-side validation
     const errors = validateFormClientSide();
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors);
@@ -50,26 +48,7 @@ const LoginPage = () => {
       return;
     }
 
-    // try {
-    //   const response = await adminSignin({
-    //     username: formData.username, // can also be email
-    //     password: formData.password,
-    //   });
-
-    //   console.log("Login response data:", response.data);
-
-    //   // ✅ success -> backend returns { token, user }
-    //   localStorage.setItem("admin_token", response.data.token);
-    //   localStorage.setItem("admin_user", JSON.stringify(response.data.user));
-
-    //   setMessage("Login successful!");
-      
-    //   if(response.status == 200) navigate("/dashboard"); 
-    // } catch (err) {
-    //   setError(err.message || "Login failed");
-    // } finally {
-    //   setIsLoading(false);
-    // }
+    
   };
 
   return (

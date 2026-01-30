@@ -12,13 +12,14 @@ const SignUp = () => {
     const navigate = useNavigate();
 
     // Controlled Inputs
-    const [firstname, setFirstname] = useState("");
-    const [lastname, setLastname] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [type, setType] = useState("Individual")
     const [facebookLink, setFacebookLink] = useState("");
     const [instagramLink, setInstagramLink] = useState("");
-    const [whatsappNumber, setWhatsappNumber] = useState("");
+    const [whatsappLink, setWhatsappLink] = useState("");
     const [website, setWebsite] = useState("");
     const [isBusiness, setIsBusiness] = useState(false);
     const [businessName, setBusinessName] = useState("");
@@ -29,9 +30,21 @@ const SignUp = () => {
       const handleSignup = async (event) => {
         event.preventDefault();
         setLoading(true);
+        setType(()=>isBusiness ? 'Business' : 'Individual')
     
         try {
-          const payload = { firstname, lastname, email, password, facebookLink, instagramLink, whatsappNumber,businessName, website };
+          const payload = { 
+            first_name: firstName, 
+            last_name: lastName, 
+            email, 
+            password, 
+            type,
+            business_name: businessName,
+            whatsapp_link: whatsappLink,
+            facebook_link: facebookLink,
+            instagram_link: instagramLink,
+            website_link: website,
+        };
           const response = await fetch(API_ENDPOINTS.SIGNUP, {
             method: "POST",
             headers: {
@@ -39,19 +52,30 @@ const SignUp = () => {
             },
             body: JSON.stringify(payload),
           });
-    
-          if (!response.ok) {
-            const errorData = await response.json();
-            alert(errorData.message || "Invalid login details");
-            setLoading(false);
-            return;
-          }
-    
           const data = await response.json();
-    
-          console.log("Login successful.");
-          navigate("/add-phone-number");
-    
+        //   if (!response.ok) {
+        //     alert(data.message || "server error");
+        //     setLoading(false);
+        //     console.log(response)
+        //     return;
+        //   }
+          switch (response.status) {
+            case 400:
+                alert('invalid email')
+                console.log(response)
+                break;
+            case 409:
+                alert('email already register')
+                break;
+            case 500:
+                alert('pls try again later')
+                break;
+            default:
+                localStorage.setItem("currentUser", JSON.stringify(data.user_id));
+                console.log("Signup successful.");
+                navigate("/add-phone-number");
+                break;
+          }
         } catch (error) {
           console.error("Login error:", error);
           alert("Network error. Please try again.");
@@ -90,16 +114,16 @@ const SignUp = () => {
                             <input
                                 type="text"
                                 placeholder="First Name" 
-                                value={firstname}
-                                onChange={(e) => setFirstname(e.target.value)}
+                                value={firstName}
+                                onChange={(e) => setFirstName(e.target.value)}
                                 className="mt-1 w-full px-4 py-3 font-medium text-lg text-[#708CAF] border border-white rounded-2xl focus:ring-2 focus:ring-secondary placeholder:text-[#708CAF] outline-none"
                                 required
                             />
                             <input 
                                 type="text"
                                 placeholder="Last Name"
-                                value={lastname}
-                                onChange={(e) => setLastname(e.target.value)}
+                                value={lastName}
+                                onChange={(e) => setLastName(e.target.value)}
                                 className="mt-1 w-full px-4 py-3 font-medium text-lg text-[#708CAF] border border-white rounded-2xl focus:ring-2 focus:ring-secondary placeholder:text-[#708CAF] outline-none"
                                 required
                             />
@@ -119,6 +143,7 @@ const SignUp = () => {
                             <input
                                 type="password"
                                 placeholder="Password (at least 8 characters)" 
+                                minLength={8}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 className="mt-1 w-full px-4 py-3 font-medium text-lg text-[#708CAF] border border-white rounded-2xl focus:ring-2 focus:ring-secondary placeholder:text-[#708CAF] outline-none"
@@ -161,8 +186,8 @@ const SignUp = () => {
                                     <input
                                       type="text"
                                       placeholder="Whatsapp Phone Number"
-                                      value={whatsappNumber}
-                                onChange={(e) => setWhatsappNumber(e.target.value)}
+                                      value={whatsappLink}
+                                onChange={(e) => setWhatsappLink(e.target.value)}
                                       className="mt-1 w-full px-4 py-3 font-medium text-lg text-[#708CAF] border border-white rounded-2xl focus:ring-2 focus:ring-secondary placeholder:text-[#708CAF] outline-none"
                                     />
                                     <input

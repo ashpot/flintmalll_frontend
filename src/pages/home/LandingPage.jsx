@@ -19,24 +19,26 @@ const LandingPage = () => {
   const [premiumAds, setPremiumAds] = useState([]);
   const [trendingAds, setTrendingAds] = useState([]);
   const [loading, setLoading] = useState(true);
-  const token = localStorage.getItem("authToken"); 
-  const isAuthenticated = token !== null;
   const [showSignInModal, setShowSignInModal] = useState(false);
   const navigate = useNavigate();
 
 
-  // Fetch home data: categories + premium_ads + trending_ads
   useEffect(() => {
     const fetchHomeData = async () => {
+      const token  =  localStorage.getItem('authToken');
+      const headers = { "Content-Type": "application/json" }
+      if (token) {
+        headers["Authorization"] = `Token ${token}`;
+      }
+      const url = token ? API_ENDPOINTS.HOME_DATA_AUTH : API_ENDPOINTS.HOME_DATA_GUEST;
       try {
-        
-        const response = await fetch(API_ENDPOINTS.HOMEDATA_OFFLINE, {
+      const response = await fetch(
+        url, 
+        {
           method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-           },
-        });
-      
+          headers: headers,
+        }
+      );
 
         if (!response.ok) {
           throw new Error("Failed to load home data");
@@ -54,7 +56,7 @@ const LandingPage = () => {
         setLoading(false);
       }
     };
-
+    
     fetchHomeData();
   }, []);
 
@@ -107,7 +109,7 @@ const LandingPage = () => {
         <AdSection title="Trending Ads" ads={trendingAds} adType="trending" />
       </div>
 
-      <Button buttonTitle="Loading More Ads" linkTo="/product-details" />
+      <Button buttonTitle="Loading More Ads" />
       <Footer />
       {showSignInModal && (
         <SignInModal onClose={() => setShowSignInModal(false)} />

@@ -6,11 +6,13 @@ import Step_EnterPhone from "../../components/addPhoneNumber/Step_EnterPhone";
 import Step_EnterCode from "../../components/addPhoneNumber/Step_EnterCode";
 import Step_Verifying from "../../components/addPhoneNumber/Step_Verifying";
 import Step_Complete from "../../components/addPhoneNumber/Step_Complete";
+import { useNavigate } from "react-router-dom";
 
 const AddPhoneNumber = () => {
   const [step, setStep] = useState('enterPhone'); 
   
   const [phoneNumber, setPhoneNumber] = useState('');
+  const navigate = useNavigate();
   
   useEffect(() => {
     if (step === 'verifying') {

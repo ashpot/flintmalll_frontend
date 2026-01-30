@@ -27,7 +27,7 @@ const ContactDetails = ({ email, phone, address }) => (
         </div>
       </div>
       
-      <div className="flex space-x-3">
+      {address && <div className="flex space-x-3">
         <div className="w-12 h-12 flex items-center justify-center bg-[#285386] rounded-2xl mb-2">
           <MdOutlineLocationOn size={20}  className="text-white" />
         </div>
@@ -35,7 +35,7 @@ const ContactDetails = ({ email, phone, address }) => (
           <span className="md:text-sm font-semibold text-[#666666]">Address</span>
           <p className="md:text-lg font-semibold text-[#1E1E1E]">{address}</p>
         </div>
-      </div>
+      </div>}
       
     </div>
   </div>
