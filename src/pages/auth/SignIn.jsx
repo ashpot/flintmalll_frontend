@@ -5,8 +5,8 @@ import Navbar from "../../components/layout/Navbar";
 import { FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import SignInScreen from "../../assets/images/SignInScreen.png";
-
 import { API_ENDPOINTS } from "../../services/api";
+import { Link } from "react-router-dom";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -44,8 +44,7 @@ const SignIn = () => {
 
       // Save token for future requests
       localStorage.setItem("authToken", data.token);
-      localStorage.setItem("currentUser", JSON.stringify(data.user));
-      alert(JSON.stringify(data.user));
+      localStorage.setItem("currentUser", JSON.stringify(data));
       navigate("/");
 
     } catch (error) {
@@ -108,12 +107,9 @@ const SignIn = () => {
                     Stay signed in
                     <input type="checkbox" className="accent-secondary" />
                   </label>
-                  <a
-                    href="/forgotpassword"
-                    className="text-primary hover:text-primaryLight hover:no-underline"
-                  >
+                  <Link to='/forgot-password' className="text-primary hover:text-primaryLight hover:no-underline">
                     Forgot Password?
-                  </a>
+                  </Link>
                 </div>
               </div>
 

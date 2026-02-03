@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { API_ENDPOINTS } from '../../services/api';
 import { MdOutlineArrowBackIos } from 'react-icons/md'; 
 import PhoneInput from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
@@ -9,19 +10,28 @@ const Step_EnterPhone = ({ onContinue }) => {
   
   const isValid = phone && phone.length > 10; 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isValid) {
-      const lastFour = phone.slice(-4);
-      const formattedPhone = `+${phone.slice(0, -10)} *** *** ${lastFour}`;
-      onContinue(formattedPhone);
+    try {
+      const response = await fetch(API_ENDPOINTS.SEND_PHONE_OTP, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone: phone })
+      });
+
+      if (response.ok) {
+        const formattedPhone = `${phone}`;
+        onContinue(formattedPhone);
+      }
+    } catch (err) {
+      console.error("Failed to send OTP", err);
     }
+    
   };
 
   return (
     <div className="">
 		<div className='relative flex justify-center items-center'>
-			{/* Position the button absolutely on the left */}
 			<button 
 				className="absolute left-0 text-[#708CAF] bg-white p-2 rounded-full cursor-not-allowed" 
 				disabled
@@ -36,7 +46,8 @@ const Step_EnterPhone = ({ onContinue }) => {
 		</div>
       
       <p className="text-primaryLight font-medium text-base text-left mb-6">
-        We’ll text a code to your phone number to finish setting up your account.
+        By selecting Continue, you agree to receive a text message with a security code. 
+        Standard rates may apply.
       </p>
 
       <form className="space-y-4" onSubmit={handleSubmit}>

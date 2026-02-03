@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MdOutlineArrowBackIos } from 'react-icons/md';
+import { API_ENDPOINTS } from '../../services/api';
 
 const Step_EnterCode = ({ phoneNumber, onVerify, onBack }) => {
-  const [otp, setOtp] = useState(new Array(6).fill(''));
+  const [otp, setOtp] = useState(new Array(4).fill(''));
   const [timer, setTimer] = useState(47); // From your screenshot
   const [error, setError] = useState('');
+  const [resend, setResend] = useState(false)
   const inputsRef = useRef([]);
 
   // Timer logic
@@ -25,7 +27,7 @@ const Step_EnterCode = ({ phoneNumber, onVerify, onBack }) => {
     setError(''); // Clear error on new input
 
     // Focus next input
-    if (value && index < 5) {
+    if (value && index < 4) {
       inputsRef.current[index + 1].focus();
     }
   };
@@ -37,26 +39,54 @@ const Step_EnterCode = ({ phoneNumber, onVerify, onBack }) => {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const code = otp.join('');
-    
-    if (code.length < 6) {
-      setError('Please enter a valid code.');
-      return;
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  const code = otp.join('');
+  const userId = localStorage.getItem('currentUser')
+  try {
+    const payload = {
+      phone: phoneNumber,
+      user_id: userId.user.id,
+      otp: code,
     }
-    
-    // --- Mock "correct" code is 123456 ---
-    if (code === "123456") {
-      setError('');
-      onVerify(); // Go to "Verifying..." screen
+    const response = await fetch(API_ENDPOINTS.VERIFY_PHONE_OTP, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (response.ok) {
+      onVerify(); // Move to verifying/complete screen
     } else {
-      setError('Please enter a valid code.'); // Show error
+      setError('Invalid code. Please try again.');
     }
-  };
+  } catch (err) {
+    setError('Server error. Try again later.');
+  }
+};
 
-  // Check if all 6 boxes are filled
+
+  // Check if all 4 boxes are filled
   const isFilled = otp.every(digit => digit !== '');
+const handleResendOtp = async (e) => {
+  e.preventDefault();
+    try {
+      const response = await fetch(API_ENDPOINTS.RESEND_PHONE_OTP, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone: phoneNumber })
+      });
+      if (response.ok) {
+        setTimer(47);
+        setError('');  
+        setOtp(new Array(4).fill(''));
+    } else {
+      setError("Failed to resend code. Try again.");
+    }
+    } catch (err) {
+      console.error("Failed to send OTP", err);
+    }
+    
+  };
 
   return (
     <div className="">
@@ -119,7 +149,7 @@ const Step_EnterCode = ({ phoneNumber, onVerify, onBack }) => {
           {timer > 0 ? (
             <span>You can resend code in <span className="font-bold text-primaryLight">00:{timer < 10 ? `0${timer}` : timer}</span></span>
           ) : (
-            <span>Didn't receive code? <button type="button" className="font-bold text-primaryLight hover:underline">Resend</button></span>
+            <span>Didn't receive code? <button type="button" onClick={(e)=>{handleResendOtp(e)}} className="font-bold text-primaryLight hover:underline">Resend</button></span>
           )}
         </div>
       </form>

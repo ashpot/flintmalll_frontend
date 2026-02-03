@@ -3,11 +3,10 @@ import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 
 const Step3_Details = ({ formData, setFormData, onNext }) => {
   const parameters = JSON.parse(localStorage.getItem("parameters")) || [];
-  console.log(parameters);
 
   // Local states for toggles
-  const [isNegotiable, setIsNegotiable] = useState(formData.priceType === 'Negotiable');
-  const [isDeliveryAvailable, setIsDeliveryAvailable] = useState(formData.delivery || false);
+  const [isNegotiable, setIsNegotiable] = useState(true);
+  const [isDeliveryAvailable, setIsDeliveryAvailable] = useState(formData.delivery_available || false);
 
   // Generic handler for top-level inputs
   const handleChange = (e) => {
@@ -23,8 +22,8 @@ const Step3_Details = ({ formData, setFormData, onNext }) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      data: {
-        ...prev.data,
+      product_details: {
+        ...prev.product_details,
         [name]: value
       }
     }));
@@ -34,7 +33,7 @@ const Step3_Details = ({ formData, setFormData, onNext }) => {
     setIsNegotiable(prev => !prev);
     setFormData(prev => ({
       ...prev,
-      priceType: !isNegotiable ? 'Negotiable' : 'Fixed'
+      price_negotiable: isNegotiable ? "Yes" : "No"
     }));
   };
 
@@ -43,12 +42,11 @@ const Step3_Details = ({ formData, setFormData, onNext }) => {
     setIsDeliveryAvailable(checked);
     setFormData(prev => ({
       ...prev,
-      delivery: checked
+      delivery_available: checked
     }));
   };
 
   const handleContinue = () => {
-    // Add validation here if needed
     console.log("Step 3 Data:", formData);
     onNext();
   };
@@ -71,13 +69,13 @@ const Step3_Details = ({ formData, setFormData, onNext }) => {
                 name={param.name}
                 placeholder={`Enter ${param.label}`}
                 className="w-full p-3 border border-[#CFD9E4] font-medium text-lg text-[#666666] rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary"
-                value={formData.data[param.name] || ''}
+                value={formData.product_details[param.name] || ''}
                 onChange={handleDataChange}
               />
             ) : (
               <select
                 name={param.name}
-                value={formData.data[param.name] || ''}
+                value={formData.product_details[param.name] || ''}
                 onChange={handleDataChange}
                 className="w-full p-3 border border-[#CFD9E4] text-[#666666] text-lg font-semibold rounded-2xl"
               >
@@ -130,10 +128,10 @@ const Step3_Details = ({ formData, setFormData, onNext }) => {
         <div className="md:col-span-2 bg-[#F7F7F7] p-4 rounded-lg flex justify-between items-center my-3">
           <div>
             <label className="block font-semibold text-lg text-primary">Price Type</label>
-            <p className="text-lg font-medium text-[#666666] mt-2">{isNegotiable ? 'Negotiable' : 'Fixed Price'}</p>
+            <p className="text-lg font-medium text-[#666666] mt-2">{isNegotiable ? "Fixed Price" : 'Negotiable'}</p>
           </div>
           <div className="flex items-center space-x-3">
-            <span className={`font-medium text-lg ${!isNegotiable ? 'text-primary' : 'text-[#666666]'}`}>Fixed</span>
+            <span className={`font-medium text-lg ${isNegotiable ? 'text-[#666666]' : 'text-primary'}`}>Negotiable</span>
             <button
               type="button"
               onClick={handleToggleNegotiable}
@@ -147,7 +145,7 @@ const Step3_Details = ({ formData, setFormData, onNext }) => {
                 }`}
               />
             </button>
-            <span className={`font-medium text-lg ${isNegotiable ? 'text-primary' : 'text-[#666666]'}`}>Negotiable</span>
+            <span className={`font-medium text-lg ${isNegotiable ? 'text-[#666666]' : 'text-primary'}`}>Fixed</span>
           </div>
         </div>
 

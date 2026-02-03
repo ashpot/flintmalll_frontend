@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { MdOutlineArrowBackIos } from "react-icons/md";
 import { FaCreditCard, FaUniversity, FaCcVisa, FaCcMastercard } from 'react-icons/fa';
-import { BiSolidCopy } from "react-icons/bi";import SmallFooter from '../../components/layout/SmallFooter';
+import { BiSolidCopy } from "react-icons/bi";
+import SmallFooter from '../../components/layout/SmallFooter';
 import { useNavigate } from 'react-router-dom';
 ;
 

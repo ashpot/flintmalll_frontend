@@ -7,7 +7,7 @@ import AdManagementLayout from './components/layout/AdManagement';
 import PaymentsLayout from './components/layout/PaymentLayout';
 import SupportLayout from './components/layout/SupportLayout';
 import SettingsLayout from './components/layout/SettingsLayout';
-import EditProfile from './components/layout/EditProfile';
+import EditProfile from './pages/editProfile/EditProfile';
 import SavedItems from './components/common/SavedItems';
 import MyAds from './components/common/MyAds';
 
@@ -59,6 +59,7 @@ import Categories from './pages/dashboard/Settings/Categories';
 import AdminRoles from './pages/dashboard/Settings/AdminRoles';
 import ProfileSettings from './pages/dashboard/ProfileSettings';
 import Notification from './pages/Notification/Notification';
+import Chat from './pages/chat/Chat';
 
 
 function App() {
@@ -131,7 +132,6 @@ function App() {
             <Route index element={<Categories />} />
             <Route path="roles" element={<AdminRoles />} />
           </Route>
-
          
         </Route>
         <Route path='profile-settings' element={<ProfileSettings />} />
@@ -141,6 +141,7 @@ function App() {
         <Route path='/promote-ads' element={<BoostAds />} />
         <Route path='/payment-method' element={<PaymentMethod />} />
         <Route path='/Notifications' element={<Notification />} />
+        <Route path='/Chats' element={<Chat />} />
       </Routes>
     </BrowserRouter>
   )

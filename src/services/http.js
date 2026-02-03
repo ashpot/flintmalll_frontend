@@ -1,20 +1,28 @@
-export const authFetch = async (url, options = {}) => {
-  const token = localStorage.getItem("authToken");
-
-  const headers = {
-    ...options.headers,
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${token}`,
-  };
-
+const token = localStorage.getItem("authToken");
+export const getData = async (url)=>{
   const response = await fetch(url, {
-    ...options,
-    headers,
-  });
-
-  if (!response.ok) {
-    throw new Error(`API error: ${response.status}`);
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    }
+  })
+  if(!response.ok){
+    throw new Error(`Failed to fetch: ${response.status}`);
   }
-
-  return response.json();
-};
+  return await response.json();
+}
+export const postData = async (url, data)=>{
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify(data)
+  })
+  if(!response.ok){
+    throw new Error(`Failed to fetch: ${response.status}`);
+  }
+  return await response.json();
+}

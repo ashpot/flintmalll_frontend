@@ -9,8 +9,9 @@ const AccountDropdown = () => {
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
 
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));  
-  const isAuthenticated = currentUser !== null;
+  const authToken = localStorage.getItem("authToken");  
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"))
+  const isAuthenticated = !!authToken;
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -56,7 +57,7 @@ const AccountDropdown = () => {
                       className="w-10 h-10 border border-primaryDull rounded-full bg-gray-200 object-cover"
                     />
                     <span className="text-lg font-semibold text-[#666666]">
-                      {currentUser.first_name} {currentUser.last_name}
+                      {currentUser.user.first_name} {currentUser.user.last_name}
                     </span>
                   </div>
                 </li>

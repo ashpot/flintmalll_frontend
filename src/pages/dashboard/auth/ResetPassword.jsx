@@ -4,8 +4,6 @@ import logo from '../../../assets/images/Logo.png';
 import resetPassword from '../../../assets/images/resetpassword.png';
 import { IoEyeSharp } from 'react-icons/io5';
 import { FaEyeSlash } from 'react-icons/fa';
-// import { useNavigate, useParams } from "react-router-dom";
-// import { adminResetPassword } from "../../services/authService";
 
 const ResetPassword = () => {
   const [password, setPassword] = useState('');
@@ -17,7 +15,7 @@ const ResetPassword = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 //   const navigate = useNavigate();
 
-  // ✅ get token from URL param: /resetpassword/:token
+  // get token from URL param: /resetpassword/:token
 //   const { token } = useParams();
 
   const handleSubmit = async (e) => {
@@ -37,23 +35,7 @@ const ResetPassword = () => {
       setIsLoading(false);
       return;
     }
-
-    // try {
-    //   const data = await adminResetPassword({
-    //     token,
-    //     password,
-    //     password2: confirmPassword,
-    //   });
-
-    //   setMessage(data.success || 'Password has been successfully reset!');
-    //   navigate("/securedpassword");
-    // } catch (err) {
-    //   setError(err.message || 'Failed to reset password');
-    // } finally {
-    //   setIsLoading(false);
-    // }
-  };
-
+  }
   return (
     <div className="min-h-screen p-4 w-[90%] mx-auto">
       <div className="flex mb-6">

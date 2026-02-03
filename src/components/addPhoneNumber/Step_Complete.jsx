@@ -6,7 +6,7 @@ const Step_Complete = () => {
 
   const handleContinue = () => {
     // Navigate to your landing page
-    navigate('/'); 
+    navigate('/login'); 
   };
 
   return (
@@ -15,12 +15,12 @@ const Step_Complete = () => {
         Verification Complete
       </h2>
       <p className="text-primaryLight text-lg font-medium">
-        Please click Continue to go to your dashboard.
+        Please click Continue to login.
       </p>
       
       {/* 6 Dots */}
       <div className="flex justify-between my-10">
-        {[...Array(6)].map((_, i) => (
+        {[...Array(4)].map((_, i) => (
           <div 
             key={i} 
             className="w-12 h-12 relative rounded-xl bg-white shadow flex items-center justify-center"

@@ -48,7 +48,7 @@ const EditPersonal = () => {
   return (
     <div className="bg-white sm:p-6 p-4 sm:rounded-3xl">
         <section className='relative'>
-                <button onClick={()=>navigate('/profile')} className='flex items-center sm:gap-1 absolute -left-4 top-1'>
+                <button onClick={()=>navigate(-1)} className='flex items-center sm:gap-1 absolute -left-4 top-1'>
                     <IoIosArrowBack size={25}/>
                     <span className='font-bold sm:text-lg'>Back</span>
                 </button>

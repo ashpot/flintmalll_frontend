@@ -5,30 +5,22 @@ const Step1_Category = ({ formData, setFormData, onNext }) => {
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
   const token = localStorage.getItem("authToken");
-
-  
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedSubcategory, setSelectedSubcategory] = useState("");
-  const [stateRegion, setStateRegion] = useState("");
-  const [city, setCity] = useState("");
-  const [fields, setCategoryParameters] = useState([]);
-
   const [loadingCategories, setLoadingCategories] = useState(true);
   const [loadingSubcategories, setLoadingSubcategories] = useState(false);
-
 
   // Load categories on mount
   useEffect(() => {
     async function loadCategories() {
       setLoadingCategories(true);
       try {
-        const res = await fetch(API_ENDPOINTS.CATEGORIES,{
+        const res = await fetch(API_ENDPOINTS.CATEGORIES_LIST,{
           headers: {
             "Content-Type": "application/json",
             Authorization: `Token ${token}`,
           }});
         const data = await res.json();
         setCategories(data.categories);
+
       } catch (error) {
         console.error("Error loading categories", error);
       }
@@ -43,11 +35,12 @@ const Step1_Category = ({ formData, setFormData, onNext }) => {
   const handleCategoryChange = async (e) => {
     const categoryId = e.target.value;
     const selectedCategory = e.target.value;
+    const url = API_ENDPOINTS.CATEGORY_PARAMETERS(categoryId)
 
     setFormData({
         ...formData,
         category: selectedCategory,
-        subcategory: ""
+        sub_category: ""
     });
 
     if (!selectedCategory) return;
@@ -55,7 +48,7 @@ const Step1_Category = ({ formData, setFormData, onNext }) => {
     setLoadingSubcategories(true);
 
     try {
-      const res = await fetch(`${API_ENDPOINTS.CATEGORY_PARAMETERS}${categoryId}/`, {
+      const res = await fetch(url, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Token ${token}`,
@@ -64,8 +57,7 @@ const Step1_Category = ({ formData, setFormData, onNext }) => {
 
       const data = await res.json();
       setSubcategories(data.sub_categories || []);
-	    setCategoryParameters(data.fields || []);
-      localStorage.setItem("parameters", JSON.stringify(data.fields));
+      localStorage.setItem("parameters", JSON.stringify(data.fields || []));
     } catch (error) {
       console.error("Error loading subcategories:", error);
     } finally {
@@ -77,8 +69,9 @@ const Step1_Category = ({ formData, setFormData, onNext }) => {
   
   const handleNext = () => {
     if (
+      !formData.title ||
       !formData.category ||
-      !formData.subcategory ||
+      !formData.sub_category ||
       !formData.state ||
       !formData.city
     ) {
@@ -98,6 +91,19 @@ const Step1_Category = ({ formData, setFormData, onNext }) => {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="col-span-2">
+              <label className="block text-lg font-medium text-primary mb-2">
+                Title *
+              </label>
+              <textarea
+                rows="2"
+                maxLength="100"
+                value={formData.title}
+                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                placeholder="Write a title"
+                className="w-full p-3 border border-[#CFD9E4] text-[#666666] text-lg font-semibold rounded-2xl resize-none capitalize"
+              />  
+          </div>
 
           
           <div>
@@ -132,14 +138,9 @@ const Step1_Category = ({ formData, setFormData, onNext }) => {
 
             <select
               className="w-full p-3 border border-[#CFD9E4] text-[#666666] text-lg font-semibold rounded-2xl"
-             value={formData.subcategory}
-              /*
-               value={selectedSubcategory}
-              onChange={(e) => setSelectedSubcategory(e.target.value)}
-              disabled={!selectedCategory}
-              */
+             value={formData.sub_category}
              onChange={(e) =>
-            setFormData({ ...formData, subcategory: e.target.value })
+              setFormData({ ...formData, sub_category: e.target.value })
           }
           disabled={!formData.category}
             >
@@ -191,14 +192,14 @@ const Step1_Category = ({ formData, setFormData, onNext }) => {
             onClick={handleNext}
             disabled={
               !formData.category ||
-              !formData.subcategory ||
+              !formData.sub_category ||
               !formData.state ||
               !formData.city
             }
             className={`w-4/5 bg-primary text-white text-base font-bold py-3 rounded-xl shadow-md 
               transition-colors ${
                 !formData.category ||
-                !formData.subcategory ||
+                !formData.sub_category ||
                 !formData.state ||
                 !formData.city
                   ? "opacity-50 cursor-not-allowed"

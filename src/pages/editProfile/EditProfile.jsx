@@ -1,8 +1,8 @@
 import React from 'react';
-import Navbar from './Navbar';
-import SmallFooter from './SmallFooter';
-import EditPersonal from '../common/EditPersonal';
-import EditBusiness from '../common/EditBusiness';
+import Navbar from '../../components/layout/Navbar';
+import SmallFooter from '../../components/layout/SmallFooter';
+import EditPersonal from '../../components/layout/EditPersonal';
+import EditBusiness from '../../components/layout/EditBusiness';
 
 /*
 this components renders handles rendering of either the EditPersonal or EditBusiness
@@ -23,7 +23,7 @@ const EditProfile = () => {
 				</div>
       } />
       <main className='min-h-screen max-w-6xl mx-auto space-y-6 py-10'>
-        {currentUser.type === 'Individual' ? <EditPersonal /> : <EditBusiness />}
+        {currentUser.user.type === 'Individual' ? <EditPersonal /> : <EditBusiness />}
       </main>
       <SmallFooter />
     </div>

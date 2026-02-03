@@ -8,8 +8,7 @@ import SmallFooter from '../../components/layout/SmallFooter';
 
 
 
-const PersonalProfile = () => {
-  const currentUser = JSON.parse(localStorage.getItem("currentUser")); 
+const PersonalProfile = ({user}) => {
 
   return (
     <div className='bg-[#F7F7F7] min-h-screen'>
@@ -25,13 +24,13 @@ const PersonalProfile = () => {
         <div className="max-w-4xl mx-auto space-y-6">
 
           {/* 3. Pass the user prop down */}
-          <ProfileHeader user={currentUser} />
+          <ProfileHeader user={user} />
 
           {/* 4. ADD THE CONTACTDETAILS COMPONENT HERE */}
           <ContactDetails 
-            email={currentUser.email}
-            phone={currentUser.phone}
-            address={currentUser.address}
+            email={user.email}
+            phone={user.phone}
+            address={user.address}
           />
           
           {/* 5. Pass the stats prop down */}
