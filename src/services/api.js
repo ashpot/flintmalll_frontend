@@ -1,48 +1,5 @@
-// // export const API_LIVE_URL = "https://flintmall.com/api/v1/rest-auth";
-// export const API_LIVE_URL = "https://flintmall.com.ng/api/v1"
-// export const API_LOCAL_URL = "http://127.0.0.1:8000/api/v1/rest-auth";
-// export const API_TEST_URL = "https://billwev.pythonanywhere.com/api/v1/rest-auth";
-
-// export const API_BASE_URL = API_LIVE_URL;
-
-// export const API_ENDPOINTS = {
-//   // -------- STATIC ENDPOINTS ----------//
-//   // -POST REQUESTS
-//   SIGNUP: `${API_BASE_URL}/auth/register/`,
-//   SIGNIN: `${API_BASE_URL}/auth/login/`,
-//   GOOGLE_SIGNIN: `${API_BASE_URL}/auth/google/`,
-//   SEND_OTP: `${API_BASE_URL}/auth/send-phone-otp/`,
-//   VERIFY_OTP: `${API_BASE_URL}/auth/verify-phone/`,
-//   RESEND_OTP: `${API_BASE_URL}/auth/resend-phone-otp/`,
-//   RESET_PASSWORD: `${API_BASE_URL}/auth/password/reset/`,
-//   RESET_PASSWORD_OFFLINE: `${API_BASE_URL}/auth/password/reset-offline/`,
-//   RESET_OTP_PHONE: `${API_BASE_URL}/reset/password/send-phone-otp/`,
-//   RESET_OTP_EMAIL: `${API_BASE_URL}/reset/password/send-email-otp/`,
-
-//   // - GET REQUESTS
-//   HOMEDATA: `${API_BASE_URL}/home/`,
-//   HOMEDATA_OFFLINE: `${API_BASE_URL}/home/offline/`,
-  
-//   CATEGORIES: `${API_BASE_URL}/categories/`,
-//   SIMILAR_ADS: `${API_BASE_URL}/similar_ads/`,
-//   TRENDING_ADS: `${API_BASE_URL}/trending_ads/`,
-//   PREMIUM_ADS: `${API_BASE_URL}/premium_ads/`,
-
-//   // -------- DYNAMIC ENDPOINTS ----------//
-//   // -- GET REQUESTS 
-//   // - load details of a particular category 
-//   CATEGORY_DETAILS: (id)=> `${API_BASE_URL}/categories/${id}/`,  
-//   // - load all sub categories for a particular category
-//   SUBCATEGORIES: (id) => `${API_BASE_URL}/categories/${id}/subcategories/`, 
-//   // - load parameters of a particular Category
-//   CATEGORY_PARAMETERS: (id) => `${API_BASE_URL}/categories/${id}/parameters/`,
-// };
-
-
 export const API_LIVE_URL = "https://flintmall.com.ng/api/v1";
-export const API_LOCAL_URL = "http://127.0.0.1:8000/api/v1";
 export const API_TEST_URL = "https://billwev.pythonanywhere.com/api/v1";
-
 export const API_BASE_URL = API_LIVE_URL;
 
 export const API_ENDPOINTS = {

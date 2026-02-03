@@ -6,22 +6,18 @@ import { IoClose } from "react-icons/io5";
 const Step2_Photos = ({ formData, setFormData, onNext }) => {
   const [images, setImages] = useState([]);
   const [mainImageIndex, setMainImageIndex] = useState(0);
-  const [videoLink, setVideoLink] = useState(formData.videoLink || "");
+  const [videoLink, setVideoLink] = useState(formData.video_link || "");
 
   // Load initial images from formData
   useEffect(() => {
-    if (formData.images && formData.images.length > 0) {
-      const loadedImages = formData.images.map((img) =>
+    if (formData.files && formData.files.length > 0) {
+      const loadedImages = formData.files.map((img) =>
         img.preview ? img : { file: img.file || img, preview: img.preview || URL.createObjectURL(img.file || img) }
       );
       setImages(loadedImages);
     }
-  }, [formData.images]);
+  }, [formData.files]);
 
-  // Cleanup previews on unmount
-  // useEffect(() => {
-  //   return () => images.forEach((img) => URL.revokeObjectURL(img.preview));
-  // }, [images]);
 
   // --- Dropzone ---
   const onDrop = (acceptedFiles) => {
@@ -31,7 +27,7 @@ const Step2_Photos = ({ formData, setFormData, onNext }) => {
 
     const updatedImages = [...images, ...newImages];
     setImages(updatedImages);
-    setFormData({ ...formData, images: updatedImages, videoLink });
+    setFormData({ ...formData, files: updatedImages, video_link: videoLink });
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -45,7 +41,7 @@ const Step2_Photos = ({ formData, setFormData, onNext }) => {
   const handleDelete = (index) => {
     const updated = images.filter((_, i) => i !== index);
     setImages(updated);
-    setFormData({ ...formData, images: updated, videoLink });
+    setFormData({ ...formData, files: updated, video_link: videoLink });
     if (index === mainImageIndex) setMainImageIndex(0);
   };
 
@@ -55,7 +51,7 @@ const Step2_Photos = ({ formData, setFormData, onNext }) => {
   // --- Update video link ---
   const handleVideoLinkChange = (e) => {
     setVideoLink(e.target.value);
-    setFormData({ ...formData, videoLink: e.target.value, images });
+    setFormData({ ...formData, video_link: e.target.value, files:images });
   };
 
   // --- Validation ---
@@ -63,7 +59,7 @@ const Step2_Photos = ({ formData, setFormData, onNext }) => {
 
    const handleNext = () => {
     if (
-      formData.images.length < 2
+      formData.files.length < 2
     ) {
       alert("Upload at least two images ");
       return;

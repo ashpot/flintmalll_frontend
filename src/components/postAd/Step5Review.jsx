@@ -12,12 +12,13 @@ import Property from '../../assets/images/Property.png';
 import Vehicles from '../../assets/images/Vehicles.png';
 import Beauty from '../../assets/images/Health and beauty.png';
 import profilePhoto from '../../assets/images/profilePhoto.png';
+import { PiTagSimpleFill } from 'react-icons/pi';
 
-const SpecItem = ({ icon, label, value }) => (
+const SpecItem = ({ label, value }) => (
   <div className="flex items-center space-x-3">
-    <div className="flex-shrink-0 text-[#9FB3C9]">{icon}</div>
+    <div className="flex-shrink-0 text-[#9FB3C9]"><PiTagSimpleFill size={24}/></div>
     <div>
-      <p className="text-lg font-semibold text-[#666666]">{label}</p>
+      <p className="text-lg font-semibold text-[#666666] capitalize">{label}</p>
       <p className="font-semibold text-2xl text-[#1E1E1E]">{value}</p>
     </div>
   </div>
@@ -58,7 +59,7 @@ const Step5_Review = ({ onNext, goToStep, formData, sellerData }) => {
   const data = formData || mockFormData;
   const seller = sellerData || mockSellerData;
   // const imagesToShow = (Array.isArray(data.images) && data.images.length > 0) ? data.images : [];
-  const imagesToShow = (data.images && data.images.length > 0) ? data.images : mockFormData.images;
+  const imagesToShow = (data.files && data.files.length > 0) ? data.files : mockFormData.images;
   
   // Helper to get the correct source (Handles both Object from Step 2 and String from Mock)
   const getImgSrc = (img) => {
@@ -144,10 +145,12 @@ const Step5_Review = ({ onNext, goToStep, formData, sellerData }) => {
             <h1 className="text-[28px] font-bold text-[#1E1E1E] mb-2">{data.title}</h1>
             <p className="text-4xl font-bold text-primary mb-3">₦{data.price.toLocaleString()}</p>
             <div className="flex flex-wrap gap-2 mb-4">
-              {data.priceType === 'Negotiable' && (
-                <span className="bg-cyan-100 text-cyan-700 text-xs font-semibold px-3 py-1 rounded-full">{data.priceType}</span>
+              {data.price_negotiable === 'Yes' && (
+                <span className="bg-cyan-100 text-cyan-700 text-xs font-semibold px-3 py-1 rounded-full">
+                  {data.priceType === "Yes" ? "Negotiable" : "Fixed"}
+                </span>
               )}
-              <span className="bg-orange-100 text-orange-700 text-xs font-semibold px-3 py-1 rounded-full">{data.data.condition}</span>
+              {/* <span className="bg-orange-100 text-orange-700 text-xs font-semibold px-3 py-1 rounded-full">{data.data.condition}</span> */}
             </div>
             <div className="flex items-center text-[#666666]">
               <MdLocationOn className="mr-2 flex-shrink-0" />
@@ -190,17 +193,15 @@ const Step5_Review = ({ onNext, goToStep, formData, sellerData }) => {
         </div>
       </div>
 
-      {/* --- About this Product --- */}
+      {/* --- About this Product (get this particular render from the local storage) --- */}
       <div className='border-t border-[#B7B7B7] my-10'>
         <h2 className="text-[28px] font-bold text-[#1E1E1E] mt-10 mb-6">About this Product</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-8">
-          <SpecItem icon={<MdOutlinePhoneIphone size={24} />} label={features.label} value={data.data.brand} />
-          <SpecItem icon={<FaTag size={24} />} label="Model" value={data.data.model} />
-          <SpecItem icon={<MdOutlineStorage size={24} />} label="Storage" value={data.storage} />
-          <SpecItem icon={<RiRam2Fill size={24} />} label="RAM" value={data.ram} />
-          <SpecItem icon={<TbBattery3Filled size={24} />} label="Battery" value={data.battery} />
-          <SpecItem icon={<BsDisplay size={24} />} label="Display" value={data.display} />
-          <SpecItem icon={<BiSolidError size={24} />} label="Issue" value={data.issue} />
+          {Object.entries(data.product_details).map(([key, value])=>{
+            return (
+              <SpecItem label={key} value={value} key={key}/>
+            )
+          })}
         </div>
       </div>
 
