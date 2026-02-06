@@ -8,7 +8,6 @@ const AccountDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
-
   const authToken = localStorage.getItem("authToken");  
   const currentUser = JSON.parse(localStorage.getItem("currentUser"))
   const isAuthenticated = !!authToken;
