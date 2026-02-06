@@ -6,10 +6,16 @@ import { FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import SignInScreen from '../../assets/images/SignInScreen.png';
 import { API_ENDPOINTS } from "../../services/api";
+import { cn } from "../../lib/Utils";
+import SmallFooter from "../../components/layout/SmallFooter";
 
 const SignUp = () => {
 
     const navigate = useNavigate();
+    // classes 
+    const inputClasses = cn("mt-1 w-full px-4 py-3 font-medium sm:text-lg text-base text-[#708CAF] border border-white", 
+                              "focus:ring-2 focus:ring-secondary placeholder:text-[#708CAF] outline-none rounded-xl sm:rounded-2xl ")
+    const iconWrapper = cn("flex w-full items-center justify-center gap-2 border border-black px-8 py-2 rounded-xl hover:bg-white hover:text-[#666666]") 
 
     // Controlled Inputs
     const [firstName, setFirstName] = useState("");
@@ -53,12 +59,6 @@ const SignUp = () => {
             body: JSON.stringify(payload),
           });
           const data = await response.json();
-        //   if (!response.ok) {
-        //     alert(data.message || "server error");
-        //     setLoading(false);
-        //     console.log(response)
-        //     return;
-        //   }
           switch (response.status) {
             case 400:
                 alert('invalid email')
@@ -103,20 +103,22 @@ const SignUp = () => {
             >
 
             <div className="flex flex-1 items-center justify-center px-4">
-                <div className="bg-white/80 backdrop-blur-md rounded-2xl shadow-xl w-[50%] mx-auto p-8">
+                <div className={cn("bg-white/80 backdrop-blur-md rounded-2xl shadow-xl lg:w-[50%] md:w-[60%] sm:w-[70%] w-full mx-auto",
+                            "md:p-8 md:px-5 py-6 px-4 "
+                          )}>
                 
-                    <h2 className="text-4xl font-bold text-center text-primary mb-7">
+                    <h2 className="sm:text-4xl text-2xl font-bold text-center text-primary mb-7">
                         Create an account
                     </h2>
 
                     <form className="space-y-4" method="post" onSubmit={handleSignup}>
-                        <div className="flex justify-between gap-4">
+                        <div className="flex justify-between gap-4 sm:flex-row flex-col">
                             <input
                                 type="text"
                                 placeholder="First Name" 
                                 value={firstName}
                                 onChange={(e) => setFirstName(e.target.value)}
-                                className="mt-1 w-full px-4 py-3 font-medium text-lg text-[#708CAF] border border-white rounded-2xl focus:ring-2 focus:ring-secondary placeholder:text-[#708CAF] outline-none"
+                                className={inputClasses}
                                 required
                             />
                             <input 
@@ -124,7 +126,7 @@ const SignUp = () => {
                                 placeholder="Last Name"
                                 value={lastName}
                                 onChange={(e) => setLastName(e.target.value)}
-                                className="mt-1 w-full px-4 py-3 font-medium text-lg text-[#708CAF] border border-white rounded-2xl focus:ring-2 focus:ring-secondary placeholder:text-[#708CAF] outline-none"
+                                className={inputClasses}
                                 required
                             />
                         </div>
@@ -134,7 +136,7 @@ const SignUp = () => {
                                 placeholder="Email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                className="mt-1 w-full px-4 py-3 font-medium text-lg text-[#708CAF] border border-white rounded-2xl focus:ring-2 focus:ring-secondary placeholder:text-[#708CAF] outline-none"
+                                className={inputClasses}
                                 required
                             />
                         </div>
@@ -146,10 +148,10 @@ const SignUp = () => {
                                 minLength={8}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className="mt-1 w-full px-4 py-3 font-medium text-lg text-[#708CAF] border border-white rounded-2xl focus:ring-2 focus:ring-secondary placeholder:text-[#708CAF] outline-none"
+                                className={inputClasses}
                                 required
                             />
-                            <div className="my-4 font-medium text-lg">
+                            <div className="my-4 font-medium sm:text-lg text-base">
                                 <label className="flex items-center gap-2 mb-2">
                                     Registering as a business?
                                     <input 
@@ -167,41 +169,41 @@ const SignUp = () => {
                                       placeholder="Business Name"
                                       value={businessName}
                                       onChange={(e) => setBusinessName(e.target.value)}
-                                      className="mt-1 w-full px-4 py-3 font-medium text-lg text-[#708CAF] border border-white rounded-2xl focus:ring-2 focus:ring-secondary placeholder:text-[#708CAF] outline-none"
+                                      className={inputClasses}
                                     />
                                     <input
                                       type="text"
                                       placeholder="Facebook link"
                                       value={facebookLink}
                                 onChange={(e) => setFacebookLink(e.target.value)}
-                                      className="mt-1 w-full px-4 py-3 font-medium text-lg text-[#708CAF] border border-white rounded-2xl focus:ring-2 focus:ring-secondary placeholder:text-[#708CAF] outline-none"
+                                      className={inputClasses}
                                     />
                                     <input
                                       type="text"
                                       placeholder="Instagram Link"
                                       value={instagramLink}
                                 onChange={(e) => setInstagramLink(e.target.value)}
-                                      className="mt-1 w-full px-4 py-3 font-medium text-lg text-[#708CAF] border border-white rounded-2xl focus:ring-2 focus:ring-secondary placeholder:text-[#708CAF] outline-none"
+                                      className={inputClasses}
                                     />
                                     <input
                                       type="text"
                                       placeholder="Whatsapp Phone Number"
                                       value={whatsappLink}
                                 onChange={(e) => setWhatsappLink(e.target.value)}
-                                      className="mt-1 w-full px-4 py-3 font-medium text-lg text-[#708CAF] border border-white rounded-2xl focus:ring-2 focus:ring-secondary placeholder:text-[#708CAF] outline-none"
+                                      className={inputClasses}
                                     />
                                     <input
                                       type="text"
                                       placeholder="Website (optional)"
                                       value={website}
                                 onChange={(e) => setWebsite(e.target.value)}
-                                      className="mt-1 w-full px-4 py-3 font-medium text-lg text-[#708CAF] border border-white rounded-2xl focus:ring-2 focus:ring-secondary placeholder:text-[#708CAF] outline-none"
+                                      className={inputClasses}
                                     />
                                   </div>
                                 )}
 
-                                <p className="text-sm font-medium">By selecting Create Account, you agree to our <span className="text-primary">User Agreement</span></p>
-                                <p className="text-sm font-medium">and acknowledge reading our <span className="text-primary">User Privacy Note</span></p>
+                                <p className="sm:text-sm text-xs font-medium">By selecting Create Account, you agree to our <span className="text-primary">User Agreement</span></p>
+                                <p className="sm:text-sm text-xs font-medium">and acknowledge reading our <span className="text-primary">User Privacy Note</span></p>
                             </div>
                         </div>
 
@@ -228,38 +230,25 @@ const SignUp = () => {
                             <hr className="flex-1 border-[#B7B7B7]" />
                         </div>
 
-                        <div className="flex justify-center gap-4 text-lg font-bold text-[#1E1E1E]">
+                        <div className="flex flex-col sm:flex-row justify-center gap-4 sm:text-lg text-base font-bold text-[#1E1E1E]">
                             <button
                                 type="button"
-                                className="flex items-center gap-2 border border-white px-8 py-2 rounded-xl hover:bg-white hover:text-[#666666]"
+                                className={iconWrapper}
                             >
                                 <FcGoogle size={25}/> Google
                             </button>
-                            <button
+                            {/* <button
                                 type="button"
                                 className="flex items-center gap-2 border border-white px-8 py-2 rounded-xl hover:bg-white hover:text-[#666666]"
                             >
                                 <FaFacebook size={25} className="text-[#1877F2]" /> Facebook
-                            </button>
+                            </button> */}
                         </div>
                     </form>
                 </div>
             </div>
 
-            <footer className="flex justify-between w-[85%] mx-auto font-medium text-lg text-white mt-10 mb-5">
-                <p>
-                    &copy; 2025 FlintMall. All Rights Reserved.
-                </p>
-                <div className="flex justify-center gap-3 mt-1">
-                    <a href="/privacy-policy" className="hover:underline">
-                        Privacy Policy
-                    </a>
-                    <span>|</span>
-                    <a href="/terms-of-service" className="hover:underline">
-                        Terms of Service
-                    </a>
-                </div>
-            </footer>
+            <SmallFooter />
         </div>
     </div>
     

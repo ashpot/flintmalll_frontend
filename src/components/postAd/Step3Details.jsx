@@ -47,7 +47,7 @@ const Step3_Details = ({ formData, setFormData, onNext }) => {
   };
 
   const handleContinue = () => {
-    console.log("Step 3 Data:", formData);
+    // console.log("Step 3 Data:", formData);
     onNext();
   };
 

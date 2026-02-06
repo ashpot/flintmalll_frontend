@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Navbar from '../../components/layout/Navbar';
 import SmallFooter from '../../components/layout/SmallFooter';
 import EditPersonal from '../../components/layout/EditPersonal';
@@ -13,6 +13,9 @@ const EditProfile = () => {
   /*fetches data gotten from the backend api so we can know whether
   the user is a personal or business account */
   const currentUser = JSON.parse(localStorage.getItem("currentUser")); 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className='bg-[#F7F7F7]'>
       <title>Flintmall - Edit Profile</title>
@@ -22,8 +25,8 @@ const EditProfile = () => {
 					<a href="#" className='cursor-pointer hover:text-secondary'>Help</a>
 				</div>
       } />
-      <main className='min-h-screen max-w-6xl mx-auto space-y-6 py-10'>
-        {currentUser.user.type === 'Individual' ? <EditPersonal /> : <EditBusiness />}
+      <main className='min-h-screen max-w-6xl mx-auto space-y-6 py-10 pt-8'>
+        {currentUser.user.type === 'Individual' ? <EditPersonal user={currentUser.user} /> : <EditBusiness user={currentUser.user} />}
       </main>
       <SmallFooter />
     </div>

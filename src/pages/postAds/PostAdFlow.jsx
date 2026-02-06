@@ -31,6 +31,8 @@ const initialFormData = {
   product_details: {},
   ad_type: "",
   files: [],
+  preview_category: '',
+  preview_subcategory: ''
 };
 
 const PostAdFlow = () => {
@@ -108,10 +110,6 @@ const PostAdFlow = () => {
     } catch (error) {
       alert('internal error')
     } 
-    for (let pair of FORM_DATA.entries()) {
-  console.log(pair[0], pair[1]);
-}
-    
   };
 
   // --- Render Step Components ---

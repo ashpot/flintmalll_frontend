@@ -134,6 +134,7 @@ function App() {
           </Route>
          
         </Route>
+        {/* other routes */}
         <Route path='profile-settings' element={<ProfileSettings />} />
         <Route path='/edit-profile' element={<EditProfile />} />
         <Route path='/saved-items' element={<SavedItems />} />

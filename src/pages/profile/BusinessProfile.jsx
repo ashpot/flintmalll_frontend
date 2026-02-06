@@ -18,7 +18,7 @@ const BusinessProfile = ({ user }) => {
 			}
 		/>
 
-		<main className="p-8">
+		<main className="p-8 px-4">
 			<div className="max-w-4xl mx-auto space-y-6">
 
 			{/* 3. Pass the user prop down */}

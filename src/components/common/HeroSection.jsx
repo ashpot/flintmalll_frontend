@@ -40,7 +40,7 @@ const Hero = () => {
   return (
     <section id="home" className="relative md:my-10">
       <div
-        className="relative w-full md:w-[85%] mx-auto bg-no-repeat rounded-b-[30px] md:rounded-3xl flex items-center justify-start transition-all duration-500"
+        className="relative w-full md:w-[85%] mx-auto bg-no-repeat sm:rounded-b-[30px] md:rounded-3xl flex items-center justify-start transition-all duration-500"
         loading="lazy"
         style={{
           backgroundImage: `url(${slide.image})`,

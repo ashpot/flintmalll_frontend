@@ -24,8 +24,7 @@ const AccountDropdown = () => {
   }, []);
 
   const handleSignOut = () => {
-    localStorage.removeItem("currentUser");
-    localStorage.removeItem("authToken");
+    localStorage.clear();
     setIsOpen(false);
     navigate("/login");
   };
@@ -43,21 +42,21 @@ const AccountDropdown = () => {
 
       {/* Dropdown */}
       {isOpen && (
-        <div className="absolute top-full right-0 mt-2 w-60 bg-white rounded-2xl shadow-lg z-20 border border-gray-100 p-3">
+        <div className="absolute top-full sm:right-0 -left-16 xs:-left-24 mt-2 w-60 bg-white rounded-2xl shadow-lg z-20 border border-gray-100 p-3">
           <ul>
             {/* IF USER IS LOGGED IN */}
             {isAuthenticated ? (
               <>
                 {/* User Header */}
                 <li>
-                  <div className="flex items-center gap-3 p-2 rounded-lg">
+                  <div className="flex items-center gap-3 p-2 rounded-lg" onClick={()=>navigate('/profile')}>
                     <img
                       src={currentUser.photo_url || UserAvatar}
                       alt="User"
                       className="w-10 h-10 border border-primaryDull rounded-full bg-gray-200 object-cover"
                     />
                     <span className="text-lg font-semibold text-[#666666]">
-                      {currentUser.user.first_name} {currentUser.user.last_name}
+                      {currentUser.user.first_name || ''} {currentUser.user.last_name || ""}
                     </span>
                   </div>
                 </li>
