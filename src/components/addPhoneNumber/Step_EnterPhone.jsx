@@ -4,8 +4,13 @@ import { MdOutlineArrowBackIos } from 'react-icons/md';
 import PhoneInput from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
 import '../../css/phoneInput.css';
+import { useNavigate } from 'react-router-dom';
+import { cn } from '../../lib/Utils';
 
 const Step_EnterPhone = ({ onContinue }) => {
+  const navigate = useNavigate();
+  const inputClasses = cn("mt-1 w-full px-4 py-3 font-medium sm:text-lg text-base text-[#708CAF] border border-white", 
+                                "focus:ring-2 focus:ring-secondary placeholder:text-[#708CAF] outline-none rounded-xl sm:rounded-2xl ")
   const [phone, setPhone] = useState('');
   
   const isValid = phone && phone.length > 10; 
@@ -30,19 +35,21 @@ const Step_EnterPhone = ({ onContinue }) => {
   };
 
   return (
-    <div className="">
-		<div className='relative flex justify-center items-center'>
+    <div className="pt-5">
+		<div className='relative fle justify-between items-center'>
 			<button 
-				className="absolute left-0 text-[#708CAF] bg-white p-2 rounded-full cursor-not-allowed" 
+				className="absolute text-base sm:text-lg font-bold -top-10 text-[#708CAF] p-2 hover:underline hover:cursor-pointer" 
+        onClick={()=>navigate("/")}
 				disabled
 			>
-				<MdOutlineArrowBackIos size={20} />
+				Skip
 			</button>
 			
 			{/* The title will now be centered in the remaining space */}
-			<h2 className="text-[28px] font-bold text-primary mb-3 text-center">
+			<h2 className="sm:text-3xl text-xl font-bold text-center text-primary mb-7 text-center">
 				Add your phone number
 			</h2>
+      <div></div>
 		</div>
       
       <p className="text-primaryLight font-medium text-base text-left mb-6">
@@ -59,7 +66,7 @@ const Step_EnterPhone = ({ onContinue }) => {
             placeholder="Phone Number" 
             value={phone}
             onChange={setPhone}
-            className="w-full font-medium text-lg text-primary placeholder:text-gray-400 outline-none" 
+            className="w-full font-medium sm:text-base text-sm text-primary placeholder:text-gray-400 outline-none" 
           />
         </div>
 

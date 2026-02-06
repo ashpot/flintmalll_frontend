@@ -130,7 +130,7 @@ const SavedItems = () => {
       />
         <main className='min-h-screen max-w-[78rem] mx-auto space-y-6 py-10'>
             <section className='relative bg-white sm:p-6 p-4'>
-                <button onClick={()=>navigate('/profile')} className='flex items-center sm:gap-1 absolute sm:left-2 sm:top-8 top-5 left-1'>
+                <button onClick={()=>navigate(-1)} className='flex items-center sm:gap-1 absolute sm:left-2 sm:top-8 top-5 left-1'>
                     <IoIosArrowBack size={25}/>
                     <span className='font-bold sm:text-lg'>Back</span>
                 </button>

@@ -53,37 +53,35 @@ const Step4_Promote = ({ formData, setFormData, onNext }) => {
   const buttonClasses = `w-full py-3 mt-8 rounded-2xl font-semibold transition-transform duration-200 
   hover:scale-105 bg-secondary text-white`;
   useEffect(()=>{
-    const getAdTypes = async ()=>{
     const token = localStorage.getItem("authToken");
     const localSavedTypes = JSON.parse(localStorage.getItem("adTypes"));
     console.log(localSavedTypes)
-    if (localSavedTypes !== null) {
-      setAdTypes(localSavedTypes);
-    } else {
-        try {
-        setLoading(true)
-        const res = await fetch(API_ENDPOINTS.AD_TYPES, {
-          method: "GET",
-          headers: {
-            "Content-type": "application/json",
-            Authorization: `Token ${token}`
-          },
-        });
-        const data = await res.json();
-        if (res.ok){
-          console.log(data);
-          setAdTypes(data.ad_types || []);
-          // cache the data to local storage to avoid making another request on page mount 
-          localStorage.setItem("adTypes", JSON.stringify(data.ad_types || []));
-        } else{alert('server error')}
-      } catch (error) {
-        console.log('network error' + error)
-      } finally{
-        setLoading(false)
-      }
-    }
-    }
-    getAdTypes();
+      if (localSavedTypes !== null) {
+            setAdTypes(localSavedTypes);
+          } else {
+          const getAdTypes = async ()=>{
+          try {
+            setLoading(true)
+            const res = await fetch(API_ENDPOINTS.AD_TYPES, {
+              method: "GET",
+              headers: {
+                "Content-type": "application/json",
+                Authorization: `Token ${token}`
+              },
+            });
+            const data = await res.json();
+            if (res.ok){
+              setAdTypes(data.ad_types || []);
+              // cache the data to local storage to avoid making another request on page mount 
+              localStorage.setItem("adTypes", JSON.stringify(data.ad_types || []));
+            } else{alert('server error')}
+          } catch (error) {
+            console.log('network error' + error)
+          } finally{
+            setLoading(false)
+          }}
+          getAdTypes()
+        }
 }, [])
   const handleSelectPlan = (adType) => {
     setFormData({ ...formData, ad_type: adType.id });

@@ -141,7 +141,7 @@ const Step5_Review = ({ onNext, goToStep, formData, sellerData }) => {
         <div className="space-y-4">
           {/* Ad Details */}
           <div className="bg-white p-6 rounded-2xl shadow-sm border">
-            <p className="text-lg text-[#1E1E1E] font-medium mb-1">{data.category}</p>
+            <p className="text-lg text-[#1E1E1E] font-medium mb-1">{data.preview_category} ● {data.preview_subcategory}</p>
             <h1 className="text-[28px] font-bold text-[#1E1E1E] mb-2">{data.title}</h1>
             <p className="text-4xl font-bold text-primary mb-3">₦{data.price.toLocaleString()}</p>
             <div className="flex flex-wrap gap-2 mb-4">

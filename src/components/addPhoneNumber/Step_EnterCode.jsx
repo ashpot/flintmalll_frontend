@@ -80,7 +80,7 @@ const handleResendOtp = async (e) => {
         setError('');  
         setOtp(new Array(4).fill(''));
     } else {
-      setError("Failed to resend code. Try again.");
+      setError("Failed to resend code. Please Try again.");
     }
     } catch (err) {
       console.error("Failed to send OTP", err);
@@ -93,20 +93,20 @@ const handleResendOtp = async (e) => {
       <button onClick={onBack} className="text-[#708CAF] float-left bg-white p-2 rounded-full mr-5">
         <MdOutlineArrowBackIos size={20} />
       </button>
-      <h2 className="text-[28px] font-bold text-primary mb-6">
+      <h2 className="sm:text-3xl text-2xl font-bold text-primary mb-6 md:text-center">
         Enter Code
       </h2>
-      <p className="text-primaryLight text-base font-medium mb-6">
+      <p className="text-primaryLight text-base font-medium mb-6 text-center">
         Please enter the code we sent to {phoneNumber}.
       </p>
 
       <form className="space-y-6" onSubmit={handleSubmit}>
         {/* OTP Boxes */}
-        <div className="flex justify-between">
+        <div className="flex space-x-5 items-center justify-center">
           {otp.map((data, index) => (
             <div 
               key={index}
-              className={`w-12 h-12 relative border bg-white rounded-lg ${
+              className={` w-12 h-12 sm:w-16 sm:h-16 relative border bg-white rounded-lg ${
                 error ? 'border-red-500' : (data ? 'border-secondary' : 'border-[#9FB3C9]')
               }`}
             >
@@ -129,7 +129,7 @@ const handleResendOtp = async (e) => {
           ))}
         </div>
         
-        {error && <p className="text-red-500 text-sm -mt-2">{error}</p>}
+        {error && <p className="text-red-500 text-sm -mt-2 text-center">{error}</p>}
 
         {/* Verify Button */}
         <button

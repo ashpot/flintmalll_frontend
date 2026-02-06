@@ -30,24 +30,24 @@ const Input = ({type, holder, value, onChange, others})=>{
             onChange={onChange}
             className={cn('w-full px-4 py-3 font-medium text-lg text-[#708CAF]', 
                 'border border-[var(--color-border)] rounded-xl focus:ring-2 focus:ring-secondary', 
-                'placeholder:text-[#708CAF] outline-none',
+                'placeholder:text-[#708CAF]/50 outline-none',
             others)}
         />
     )
 }
-const EditBusiness = () => {
+const EditBusiness = ({user}) => {
     const [loading, setLoading] = useState(false)
 
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [phone, setPhone] = useState('');
-    const [mail, setMail] = useState('');
-    const [businessAddress, setBusinessAddress] = useState('');
-    const [businessName, setBusinessName] = useState('');
+    const [firstName, setFirstName] = useState(user.first_name || '');
+    const [lastName, setLastName] = useState(user.last_name || '');
+    const [phone, setPhone] = useState(user.phone || '');
+    const [mail, setMail] = useState(user.email || '');
+    const [businessAddress, setBusinessAddress] = useState(user.business_address || '');
+    const [businessName, setBusinessName] = useState(user.business_name || '');
     const [socialLinks, setSocialLinks] = useState('');
-    const [website, setWebsite] = useState('');
+    const [website, setWebsite] = useState(user.website || '');
     const [regNumber, setRegNumber] = useState('');
-    const [dob, setDob] = useState('');
+    const [dob, setDob] = useState(user.date_of_birth || '');
 
     const navigate = useNavigate();
   return (
@@ -150,7 +150,7 @@ const EditBusiness = () => {
                             onChange={(e)=>setWebsite(e.target.value)}
                         />
                     </div>
-                    <div className='flex flex-col w-full'>
+                    {/* <div className='flex flex-col w-full'>
                         <Label>Registration Number</Label>
                         <Input 
                             type='number'
@@ -158,7 +158,7 @@ const EditBusiness = () => {
                             value={regNumber}
                             onChange={(e)=>setRegNumber(e.target.value)}
                         />
-                    </div>
+                    </div> */}
                 </div>   
 
                 <div className="flex justify-between sm:flex-row flex-col gap-5 sm:gap-8">

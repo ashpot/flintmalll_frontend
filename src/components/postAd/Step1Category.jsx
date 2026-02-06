@@ -34,12 +34,15 @@ const Step1_Category = ({ formData, setFormData, onNext }) => {
   // Load subcategories when category changes
   const handleCategoryChange = async (e) => {
     const categoryId = e.target.value;
-    const selectedCategory = e.target.value;
+    //logic to find match category name.
+    const selectedCategory = categories.find(
+      (cat) => String(cat.id) === String(categoryId)
+    );
     const url = API_ENDPOINTS.CATEGORY_PARAMETERS(categoryId)
-
     setFormData({
         ...formData,
-        category: selectedCategory,
+        category: categoryId,
+        preview_category: selectedCategory?.title || '',
         sub_category: ""
     });
 
@@ -113,8 +116,8 @@ const Step1_Category = ({ formData, setFormData, onNext }) => {
 
             <select
               className="w-full p-3 border border-[#CFD9E4] text-[#666666] text-lg font-semibold rounded-2xl"
-             value={formData.category}
-          onChange= {handleCategoryChange}
+              value={formData.category}
+              onChange= {handleCategoryChange}
             >
               <option value="">Select category</option>
 
@@ -139,10 +142,19 @@ const Step1_Category = ({ formData, setFormData, onNext }) => {
             <select
               className="w-full p-3 border border-[#CFD9E4] text-[#666666] text-lg font-semibold rounded-2xl"
              value={formData.sub_category}
-             onChange={(e) =>
-              setFormData({ ...formData, sub_category: e.target.value })
-          }
-          disabled={!formData.category}
+             onChange={(e) => {
+                const subId = e.target.value;
+                const selectedSub = subcategories.find(
+                  (sub) => String(sub.id) === String(subId)
+                );
+
+                setFormData({
+                  ...formData,
+                  sub_category: subId,
+                  preview_subcategory: selectedSub?.title || "",
+                });
+              }}
+              disabled={!formData.category}
             >
               <option value="">
                 {loadingSubcategories ? "Loading..." : "Select subcategory"}

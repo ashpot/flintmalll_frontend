@@ -4,6 +4,8 @@ import { FaUser } from "react-icons/fa6";
 import { IoIosNotifications } from "react-icons/io";
 import { MdVerified, MdMessage } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
+import UserAvatar from '../../assets/images/profilePhoto.png';
+
 
 const ProfileHeader = ({ user }) => {
   const navigate = useNavigate();
@@ -14,13 +16,13 @@ const ProfileHeader = ({ user }) => {
     >
       <div className="flex flex-col sm:flex-row items-center sm:space-x-4 gap-2 sm:gap-0">
         <img 
-          src={user.photo_url} 
+          src={user.photo_url || UserAvatar} 
           alt={user.first_name} 
           className="w-16 h-16 rounded-full" 
         />
         <div className="text-center sm:text-left">
-          <div className="flex flex-col sm:flex-row items-center sm:space-x-2 gap-1 sm:gap-0">
-            <h1 className="text-2xl sm:text-[28px] font-semibold text-[#1E1E1E]">
+          <div className="flex flex-row items-center sm:space-x-2 gap-3 sm:gap-0">
+            <h1 className="text-2xl sm:text-[28px] font-semibold text-[#1E1E1E] capitalize">
               {user.first_name} {user.last_name}
             </h1>
             {isBusiness ? (

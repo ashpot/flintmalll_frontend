@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
         
 
 const LandingPage = () => {
+  const homeData = JSON.parse(localStorage.getItem("homeData"));
   const [categories, setCategories] = useState([]);
   const [premiumAds, setPremiumAds] = useState([]);
   const [trendingAds, setTrendingAds] = useState([]);
@@ -24,7 +25,14 @@ const LandingPage = () => {
 
 
   useEffect(() => {
-    const fetchHomeData = async () => {
+    if (homeData) {
+      setLoading(true)
+      setCategories(homeData.categories || []);
+      setPremiumAds(homeData.premium_ads || []);
+      setTrendingAds(homeData.trending_ads || []);
+      setLoading(false)
+    } else {
+      const fetchHomeData = async () => {
       const token  =  localStorage.getItem('authToken');
       const headers = { "Content-Type": "application/json" }
       if (token) {
@@ -45,11 +53,10 @@ const LandingPage = () => {
         }
 
         const data = await response.json();
-
+        localStorage.setItem("homeData", JSON.stringify(data))
         setCategories(data.categories || []);
         setPremiumAds(data.premium_ads || []);
         setTrendingAds(data.trending_ads || []);
-
       } catch (error) {
         console.error("Error loading home data:", error);
       } finally {
@@ -58,6 +65,7 @@ const LandingPage = () => {
     };
     
     fetchHomeData();
+    }
   }, []);
 
   // Loading spinner
@@ -74,23 +82,21 @@ const LandingPage = () => {
       <Navbar
         rightContent={
           <div className="flex items-center gap-4 md:space-x-4 text-xs md:text-lg font-medium cursor-pointer">
-            <IoIosNotifications size={27} className="text-[#B7B7B7]" />
+            <IoIosNotifications size={27} className="text-[#B7B7B7]" onClick={()=>navigate('/Notifications')}/>
             <AccountDropdown />
             <button
-  onClick={() => {
-    const user = JSON.parse(localStorage.getItem("currentUser"));
-    if (!user) {
-      // Show Sign-in modal
-      setShowSignInModal(true);
-    } else {
-      // Navigate to post ad page
-      navigate("/post-ad");
-    }
-  }}
-  className="bg-secondary hover:bg-secondaryLight text-white px-3 py-2 font-medium md:text-lg rounded-2xl flex items-center gap-3"
->
-  <TbTag size={18} /> Post Ad
-</button>
+              onClick={() => {
+                const user = JSON.parse(localStorage.getItem("currentUser"));
+                if (!user) {
+                  setShowSignInModal(true);
+                } else {
+                  navigate("/post-ad");
+                }
+              }}
+              className="bg-secondary hover:bg-secondaryLight text-white px-3 py-2 font-medium md:text-lg rounded-2xl flex items-center gap-3"
+            >
+              <TbTag size={18} /> Post Ad
+            </button>
           </div>
         }
       />
@@ -109,7 +115,7 @@ const LandingPage = () => {
         <AdSection title="Trending Ads" ads={trendingAds} adType="trending" />
       </div>
 
-      <Button buttonTitle="Loading More Ads" />
+      {/* <Button buttonTitle="Loading More Ads" /> */}
       <Footer />
       {showSignInModal && (
         <SignInModal onClose={() => setShowSignInModal(false)} />

@@ -5,7 +5,7 @@ const Step_Complete = () => {
   const navigate = useNavigate();
 
   const handleContinue = () => {
-    // Navigate to your landing page
+    // Navigate to login page
     navigate('/login'); 
   };
 
@@ -19,11 +19,11 @@ const Step_Complete = () => {
       </p>
       
       {/* 6 Dots */}
-      <div className="flex justify-between my-10">
+      <div className="flex space-x-5 items-center justify-center my-10">
         {[...Array(4)].map((_, i) => (
           <div 
             key={i} 
-            className="w-12 h-12 relative rounded-xl bg-white shadow flex items-center justify-center"
+            className="w-12 h-12 sm:w-16 sm:h-16 relative rounded-xl bg-white shadow flex items-center justify-center"
           >
             {/* The Dot */}
             <span className="w-3 h-3 bg-secondary rounded-full"></span>

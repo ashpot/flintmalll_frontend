@@ -29,20 +29,20 @@ const Input = ({type, holder, value, onChange, others})=>{
             onChange={onChange}
             className={cn('w-full px-4 py-3 font-medium text-lg text-[#708CAF]', 
                 'border border-[var(--color-border)] rounded-xl focus:ring-2 focus:ring-secondary', 
-                'placeholder:text-[#708CAF] outline-none',
+                'placeholder:text-[#708CAF]/50 outline-none',
             others)}
         />
     )
 }
-const EditPersonal = () => {
+const EditPersonal = ({user}) => {
     const [loading, setLoading] = useState(false)
 
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [phone, setPhone] = useState('');
-    const [mail, setMail] = useState('');
-    const [address, setAddress] = useState('');
-    const [dob, setDob] = useState('');
+    const [firstName, setFirstName] = useState(user.first_name || '');
+    const [lastName, setLastName] = useState(user.last_name || '');
+    const [phone, setPhone] = useState(user.phone || '');
+    const [mail, setMail] = useState(user.email || '');
+    const [address, setAddress] = useState(user.address || '');
+    const [dob, setDob] = useState(user.date_of_birth || '');
 
     const navigate = useNavigate();
   return (
