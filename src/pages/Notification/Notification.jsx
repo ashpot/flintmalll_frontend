@@ -113,7 +113,6 @@ const Notification = () => {
     filter === "unread"
       ? notifications.filter((n) => !n.read)
       : notifications;
-
   const buttonClasses = cn(
     "sm:text-base text-sm flex gap-1 font-semibold bg-[#E5F9FE]",
     "text-[var(--color-header)] sm:px-3 sm:py-2 py-1.5 px-2 rounded-2xl"
@@ -158,6 +157,7 @@ const Notification = () => {
               >
                 Unread <span className={spanClass}>{unreadCount}</span>
               </button>
+              
             </div>
 
             <button
@@ -167,7 +167,6 @@ const Notification = () => {
               Mark all as read
             </button>
           </nav>
-
           {/* Notifications */}
           {loading ? (
             <div className="w-full min-h-screen flex items-center justify-center">
