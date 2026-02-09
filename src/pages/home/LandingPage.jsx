@@ -12,6 +12,7 @@ import { TbTag } from "react-icons/tb";
 import { API_ENDPOINTS } from "../../services/api";
 import SignInModal from "../../components/modals/SignInModal";
 import { useNavigate } from "react-router-dom";
+import { cn } from "../../lib/Utils";
         
 
 const LandingPage = () => {
@@ -21,6 +22,7 @@ const LandingPage = () => {
   const [trendingAds, setTrendingAds] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showSignInModal, setShowSignInModal] = useState(false);
+  const [notifications, setNotifications] = useState(0)
   const navigate = useNavigate();
 
 
@@ -28,8 +30,6 @@ const LandingPage = () => {
     if (homeData) {
       setLoading(true)
       setCategories(homeData.categories || []);
-      setPremiumAds(homeData.premium_ads || []);
-      setTrendingAds(homeData.trending_ads || []);
       setLoading(false)
     } else {
       const fetchHomeData = async () => {
@@ -53,10 +53,11 @@ const LandingPage = () => {
         }
 
         const data = await response.json();
-        localStorage.setItem("homeData", JSON.stringify(data))
+        localStorage.setItem("homeData", JSON.stringify(data.categories))
         setCategories(data.categories || []);
         setPremiumAds(data.premium_ads || []);
         setTrendingAds(data.trending_ads || []);
+        setNotifications(data.notification_items)
       } catch (error) {
         console.error("Error loading home data:", error);
       } finally {
@@ -82,7 +83,11 @@ const LandingPage = () => {
       <Navbar
         rightContent={
           <div className="flex items-center gap-4 md:space-x-4 text-xs md:text-lg font-medium cursor-pointer">
-            <IoIosNotifications size={27} className="text-[#B7B7B7]" onClick={()=>navigate('/Notifications')}/>
+            <div className="relative">
+              {(notifications > 0) &&  <span className={cn("block absolute h-2 w-2 bg-secondary rounded-full", 
+              "top-[15%] -translate-y-[15%] translate-x-[15%] right-[15%]")}></span>}
+              <IoIosNotifications size={28} className="text-[#B7B7B7]" onClick={()=>navigate('/Notifications')}/>
+            </div>
             <AccountDropdown />
             <button
               onClick={() => {

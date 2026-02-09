@@ -50,8 +50,11 @@ const PricingCard = ({
 const Step4_Promote = ({ formData, setFormData, onNext }) => {
   const [adTypes, setAdTypes] = useState([]);
   const [loading, setLoading] = useState(false);
-  const buttonClasses = `w-full py-3 mt-8 rounded-2xl font-semibold transition-transform duration-200 
-   bg-secondary text-white ${!formData.ad_type && 'opacity-50 cursor-not-allowed'}`;
+  // const buttonClasses = `w-full py-3 mt-8 rounded-2xl font-semibold transition-transform duration-200 
+  //  bg-secondary text-white ${!formData.ad_type && 'opacity-50 cursor-not-allowed'}`;
+  const buttonClasses = `sm:w-4/5 w-full mt-8 bg-primary text-white text-base font-bold py-3 rounded-xl shadow-md 
+              transition-colors ${!formData.ad_type && "opacity-50 cursor-not-allowed"}`
+  
   useEffect(()=>{
     const token = localStorage.getItem("authToken");
     const localSavedTypes = JSON.parse(localStorage.getItem("adTypes"));

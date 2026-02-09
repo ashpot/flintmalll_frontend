@@ -6,15 +6,11 @@ import { API_ENDPOINTS } from "../../services/api";
 
 /* -------------------------------- Message Card -------------------------------- */
 
-const MessageCard = ({ notification, onRead }) => {
+const MessageCard = ({ notification, read}) => {
   const [open, setOpen] = useState(false);
 
   const handleClick = () => {
     setOpen(!open);
-
-    if (!notification.read) {
-      onRead(notification.id);
-    }
   };
 
   return (
@@ -27,7 +23,7 @@ const MessageCard = ({ notification, onRead }) => {
           className={cn(
             "sm:max-w-[55%] max-w-[75%] sm:text-base text-sm transition-all",
             !open && "line-clamp-2",
-            notification.read && "opacity-50"
+            (read || notification.read) && "opacity-50"
           )}
         >
           {notification.text}
@@ -53,6 +49,7 @@ const Notification = () => {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all"); // all | unread
+  const [read, setRead] = useState(false);
 
   useEffect(() => {
     const fetchNotifications = async () => {
@@ -75,6 +72,7 @@ const Notification = () => {
 
         const data = await response.json();
         setNotifications(data.notifications || []);
+        console.log(data)
       } catch (error) {
         console.error("Error fetching notifications:", error);
       } finally {
@@ -84,23 +82,31 @@ const Notification = () => {
 
     fetchNotifications();
   }, []);
-
-  /* --------------------------- Read State Handlers --------------------------- */
-
-  const markAsRead = (id) => {
-    setNotifications((prev) =>
-      prev.map((n) =>
-        n.id === id ? { ...n, read: true } : n
-      )
-    );
-  };
-
-  const markAllAsRead = () => {
-    setNotifications((prev) =>
-      prev.map((n) => ({ ...n, read: true }))
-    );
-  };
-
+  // mark all as read function
+  const markAllAsRead = async ()=>{
+    const token = localStorage.getItem("authToken")
+    try {
+      setLoading(true);
+      const response = await fetch(API_ENDPOINTS.MARK_NOTIFICATIONS_READ, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${token}`
+        }
+      })
+      const data = await response.json();
+      if(!response.ok){
+        alert("failed to mark all pls try again later")
+      }else{
+        alert("all notifications read")
+        setRead(true)
+      }
+    } catch (error) {
+      alert("server or network error pls try again later")
+    }finally{
+      setLoading(false)
+    }
+  }
   const unreadCount = notifications.filter((n) => !n.read).length;
 
   const filteredNotifications =
@@ -155,8 +161,8 @@ const Notification = () => {
             </div>
 
             <button
-              onClick={markAllAsRead}
               className="font-semibold sm:text-base text-sm text-[var(--color-header)]"
+              onClick={markAllAsRead}
             >
               Mark all as read
             </button>
@@ -176,7 +182,7 @@ const Notification = () => {
               <MessageCard
                 key={notification.id}
                 notification={notification}
-                onRead={markAsRead}
+                read={read}
               />
             ))
           )}
