@@ -68,21 +68,22 @@ const Step2_Photos = ({ formData, setFormData, onNext }) => {
   };
 
   return (
-    <div className="space-y-6 max-w-4xl mx-auto bg-white p-6 rounded-2xl shadow-md mb-10">
-      <h2 className="text-2xl font-bold text-center text-primary">Add Photos</h2>
-      <p className="text-center text-gray-600">Upload 2-10 photos of your item</p>
+    <div className="space-y-6 bg-white px-6 py-8 rounded-2xl shadow-md md:w-full lg:max-w-5xl w-full mx-auto mb-10">
+    {/* <div className="space-y-6 max-w-4xl mx-auto bg-white p-6 rounded-2xl shadow-md mb-10"> */}
+      <h2 className="sm:text-2xl text-xl font-bold text-center text-primary">Add Photos</h2>
+      <p className="text-center text-gray-600 text-sm sm:text-base">Upload 2-10 photos of your item</p>
 
       {/* Dropzone */}
       <div
         {...getRootProps()}
-        className={`flex flex-col items-center justify-center border-2 border-dashed rounded-xl p-10 cursor-pointer transition-colors w-[70%] mx-auto ${
+        className={` flex flex-col items-center justify-center border-2 border-dashed rounded-xl p-10 cursor-pointer transition-colors sm:w-[70%] mx-auto ${
           isDragActive ? "border-cyan-500 bg-cyan-50" : "border-gray-300 hover:border-gray-400"
         }`}
       >
         <input {...getInputProps()} />
         <FiUploadCloud size={40} className="text-gray-400 mb-2" />
-        <p className="font-semibold text-lg">Drag & drop or click to browse</p>
-        <p className="text-gray-500 mt-1">JPG, PNG, GIF, WEBP up to 10MB each</p>
+        <p className="font-semibold sm:text-lg">Drag & drop or click to browse</p>
+        <p className="text-gray-500 mt-1 text-sm sm:text-base">JPG, PNG, GIF, WEBP up to 10MB each</p>
       </div>
 
       {/* Image Previews */}
@@ -125,7 +126,7 @@ const Step2_Photos = ({ formData, setFormData, onNext }) => {
 
       {/* Video Link */}
       <div className="flex flex-col items-center mt-6">
-        <label className="block text-lg font-semibold text-primary mb-2">
+        <label className="block sm:text-lg text base font-semibold text-primary mb-2">
           Video Link (Optional)
         </label>
         <input
@@ -133,7 +134,7 @@ const Step2_Photos = ({ formData, setFormData, onNext }) => {
           placeholder="YouTube, Instagram, or Facebook video link"
           value={videoLink}
           onChange={handleVideoLinkChange}
-          className="w-[70%] p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500"
+          className="sm:w-[70%] w-full sm:p-3 p-2 border border-gray-300 sm:rounded-xl  rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500"
         />
       </div>
 
@@ -142,7 +143,7 @@ const Step2_Photos = ({ formData, setFormData, onNext }) => {
         <button
         onClick={handleNext}
           disabled={isNextDisabled}
-          className={`w-[60%] py-3 rounded-xl font-bold text-lg transition-colors ${
+          className={`sm:w-[60%] w-full py-3 rounded-xl font-bold text-lg transition-colors ${
             isNextDisabled
               ? "bg-gray-300 text-white cursor-not-allowed"
               : "bg-primary text-white hover:bg-primaryLight"

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { API_ENDPOINTS } from "../../services/api";
+import { cn } from "../../lib/Utils";
 
 const Step1_Category = ({ formData, setFormData, onNext }) => {
   const [categories, setCategories] = useState([]);
@@ -7,7 +8,9 @@ const Step1_Category = ({ formData, setFormData, onNext }) => {
   const token = localStorage.getItem("authToken");
   const [loadingCategories, setLoadingCategories] = useState(true);
   const [loadingSubcategories, setLoadingSubcategories] = useState(false);
-
+   // input classes 
+   const inputClasses = "w-full p-3 sm:p-3 px-1.5 py-2 border border-[#CFD9E4] text-[#666666] sm:text-lg text-base font-semibold sm:rounded-2xl rounded-xl"
+    const labelClass = "block sm:text-lg text-base font-medium text-primary mb-2";
   // Load categories on mount
   useEffect(() => {
     async function loadCategories() {
@@ -87,15 +90,15 @@ const Step1_Category = ({ formData, setFormData, onNext }) => {
 
 
   return (
-     <div className="bg-white px-6 rounded-2xl shadow-sm my-8 py-8 max-w-4xl mx-auto w-full">
+      <div className="bg-white/80 px-6 backdrop-blur-md my-8 py-8 rounded-2xl shadow-sm md:w-full lg:max-w-5xl w-full mx-auto">
       <div className="space-y-6 max-w-4xl mx-auto">
-        <h2 className="text-2xl font-bold text-center text-primary mb-10">
+        <h2 className="sm:text-2xl text-xl font-bold text-center text-primary mb-10">
           Select Category and Location
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="md:grid flex flex-col md:grid-cols-2 gap-6 auto-rows-auto">
           <div className="col-span-2">
-              <label className="block text-lg font-medium text-primary mb-2">
+              <label className={labelClass}>
                 Title *
               </label>
               <textarea
@@ -104,18 +107,20 @@ const Step1_Category = ({ formData, setFormData, onNext }) => {
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                 placeholder="Write a title"
-                className="w-full p-3 border border-[#CFD9E4] text-[#666666] text-lg font-semibold rounded-2xl resize-none capitalize"
+                className={cn("w-full border border-[#CFD9E4] text-[#666666] sm:text-lg text-base font-semibold sm:rounded-2xl resize-none capitalize",
+                  "focus:ring-2 focus:ring-secondary outline-none rounded-xl p-3 sm:p-3 px-1.5 py-2"
+                )}
               />  
           </div>
 
           
-          <div>
-            <label className="block text-lg font-medium text-primary mb-2">
+          <div className="">
+            <label className={labelClass}>
               Main Category *
             </label>
 
             <select
-              className="w-full p-3 border border-[#CFD9E4] text-[#666666] text-lg font-semibold rounded-2xl"
+              className={`${inputClasses} outline-none`}
               value={formData.category}
               onChange= {handleCategoryChange}
             >
@@ -135,13 +140,13 @@ const Step1_Category = ({ formData, setFormData, onNext }) => {
 
           
           <div>
-            <label className="block text-lg font-medium text-primary mb-2">
+            <label className={labelClass}>
               Subcategory *
             </label>
 
             <select
-              className="w-full p-3 border border-[#CFD9E4] text-[#666666] text-lg font-semibold rounded-2xl"
-             value={formData.sub_category}
+            className={`${inputClasses} outline-none`}
+              value={formData.sub_category}
              onChange={(e) => {
                 const subId = e.target.value;
                 const selectedSub = subcategories.find(
@@ -170,7 +175,7 @@ const Step1_Category = ({ formData, setFormData, onNext }) => {
 
           
           <div>
-            <label className="block text-lg font-medium text-primary mb-2">
+            <label className={labelClass}>
               State / Region *
             </label>
             <input
@@ -178,13 +183,13 @@ const Step1_Category = ({ formData, setFormData, onNext }) => {
               value={formData.state}
               onChange={(e) => setFormData({ ...formData, state: e.target.value })}
               placeholder="Enter your state"
-              className="w-full p-3 border border-[#CFD9E4] text-[#666666] text-lg font-semibold rounded-2xl"
+              className={cn(inputClasses, "focus:ring-2 focus:ring-secondary outline-none")}
             />
           </div>
 
           
           <div>
-            <label className="block text-lg font-medium text-primary mb-2">
+            <label className={labelClass}>
               City *
             </label>
             <input
@@ -192,7 +197,7 @@ const Step1_Category = ({ formData, setFormData, onNext }) => {
               value={formData.city}
               onChange={(e) => setFormData({ ...formData, city: e.target.value })}
               placeholder="Enter your city"
-              className="w-full p-3 border border-[#CFD9E4] text-[#666666] text-lg font-semibold rounded-2xl"
+              className={cn(inputClasses, "focus:ring-2 focus:ring-secondary outline-none")}
             />
           </div>
 
@@ -203,13 +208,15 @@ const Step1_Category = ({ formData, setFormData, onNext }) => {
           <button
             onClick={handleNext}
             disabled={
+              !formData.title || 
               !formData.category ||
               !formData.sub_category ||
               !formData.state ||
               !formData.city
             }
-            className={`w-4/5 bg-primary text-white text-base font-bold py-3 rounded-xl shadow-md 
+            className={`sm:w-4/5 w-full bg-primary text-white text-base font-bold py-3 rounded-xl shadow-md 
               transition-colors ${
+                !formData.title ||
                 !formData.category ||
                 !formData.sub_category ||
                 !formData.state ||
