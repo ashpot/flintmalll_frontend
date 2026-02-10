@@ -72,7 +72,6 @@ const Notification = () => {
 
         const data = await response.json();
         setNotifications(data.notifications || []);
-        console.log(data)
       } catch (error) {
         console.error("Error fetching notifications:", error);
       } finally {
