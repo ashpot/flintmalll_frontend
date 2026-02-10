@@ -9,7 +9,7 @@ import product from '/src/assets/images/g-shock.jpg';
 import { GoClock } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 
-export const PublishedCard = ({ads}) => {
+export const PublishedCard = ({ads, onDelete}) => {
     const conditionClass = 'px-3 py-[5px] text-xs rounded-full font-medium';
     const navigate = useNavigate();
   return (
@@ -79,10 +79,12 @@ export const PublishedCard = ({ads}) => {
               Edit
             </button>
 
-            <button className="w-[50%] flex items-center justify-center gap-2 px-4 py-2 border border-red-400 text-red-500 rounded-lg text-sm font-medium hover:bg-red-50 transition">
-              <FiTrash2 size={16} />
-              Delete
-            </button>
+              <button 
+                onClick={() => onDelete(ad)}
+                className="w-[50%] flex items-center justify-center gap-2 px-4 py-2 border border-red-400 text-red-500 rounded-lg text-sm font-medium hover:bg-red-50 transition">
+                  <FiTrash2 size={16} />
+                  Delete
+              </button>
             </div>
             
           </div>
@@ -109,7 +111,7 @@ export const PublishedCard = ({ads}) => {
   );
 }
 
-export const PendingCard = ({ads}) => {
+export const PendingCard = ({ads, onDelete}) => {
     const conditionClass = 'px-3 py-[5px] text-xs rounded-full font-medium';
    const formatPrice = (amount, decimals = 2) => {
       if (!amount) return "0.00";
@@ -199,7 +201,9 @@ export const PendingCard = ({ads}) => {
                     Edit
                   </button>
 
-                  <button className=" flex items-center justify-center gap-2 px-4 py-2 border border-red-400 text-red-500 rounded-lg text-sm font-medium hover:bg-red-50 transition">
+                  <button 
+                    onClick={() => onDelete(ad)}
+                    className=" flex items-center justify-center gap-2 px-4 py-2 border border-red-400 text-red-500 rounded-lg text-sm font-medium hover:bg-red-50 transition">
                     <FiTrash2 size={16} />
                     Delete
                   </button>

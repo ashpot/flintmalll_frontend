@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { MdOutlineArrowBackIos } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
-import SmallFooter from '../../components/layout/SmallFooter';
+import SmallFooter from '../layout/SmallFooter';
 
 const PricingCard = ({
   plan,
