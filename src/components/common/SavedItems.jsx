@@ -7,6 +7,8 @@ import { HiOutlineHeart, HiOutlineMapPin, HiOutlineCube, HiOutlineEye } from 're
 import product from '/src/assets/images/g-shock.jpg';
 import AccountDropdown from '../layout/AccountDropdown';
 import { TbTag } from 'react-icons/tb';
+import { useEffect, useState } from 'react';
+import { API_ENDPOINTS } from '../../services/api';
 
 
 const H1 = ({children})=>{
@@ -38,7 +40,7 @@ const Input = ({type, holder, value, onChange, others})=>{
     )
 }
 const ProductCard = () => {
-  return (
+    return (
     <div className="max-w-sm bg-white rounded-[1.3rem] border-2 border-[#00C2F3] overflow-hidden font-sans shadow-sm">
       {/* Image Container */}
       <div className="relative">
@@ -100,6 +102,33 @@ const ProductCard = () => {
 };
 const SavedItems = () => {
     const navigate = useNavigate();
+    const [savedAds, setSavedAds] = useState([]);
+    useEffect(()=>{
+      const getSavedAds = async()=>{
+        const token = localStorage.getItem("authToken");
+        try {
+          const response = await fetch(API_ENDPOINTS.MY_SAVED_ADS, {
+            method: "GET",
+            headers:{
+              "Content-Type": "application/json",
+              Authorization: `Token ${token}`
+            }
+          })
+          const data = await response.json()
+          if (response.ok) {
+            setSavedAds(data.saved_items)
+            alert('all saved ads loaded successfully')
+            console.log(savedAds)
+          } else {
+            alert('server error')
+          }
+        } catch (error) {
+          alert('network error')
+        }
+      }
+      getSavedAds();
+    },[])
+
   return (
     <div>
         <title>Flintmall - Saved items</title>

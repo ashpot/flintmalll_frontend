@@ -16,7 +16,6 @@ import { cn } from "../../lib/Utils";
         
 
 const LandingPage = () => {
-  const homeData = JSON.parse(localStorage.getItem("homeData"));
   const [categories, setCategories] = useState([]);
   const [premiumAds, setPremiumAds] = useState([]);
   const [trendingAds, setTrendingAds] = useState([]);
@@ -27,11 +26,6 @@ const LandingPage = () => {
 
 
   useEffect(() => {
-    if (homeData) {
-      setLoading(true)
-      setCategories(homeData.categories || []);
-      setLoading(false)
-    } else {
       const fetchHomeData = async () => {
       const token  =  localStorage.getItem('authToken');
       const headers = { "Content-Type": "application/json" }
@@ -53,11 +47,11 @@ const LandingPage = () => {
         }
 
         const data = await response.json();
-        localStorage.setItem("homeData", JSON.stringify(data.categories))
         setCategories(data.categories || []);
         setPremiumAds(data.premium_ads || []);
         setTrendingAds(data.trending_ads || []);
         setNotifications(data.notification_items)
+        console.log(data.trending_ads)
       } catch (error) {
         console.error("Error loading home data:", error);
       } finally {
@@ -66,8 +60,7 @@ const LandingPage = () => {
     };
     
     fetchHomeData();
-    }
-  }, []);
+    }, []);
 
   // Loading spinner
   if (loading) {
@@ -86,7 +79,7 @@ const LandingPage = () => {
             <div className="relative">
               {(notifications > 0) &&  <span className={cn("block absolute h-2 w-2 bg-secondary rounded-full", 
               "top-[15%] -translate-y-[15%] translate-x-[15%] right-[15%]")}></span>}
-              <IoIosNotifications size={28} className="text-[#B7B7B7]" onClick={()=>navigate('/Notifications')}/>
+              <IoIosNotifications size={28} className="text-[#B7B7B7]" onClick={()=> navigate('/Notifications')}/>
             </div>
             <AccountDropdown />
             <button
@@ -115,7 +108,7 @@ const LandingPage = () => {
         basePath="category"
       />
 
-      <div id="adSection" className="space-y-10 mb-10">
+      <div className="space-y-10 mb-10">
         <AdSection title="Premium Ads" ads={premiumAds} adType="premium" />
         <AdSection title="Trending Ads" ads={trendingAds} adType="trending" />
       </div>

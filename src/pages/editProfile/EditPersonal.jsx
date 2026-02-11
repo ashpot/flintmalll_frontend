@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { cn } from '../../lib/Utils';
 import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate } from 'react-router-dom';
+import { API_ENDPOINTS } from '../../services/api';
 
 const H1 = ({children})=>{
     return(
@@ -36,15 +37,63 @@ const Input = ({type, holder, value, onChange, others})=>{
 }
 const EditPersonal = ({user}) => {
     const [loading, setLoading] = useState(false)
-
     const [firstName, setFirstName] = useState(user.first_name || '');
     const [lastName, setLastName] = useState(user.last_name || '');
     const [phone, setPhone] = useState(user.phone || '');
     const [mail, setMail] = useState(user.email || '');
     const [address, setAddress] = useState(user.address || '');
     const [dob, setDob] = useState(user.date_of_birth || '');
-
+    const [photo, setPhoto] = useState(user.photo_url || null) // file backend
+    const [photoPreview, setPhotoPreview] = useState(profilePhoto); //ui preview
     const navigate = useNavigate();
+
+    const formatDate = (dateString) => {
+        if (!dateString) return '';
+
+        const [year, month, day] = dateString.split('-');
+        return `${day}-${month}-${year}`;
+        };
+    const formData = {
+        first_name: firstName,
+        last_name: lastName,
+        Address: address,
+        email: mail,
+        phone: phone,
+        date_of_birth: formatDate(dob),
+        photo,
+    }
+
+    const handleSubmit = async()=>{
+        const token = localStorage.getItem("authToken");
+        //multipart/form data api
+        const FORM_DATA = new FormData();
+        FORM_DATA.append('first_name', formData.first_name)
+        FORM_DATA.append('last_name', formData.last_name)
+        FORM_DATA.append('Address', formData.Address)
+        FORM_DATA.append('email', formData.email)
+        FORM_DATA.append('phone', formData.phone)
+        FORM_DATA.append('date_of_birth', formData.date_of_birth)
+        FORM_DATA.append('photo', formData.photo)
+        try {
+            const response = await fetch(API_ENDPOINTS.EDIT_PERSONAL_PROFILE, {
+                method: "PUT",
+                headers: {
+                    Authorization: `Token ${token}`
+                },
+                body: FORM_DATA
+            })
+            const data = await response.json();
+            if (response.ok){
+                console.log(data);
+                alert("profile edited successfully")
+                navigate("/profile")
+            }else {
+                alert('internal server error')
+            }
+        } catch (error) {
+            alert('error from catch block')
+        }
+    }
   return (
     <div className="bg-white sm:p-6 p-4 sm:rounded-3xl">
         <section className='relative'>
@@ -55,22 +104,48 @@ const EditPersonal = ({user}) => {
                 <H1>Edit Profile</H1>
 
                 {/* image container start */}
-            <div className='flex justify-center mb-10'>
-                
-                <div className='relative'>
-                    <div className='center flex justify-center items-center rounded-full bg-[#00BEF3] w-7 h-7'>
-                        <FaCamera size={13} className='text-white'/>
+            <div className="flex justify-center mb-10">
+                <div className="relative">
+
+                    {/* Hidden file input */}
+                    <input
+                        type="file"
+                        accept="image/*"
+                        id="profile-photo-input"
+                        className="hidden"
+                        onChange={(e) => {
+                            const file = e.target.files[0];
+                            if (!file) return;
+                            setPhoto(file); // RAW file for backend 
+                            setPhotoPreview(URL.createObjectURL(file));
+                        }}
+                    />
+
+                    {/* Camera icon */}
+                    <div
+                        onClick={() => document.getElementById('profile-photo-input').click()}
+                        className="center flex justify-center items-center rounded-full bg-[#00BEF3] w-7 h-7"
+                    >
+                        <FaCamera size={13} className="text-white" />
                     </div>
-                <img 
-                    src={profilePhoto} 
-                    alt="user avatar" 
-                    className='sm:w-28 sm:h-28 w-24 h-24 rounded-full'
-                />
-                </div>    
-            </div>
+
+                    {/* Profile image */}
+                    <img
+                        src={photoPreview}
+                        alt="user avatar"
+                        className="sm:w-28 sm:h-28 w-24 h-24 rounded-full object-cover"
+                        onClick={()=> document.getElementById('profile-photo-input').click()}
+                    />
+                </div>
+                </div>
+
             {/* image container end */}
 
-            <form>
+            <form onSubmit={(e)=>{
+                    e.preventDefault();
+                    handleSubmit()
+                    console.log(formData)
+                }}>
                 <section className='flex flex-col gap-5 sm:gap-8 mb-14'>
                     <div className="flex justify-between flex-col sm:flex-row gap-5 sm:gap-8">
                     <div className='flex flex-col w-full'>
@@ -134,7 +209,7 @@ const EditPersonal = ({user}) => {
                         </div>
                         
 
-                        <Label>Date</Label>
+                        <Label>Date of Birth</Label>
                         <Input 
                             type='date'
                             holder='Benson'

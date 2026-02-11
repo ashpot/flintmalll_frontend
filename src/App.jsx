@@ -86,8 +86,14 @@ function App() {
         <Route path='/privacy-policy' element={<PrivacyPolicy />} />
         <Route path='/FAQ' element={<Faq />} />
         <Route path='/terms-of-service' element={<TermsOfService />} />
-        <Route path='/safety-tips' element={<SafetyTips />} />
-
+        <Route path='/safety-tips' element={<SafetyTips />} />  
+        <Route path='profile-settings' element={<ProfileSettings />} />
+        <Route path='/edit-profile' element={<EditProfile />} />
+        <Route path='/saved-items' element={<SavedItems />} />
+        <Route path='/promote-ads' element={<BoostAds />} />
+        <Route path='/payment-method' element={<PaymentMethod />} />
+        <Route path='/Notifications' element={<Notification />} />
+        <Route path='/Chats' element={<Chat />} />
         {/* DASHBOARD AUTH ROUTES  */}
         
         <Route path='/dashboard/signup' element={<SignupPage />} />
@@ -134,13 +140,7 @@ function App() {
          
         </Route>
         {/* other routes */}
-        <Route path='profile-settings' element={<ProfileSettings />} />
-        <Route path='/edit-profile' element={<EditProfile />} />
-        <Route path='/saved-items' element={<SavedItems />} />
-        <Route path='/promote-ads' element={<BoostAds />} />
-        <Route path='/payment-method' element={<PaymentMethod />} />
-        <Route path='/Notifications' element={<Notification />} />
-        <Route path='/Chats' element={<Chat />} />
+        
       </Routes>
     </BrowserRouter>
   )

@@ -1,6 +1,6 @@
 // this components handles rendering of published and pending ads of a logged in user.
 
-// TODO: edit functionality, delete functionality
+// TODO: edit functionality, wire delete functionality to an api
 import React, { useEffect, useState } from 'react';
 import Navbar from '../layout/Navbar';
 import { cn } from '../../lib/Utils';

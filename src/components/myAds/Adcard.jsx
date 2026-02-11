@@ -9,6 +9,15 @@ import product from '/src/assets/images/g-shock.jpg';
 import { GoClock } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 
+ const formatPrice = (amount, decimals = 2) => {
+      if (!amount) return "0.00";
+
+      return Number(amount).toLocaleString('en-US', {
+        minimumFractionDigits: decimals,
+        maximumFractionDigits: decimals,
+      });
+    };
+
 export const PublishedCard = ({ads, onDelete}) => {
     const conditionClass = 'px-3 py-[5px] text-xs rounded-full font-medium';
     const navigate = useNavigate();
@@ -28,7 +37,7 @@ export const PublishedCard = ({ads, onDelete}) => {
         {/* Image */}
         <div className="sm:w-[80px] sm:h-[80px] h-[100%] w-[60%] rounded-md bg-[#F5EFEA] flex items-center justify-center">
           <img
-            src={product}
+            src={ad.cover_photo}
             alt="iPhone"
             className="rounded-md object-cover"
           />
@@ -38,21 +47,21 @@ export const PublishedCard = ({ads, onDelete}) => {
         <div className='space-y-3'>
           {/* Title */}
           <h3 className="font-semibold text-gray-900 sm:text-lg text-base">
-            iPhone 13 Pro - Gold
+            {ad.title}
           </h3>
 
           {/* Price & Badges */}
           <div className="flex sm:flex-row flex-col sm:items-center gap-2">
             <span className="sm:text-xl text-lg font-bold text-gray-900">
-              ₦900,000
+              ₦{formatPrice(ad.price)}
             </span>
             <div className='flex gap-2'>
-            <span className={cn('bg-sky-100 text-sky-600', conditionClass)}>
-              Fixed
+            <span className={cn('bg-sky-100 border border-sky-300 text-sky-600', conditionClass)}>
+              {ad.is_negotiable ? 'Negotiable' : 'Fixed'}
             </span>
 
-            <span className={cn('bg-[#0B3C74] text-white', conditionClass)}>
-              Premium
+            <span className={cn('bg-[--color-toggle-btn] text-white', conditionClass)}>
+              {ad.ad_type.name}
             </span>
             </div>
             
@@ -60,7 +69,7 @@ export const PublishedCard = ({ads, onDelete}) => {
 
           {/* Category */}
           <p className="text-sm text-gray-500">
-            Gadgets • Phones
+            {ad.category.title} • {ad.sub_category.title}
           </p>
 
           {/* Actions */}
@@ -98,7 +107,7 @@ export const PublishedCard = ({ads, onDelete}) => {
         </span>
 
         <span className="text-sm text-gray-400 sm:mb-10">
-          2 days ago
+          {new Date(ad.date_added).toLocaleString()}
         </span>
       </div>
     </div>
@@ -113,14 +122,6 @@ export const PublishedCard = ({ads, onDelete}) => {
 
 export const PendingCard = ({ads, onDelete}) => {
     const conditionClass = 'px-3 py-[5px] text-xs rounded-full font-medium';
-   const formatPrice = (amount, decimals = 2) => {
-      if (!amount) return "0.00";
-
-      return Number(amount).toLocaleString('en-US', {
-        minimumFractionDigits: decimals,
-        maximumFractionDigits: decimals,
-      });
-    };
   return (
     <>
       {ads.length === 0 ? (
@@ -156,7 +157,7 @@ export const PendingCard = ({ads, onDelete}) => {
                     ₦{formatPrice(ad.price)}
                   </span>
                   <div className='flex gap-2'>
-                  <span className={cn('bg-sky-100 text-sky-600', conditionClass)}>
+                  <span className={cn('bg-sky-100 border border-sky-300 text-sky-600', conditionClass)}>
                     {ad.is_negotiable ? 'Negotiable' : 'Fixed'}
                   </span>
 

@@ -33,7 +33,10 @@ export const API_ENDPOINTS = {
   MY_SAVED_ADS: `${API_BASE_URL}/users/me/saved-ads/`,
   MY_ADS: `${API_BASE_URL}/users/me/ads/`,
   MY_CONVERSATIONS: `${API_BASE_URL}/conversations/`, 
-  MY_NOTIFICATIONS: `${API_BASE_URL}/notifications/`, 
+  MY_NOTIFICATIONS: `${API_BASE_URL}/notifications/`,
+  EDIT_PERSONAL_PROFILE: `${API_BASE_URL}/users/me/profile/`, 
+  EDIT_BUSINESS_PROFILE: `${API_BASE_URL}/users/me/business/`,
+
 
   // --- ACTIONS (POST/GET) ---
   CREATE_AD: `${API_BASE_URL}/ads/`,
@@ -64,7 +67,7 @@ export const API_ENDPOINTS = {
   
   // --- SAVED ADS LOGIC ---
   // Action to save an ad 
-  SAVE_AD_ACTION: (id) => `${API_BASE_URL}/ads/${id}/save/`, 
+  SAVE_AD: (id) => `${API_BASE_URL}/ads/${id}/save/`, 
   // Check if an ad is already saved by the user 
   CHECK_AD_SAVED: (id) => `${API_BASE_URL}/ads/${id}/saved/`, 
 };
