@@ -31,7 +31,7 @@ export const PublishedCard = ({ads, onDelete}) => {
       ads.map((ad)=>{
         return (
           
-      <div className="relative sm:w-[95%] xl:w-full w-[95%] mx-auto bg-white rounded-2xl sm:p-8 p-3 pt-8 flex sm:flex-row flex-col items-center">
+      <div key={ad.id} className="relative sm:w-[95%] xl:w-full w-[95%] mx-auto bg-white rounded-2xl sm:p-8 p-3 pt-8 flex sm:flex-row flex-col items-center">
       {/* left */}
       <div className="flex sm:flex-row flex-col gap-7">
         {/* Image */}
@@ -131,7 +131,7 @@ export const PendingCard = ({ads, onDelete}) => {
       ) : (
         ads.map((ad)=>{
           return (
-            <section className="relative bg-white sm:w-[95%] xl:w-full w-[95%] mx-auto rounded-2xl sm:p-8 p-3 pt-8" key={ad.id}>
+            <section key={ad.id} className="relative bg-white sm:w-[95%] xl:w-full w-[95%] mx-auto rounded-2xl sm:p-8 p-3 pt-8">
               <div className="flex sm:flex-row flex-col items-center">
             {/* left */}
             <div className="flex sm:flex-row flex-col gap-7">

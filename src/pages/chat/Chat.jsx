@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { cn } from "../../lib/Utils";
-
+import { API_ENDPOINTS } from "../../services/api";
 // Message Bubble Component
 const MessageBubble = ({ message }) => {
   const isSender = message.role === "user";
@@ -33,8 +33,10 @@ const MessageBubble = ({ message }) => {
   );
 };
 
-// Headless Chat Hook (backend-ready)
-const useChat = () => {
+
+
+
+const useChat = (senderId, receiverId) => {
   const [messages, setMessages] = useState([
     {
       id: "1",
@@ -42,34 +44,73 @@ const useChat = () => {
       content: "Hi! How's the project going?",
       timestamp: "10:30 AM",
     },
-    {
-      id: "2",
-      role: "user",
-      content: "It's coming along great, just finishing the UI and some minor tweaks.",
-      timestamp: "10:32 AM",
-      status: "delivered",
-    },
   ]);
-
   const [input, setInput] = useState("");
+  const [isSending, setIsSending] = useState(false);
 
-  const sendMessage = () => {
-    if (!input.trim()) return;
+  const sendMessage = async () => {
+    if (!input.trim() || isSending) return;
 
-    // data being displayed in the ui, sent and updated in the backend
+    const messageText = input;
+    const tempId = crypto.randomUUID();
+    
     const newMessage = {
-      id: crypto.randomUUID(),
+      id: tempId,
       role: "user",
-      content: input,
+      content: messageText,
       timestamp: new Date().toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
       }),
-      status: "sent",
+      status: "sending",
     };
-
+    // update the ui immediately
     setMessages((prev) => [...prev, newMessage]);
     setInput("");
+    setIsSending(true);
+    const token = localStorage.getItem('authToken');
+    try {
+      const response = await fetch(API_ENDPOINTS.SEND_MESSAGE, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${token}`
+        },
+        body: JSON.stringify({
+          sender: senderId,    
+          receiver: receiverId, 
+          text: messageText   
+        })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        
+        // Update the message status to 'delivered' or sync with backend data
+        setMessages((prev) =>
+          prev.map((msg) =>
+            msg.id === tempId ? { ...msg, status: "delivered" } : msg
+          )
+        );
+      } else {
+        if (response.status === 401) {
+          console.error("401: User is not logged in");
+        } else if (response.status === 404) {
+          console.error("404: No conversation existing between both users");
+        } else if (response.status === 500) {
+          console.error("500: Internal Server Error");
+        }
+        
+        // Optional: Remove the message or show error state if send fails
+        setMessages((prev) => prev.filter((msg) => msg.id !== tempId));
+        alert("Failed to send message. Please try again.");
+      }
+    } catch (error) {
+      console.error("Network error:", error);
+      setMessages((prev) => prev.filter((msg) => msg.id !== tempId));
+    } finally {
+      setIsSending(false);
+    }
   };
 
   return {
@@ -77,13 +118,15 @@ const useChat = () => {
     input,
     setInput,
     sendMessage,
+    isSending,
   };
 };
 
 const Chat = () => {
   const [activeChat, setActiveChat] = useState(null);
   const navigate = useNavigate();
-  const { messages, input, setInput, sendMessage } = useChat();
+  // const { messages, input, setInput, sendMessage } = useChat();
+  const { messages, input, setInput, sendMessage, isSending } = useChat("2", "4");
 
   return (
     <div className="sm:bg-[#F7F7F7]">
@@ -168,10 +211,11 @@ const Chat = () => {
                 />
                 <button
                   onClick={sendMessage}
-                  className={`bg-blue-600 text-white px-6 py-2 rounded-full font-medium hover:bg-blue-700 
-                    ${!input.trim() && 'hidden'}`}
+                  disabled={isSending}
+                  className={`bg-blue-600 text-white px-6 py-2 rounded-full font-medium 
+                  ${(!input.trim() || isSending) ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-700'}`}
                 >
-                  Send
+                    {isSending ? "..." : "Send"}
                 </button>
               </div>
             </footer>

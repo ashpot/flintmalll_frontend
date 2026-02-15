@@ -70,6 +70,7 @@ const AdCard = ({
     }
     checkIfAdIsSaved();
   }, []);
+  
   const handleCardClick = () => {
     navigate(`/product-details/${id}`);
   };

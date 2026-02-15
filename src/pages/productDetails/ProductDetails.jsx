@@ -1,16 +1,58 @@
-import React from 'react'
 import Navbar from '../../components/layout/Navbar'
-import { LuCircleUserRound } from "react-icons/lu";
 import { IoIosNotifications } from "react-icons/io";
 import { TbTag } from "react-icons/tb";
 import ProductOverview from '../../components/common/ProductOverview';
 import AccountDropdown from '../../components/layout/AccountDropdown';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { API_ENDPOINTS } from '../../services/api';
+import ContactSellerFlow from './ContactSellerFlow';
+import { OpenModalContext } from './Context';
 
 const ProductDetails = () => {
-	
+	const [details, setDetails] = useState(null);
+	const [loading, setLoading] = useState(false);
+	const [isOpen, setIsOpen] = useState(false);
+	const {id} = useParams();
+	const token = localStorage.getItem("authToken");
+	useEffect(() => {
+		if (!id) return;
+
+		const fetchData = async () => {
+			try {
+			setLoading(true);
+
+			const res = await fetch(API_ENDPOINTS.AD_DETAILS(id), {
+				headers: {
+				"Content-Type": "application/json",
+				Authorization: `Token ${token}`,
+				},
+			});
+
+			const data = await res.json();
+
+			if (res.ok) {
+				setDetails(data);
+			}
+			} catch (err) {
+			console.log("Network error");
+			} finally {
+			setLoading(false);
+			}
+		};
+
+		fetchData();
+		}, [id]);
+		
+		useEffect(() => {
+			if (details) {
+				console.log("Updated details:", details);
+			}
+		}, [details]);
 
   return (
-	<div>
+	<OpenModalContext.Provider value={{isOpen, setIsOpen}}>
+		<div className='relative'>
 		<Navbar 
 			rightContent={
 				<div className='flex items-center gap-4 space-x-4 text-lg font-medium cursor-pointer'>
@@ -25,12 +67,26 @@ const ProductDetails = () => {
 			}
 		/>
 		<div className='mt-10 space-y-6'>
-			<p className='w-[85%] mx-auto mb-5 text-lg font-medium'>Home/Vehicles/Cars/Innoson </p>
-			<ProductOverview />
-			
-		</div>
-	  
+			{loading ? (
+				<div className="w-full min-h-screen flex items-center justify-center">
+				<div className="animate-spin h-12 w-12 border-4 border-gray-300 border-t-secondary rounded-full"></div>
+				</div>
+			) : details ? (
+				<>
+				<p className='w-[85%] mx-auto mb-5 text-lg font-medium'>
+					Home/Vehicles/Cars/toy
+				</p>
+						<ProductOverview details={details} />
+				</>
+			) : (
+				<p className="text-center mt-10">No product found.</p>
+			)}
+			</div>
+
+	  		{isOpen && <ContactSellerFlow info={details.ad.user}/>}
 	</div>
+	</OpenModalContext.Provider>
+	
   )
 }
 

@@ -10,20 +10,6 @@ const AdSection = ({ title, ads, adType }) => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7">
         {ads.map((ad) => (
-          // <AdCard
-          //   key={ad.id}
-          //   id={ad.id}
-          //   image={ad.cover_photo}
-          //   title={ad.title}
-          //   price={ad.price}
-          //   city={ad.city}
-          //   state={ad.state}
-          //   condition={ad.attributes.condition || ""}
-          //   timePosted={ad.date_added}
-          //   views={ad.views}
-          //   isVerified={ad.isVerified}
-          //   adType={adType} 
-          // />
           <ProductCard
             key={ad.id}
             id={ad.id}

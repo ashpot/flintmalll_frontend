@@ -17,6 +17,9 @@ import Vehicles from '../../assets/images/Vehicles.png';
 import Beauty from '../../assets/images/Health and beauty.png';
 import profilePhoto from '../../assets/images/profilePhoto.png';
 import HomeAppliances from '../../assets/images/Home Appliances.png'; 
+import { formatPrice } from '../../lib/formatPrice';
+import AddressDetails from './AddressDetails';
+import BusinessDetails from './BusinessDetails';
 
 
 const SpecItem = ({ icon, label, value }) => (
@@ -74,10 +77,10 @@ const ReviewItem = ({ review }) => {
 
 // --- Main ProductOverview Component ---
 
-// Removed unused props like onNext, goToStep for now, adjust if needed
-const ProductOverview = ({ formData, sellerData }) => { 
+const ProductOverview = ({ details }) => { 
+    const isBusiness = details.ad.user.type === 'Business';
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
+    // images = [details.ad.cover_photo, details.photos.ad.photo_url]
   // --- Mock Data ---
   const mockFormData = {
     category: 'Gadgets • Phones',
@@ -107,16 +110,8 @@ const ProductOverview = ({ formData, sellerData }) => {
     ],
   };
   
-  const mockSellerData = {
-    name: 'Galaxy Stores',
-    isVerified: true,
-    address: '21, Feyi Dami Kazeem, Ikeja, Lagos, Nigeria',
-    delivery: 'Nationwide Delivery Available',
-    avatarUrl: profilePhoto, 
-  };
-
-  const data = formData || mockFormData;
-  const seller = sellerData || mockSellerData;
+  const data = mockFormData;
+  // const imagesToShow = Array.isArray(images) && images.length > 0 ? images : [];
   const imagesToShow = Array.isArray(data.images) && data.images.length > 0 ? data.images : [];
   // --- End Mock Data ---
 
@@ -140,88 +135,6 @@ const ProductOverview = ({ formData, sellerData }) => {
     'Use secure payment methods when possible.',
   ];
 
-  const similarAds = [
-		{
-		  image: iphone,
-		  title: "Apple iPhone 13 Pro 256GB - Gold",
-		  price: "₦1,300,000",
-		  location: "Warri, Delta",
-		  posted: "Posted 5 hours ago",
-		  views: "9K",
-		  isVerified: true,
-		  condition: "New"
-		},
-		{
-		  image: Laptop,
-		  title: "Apple MacBook Pro M4-14-inch",
-		  price: "₦3,500,000",
-		  location: "Abuja, FCT",
-		  posted: "Posted 11 hours ago",
-		  views: "12K",
-		  isVerified: true,
-		  condition: "Used"
-		},
-		{
-		  image: Vehicles,
-		  title: 'Mercedes Benz C350e 2016 (Automatic) - Silver',
-		  price: '₦21,000,000',
-		  location: 'Wari, Delta',
-		  condition: 'New',
-		  timePosted: '5 hours ago',
-		  views: '9K views',
-		  isVerified: true,
-		},
-		{
-		  image: Gadgets,
-		  title: 'Mercedes Benz C350e 2016 (Automatic) - Silver',
-		  price: '₦21,000,000',
-		  location: 'Wari, Delta',
-		  condition: 'New',
-		  timePosted: '5 hours ago',
-		  views: '9K views',
-		  isVerified: true,
-		},
-		{
-		  image: iphone,
-		  title: "Apple iPhone 13 Pro 256GB - Gold",
-		  price: "₦1,300,000",
-		  location: "Warri, Delta",
-		  posted: "Posted 5 hours ago",
-		  views: "9K",
-		  isVerified: true,
-		  condition: "New"
-		},
-		{
-		  image: Laptop,
-		  title: "Apple MacBook Pro M4-14-inch",
-		  price: "₦3,500,000",
-		  location: "Abuja, FCT",
-		  posted: "Posted 11 hours ago",
-		  views: "12K",
-		  isVerified: true,
-		  condition: "Used"
-		},
-		{
-		  image: Vehicles,
-		  title: 'Mercedes Benz C350e 2016 (Automatic) - Silver',
-		  price: '₦21,000,000',
-		  location: 'Wari, Delta',
-		  condition: 'New',
-		  timePosted: '5 hours ago',
-		  views: '9K views',
-		  isVerified: true,
-		},
-		{
-		  image: Gadgets,
-		  title: 'Mercedes Benz C350e 2016 (Automatic) - Silver',
-		  price: '₦21,000,000',
-		  location: 'Wari, Delta',
-		  condition: 'New',
-		  timePosted: '5 hours ago',
-		  views: '9K views',
-		  isVerified: true,
-		},
-	];
 
   return (
     // Your main container styles
@@ -272,55 +185,31 @@ const ProductOverview = ({ formData, sellerData }) => {
            )}
          </div>
 
-         {/* ... (Details & Seller Cards - No changes needed) ... */}
          <div className="space-y-4">
            <div className="bg-white p-6 rounded-2xl shadow-sm border">
-             <p className="text-lg text-[#1E1E1E] font-medium mb-1">{data.category}</p>
-             <h1 className="text-[28px] font-bold text-[#1E1E1E] mb-2">{data.title}</h1>
-             <p className="text-4xl font-bold text-primary mb-3">₦{data.price.toLocaleString()}</p>
+             <p className="text-lg text-[#1E1E1E] font-medium mb-1">{details.ad.category.title} • {details.ad.sub_category.title}</p>
+             <h1 className="text-[28px] font-bold text-[#1E1E1E] mb-2">{details.ad.title}</h1>
+             <p className="text-4xl font-bold text-primary mb-3">₦{formatPrice(details.ad.price)}</p>
              <div className="flex flex-wrap gap-2 mb-4">
-               {data.priceType === 'Negotiable' && (
-                 <span className="bg-cyan-100 text-cyan-700 text-xs font-semibold px-3 py-1 rounded-full">{data.priceType}</span>
-               )}
-               <span className="bg-orange-100 text-orange-700 text-xs font-semibold px-3 py-1 rounded-full">{data.condition}</span>
+              <span className="bg-cyan-100 text-cyan-700 text-xs font-semibold px-3 py-1 rounded-full">
+                {
+                  details.ad.is_negotiable ? "Negotiable" : "Fixed"
+                }
+                </span>
+                {/* TODO: ask backend dev for condition key from api respond */}
+               <span className="bg-orange-100 text-orange-700 text-xs font-semibold px-3 py-1 rounded-full">New</span>
              </div>
              <div className="flex items-center text-[#666666]">
                <MdLocationOn className="mr-2 flex-shrink-0" />
-               <span className="text-sm font-semibold text-[#666666]">{data.location}</span>
+               <span className="text-sm font-semibold text-[#666666]">{details.ad.city}, {details.ad.state} State</span>
              </div>
            </div>
-           <div className="bg-white p-6 rounded-2xl shadow-sm border">
-             <h3 className="text-2xl font-bold text-[#1E1E1E] mb-4">Business Details</h3>
-             <div className="flex items-center space-x-3 mb-4">
-               <img src={seller.avatarUrl} alt={seller.name} className="w-12 h-12 rounded-full bg-gray-200" />
-               <div>
-                 <div className="flex items-center space-x-2">
-                   <p className="font-semibold text-2xl text-[#1E1E1E]">{seller.name}</p>
-                   {seller.isVerified && (
-                     <span className="flex items-center space-x-1 bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded-full">
-                       <MdVerified size={14} />
-                       <span>Verified</span>
-                     </span>
-                   )}
-                 </div>
-               </div>
-             </div>
-             <div className="flex items-center text-[#666666] space-x-3 mb-3">
-               <div>
-                 <MdLocationOn size={20} className=" flex-shrink-0" /> 
-               </div>
-               <div>
-                 <p className='text-sm font-semibold'>Store Address</p>
-                 <p className="text-lg font-semibold text-[#1E1E1E]">{seller.address}</p>
-               </div>
-             </div>
-             <div className="flex items-center text-gray-600 space-x-3">
-               <MdDeliveryDining size={20} className="flex-shrink-0" />
-               <span className="text-[#0DAC4F] font-medium text-lg border border-[#7EE4A8] bg-[#E9FAF1] rounded-2xl px-3">{seller.delivery}</span>
-             </div>
-           </div>
-         </div>
-      </div>
+           {/* business details */}
+            <BusinessDetails seller={details.ad.user}/>
+            {isBusiness && <AddressDetails info={details.ad.user} />}
+            
+          </div>
+        </div>
 
       {/* --- About this Product --- */}
       <div className='border-t border-[#B7B7B7] my-10'>
@@ -339,7 +228,7 @@ const ProductOverview = ({ formData, sellerData }) => {
       {/* --- Description --- */}
       <div className='border-t border-[#B7B7B7] my-10'>
         <h2 className="text-[28px] text-[#1E1E1E] font-bold mt-10 mb-4">Description</h2>
-        <p className="text-[#666666] font-medium text-2xl leading-relaxed">{data.description}</p>
+        <p className="text-[#666666] font-medium text-2xl leading-relaxed">{details.ad.description}</p>
       </div>
 
       {/* --- ADDED: Ratings & Reviews Section --- */}
