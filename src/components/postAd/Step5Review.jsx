@@ -113,13 +113,13 @@ const Step5_Review = ({ onNext, goToStep, formData }) => {
 
             <div className='flex space-x-3 items-center'>
               <p className="text-4xl font-bold text-primary mb-3">₦{data.price.toLocaleString()}</p>
-              <span className='flex justify-center items-center bg-cyan-100 text-cyan-700 text-sm font-semibold px-3 py-2 rounded-full'>
+              <span className='flex justify-center items-center bg-sky-100 border border-sky-300 text-sky-600 text-sm font-semibold px-3 py-2 rounded-full'>
                 {data.price_negotiable === 'Yes' ? 'Negotiable' : 'Fixed'}
               </span>
             </div>
 
             <div className="flex flex-wrap gap-4 mb-4">
-              <span className="bg-orange-100 text-orange-700 text-sm font-semibold px-3 py-2 rounded-full">
+              <span className="bg-sky-100 border border-sky-300 text-sky-600 text-sm font-semibold px-3 py-2 rounded-full">
                 {data.product_details.condition}
               </span>
 

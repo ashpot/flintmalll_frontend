@@ -3,6 +3,7 @@ import { cn } from "../../lib/Utils";
 import { useNavigate } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
 import { API_ENDPOINTS } from "../../services/api";
+import emptyBox from "../../assets/images/empty-box.svg"
 
 /* -------------------------------- Message Card -------------------------------- */
 
@@ -171,8 +172,9 @@ const Notification = () => {
               <div className="animate-spin h-12 w-12 border-4 border-gray-300 border-t-secondary rounded-full"></div>
             </div>
           ) : filteredNotifications.length === 0 ? (
-            <div className="text-center py-10 text-gray-500">
-              No notifications found
+            <div className="text-center py-10 text-gray-500 flex flex-col items-center justify-center gap-4">
+              <img src={emptyBox} alt="empty box" />
+              <span>Oops! There's nothing here</span>
             </div>
           ) : (
             filteredNotifications.map((notification) => (

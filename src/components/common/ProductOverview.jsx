@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { MdOutlinePhoneIphone, MdOutlineStorage } from "react-icons/md";
 import { RiRam2Fill } from "react-icons/ri";
 import { BiSolidError } from "react-icons/bi";
@@ -20,17 +20,10 @@ import HomeAppliances from '../../assets/images/Home Appliances.png';
 import { formatPrice } from '../../lib/formatPrice';
 import AddressDetails from './AddressDetails';
 import BusinessDetails from './BusinessDetails';
-
-
-const SpecItem = ({ icon, label, value }) => (
-  <div className="flex items-center space-x-3">
-    <div className="flex-shrink-0 text-[#9FB3C9]">{icon}</div>
-    <div>
-      <p className="text-lg font-semibold text-[#666666]">{label}</p>
-      <p className="font-semibold text-2xl text-[#1E1E1E]">{value}</p>
-    </div>
-  </div>
-);
+import { API_ENDPOINTS } from '../../services/api';
+import LoadSpinner from '../ui/LoadSpinner';
+import SpecItem from './SpecItem';
+import AdDetail from './AdDetail';
 
 // For Star Rating Display
 const StarRating = ({ rating, size = 16 }) => {
@@ -77,20 +70,59 @@ const ReviewItem = ({ review }) => {
 
 // --- Main ProductOverview Component ---
 
-const ProductOverview = ({ details }) => { 
+const ProductOverview = ({ details, id }) => { 
     const isBusiness = details.ad.user.type === 'Business';
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    let specs;
+      try {
+        specs = JSON.parse(details.ad.attributes);
+      } catch (error) {
+        console.error("Failed to parse attributes:", error);
+        specs = {};
+      }
+
+    // states related to similar ads
+    const [isLoading, setIsLoading] = useState(false);
+    const sectionRef = useRef(null);
+    const [hasFetched, setHasFetched] = useState(false);
+    const token = localStorage.getItem('authToken')
+    const [similar, setSimilar] = useState(null)
+    useEffect(()=>{
+      if(!sectionRef.current || hasFetched) return;
+      const fetchSimilarAds = async ()=>{
+            try {
+              setIsLoading(true)
+              const res = await fetch(API_ENDPOINTS.SIMILAR_ADS(id), {
+                method: "GET",
+                headers:{
+                  Authorization: `Token ${token}`
+                },
+            })
+            if(!res.ok){
+              console.log('error fetching data')
+            }
+              const data = await res.json();
+              setHasFetched(true)
+              setSimilar(data)
+            } catch (error) {
+              console.log('error from catch block')
+            } finally{
+              setIsLoading(false)
+            }
+          }
+      const observer = new IntersectionObserver(([entry])=>{
+        if(entry.isIntersecting){
+          fetchSimilarAds()
+        }
+      }, {threshold: 0.3})
+      observer.observe(sectionRef.current);
+      return () => observer.disconnect();
+    }, [hasFetched, id, token])
     // images = [details.ad.cover_photo, details.photos.ad.photo_url]
   // --- Mock Data ---
   const mockFormData = {
-    category: 'Gadgets • Phones',
-    title: 'Apple iPhone 13 Pro 256GB - Gold (Unlocked)',
-    price: 1300000,
-    priceType: 'Negotiable',
-    condition: 'Used',
-    location: 'Ikeja, Lagos',
     images: [
-      Fashion, Gadgets, Property, Vehicles, Beauty, HomeAppliances // Added HomeAppliances
+      Fashion, Gadgets, Property, Vehicles, Beauty, HomeAppliances
     ], 
     brand: 'Apple',
     model: 'iPhone 13 Pro',
@@ -126,7 +158,6 @@ const ProductOverview = ({ details }) => {
         setCurrentImageIndex((prevIndex) => (prevIndex === 0 ? imagesToShow.length - 1 : prevIndex - 1));
      }
   };
-
   // Safety Tips Data
   const safetyTips = [
     'Meet in a safe, public place for transactions.',
@@ -134,8 +165,6 @@ const ProductOverview = ({ details }) => {
     'Never pay in advance without seeing the product.',
     'Use secure payment methods when possible.',
   ];
-
-
   return (
     // Your main container styles
     <div className=" bg-white p-7 sm:p-10 rounded-2xl shadow-lg w-full md:w-[85%] mx-auto my-10"> {/* Added my-10 */}
@@ -164,7 +193,9 @@ const ProductOverview = ({ details }) => {
                  </button>
                </>
              )}
-             <button className="absolute top-3 right-3 bg-white/70 rounded-full p-2 hover:bg-white focus:outline-none focus:ring-2 focus:ring-cyan-500">
+             <button 
+              onClick={()=>console.log(specs)}
+              className="absolute top-3 right-3 bg-white/70 rounded-full p-2 hover:bg-white focus:outline-none focus:ring-2 focus:ring-cyan-500">
                <MdFavoriteBorder size={24} className="text-gray-700" />
              </button>
            </div>
@@ -186,24 +217,8 @@ const ProductOverview = ({ details }) => {
          </div>
 
          <div className="space-y-4">
-           <div className="bg-white p-6 rounded-2xl shadow-sm border">
-             <p className="text-lg text-[#1E1E1E] font-medium mb-1">{details.ad.category.title} • {details.ad.sub_category.title}</p>
-             <h1 className="text-[28px] font-bold text-[#1E1E1E] mb-2">{details.ad.title}</h1>
-             <p className="text-4xl font-bold text-primary mb-3">₦{formatPrice(details.ad.price)}</p>
-             <div className="flex flex-wrap gap-2 mb-4">
-              <span className="bg-cyan-100 text-cyan-700 text-xs font-semibold px-3 py-1 rounded-full">
-                {
-                  details.ad.is_negotiable ? "Negotiable" : "Fixed"
-                }
-                </span>
-                {/* TODO: ask backend dev for condition key from api respond */}
-               <span className="bg-orange-100 text-orange-700 text-xs font-semibold px-3 py-1 rounded-full">New</span>
-             </div>
-             <div className="flex items-center text-[#666666]">
-               <MdLocationOn className="mr-2 flex-shrink-0" />
-               <span className="text-sm font-semibold text-[#666666]">{details.ad.city}, {details.ad.state} State</span>
-             </div>
-           </div>
+           {/* ad detail child component */}
+           <AdDetail condition={specs.condition} details={details}/>
            {/* business details */}
             <BusinessDetails seller={details.ad.user}/>
             {isBusiness && <AddressDetails info={details.ad.user} />}
@@ -215,13 +230,12 @@ const ProductOverview = ({ details }) => {
       <div className='border-t border-[#B7B7B7] my-10'>
           <h2 className="text-[28px] font-bold text-[#1E1E1E] mt-10 mb-6">About this Product</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-8">
-            <SpecItem icon={<MdOutlinePhoneIphone size={24} />} label="Brand" value={data.brand} />
-            <SpecItem icon={<FaTag size={24} />} label="Model" value={data.model} />
-            <SpecItem icon={<MdOutlineStorage size={24} />} label="Storage" value={data.storage} />
-            <SpecItem icon={<RiRam2Fill size={24} />} label="RAM" value={data.ram} />
-            <SpecItem icon={<TbBattery3Filled size={24} />} label="Battery" value={data.battery} />
-            <SpecItem icon={<BsDisplay size={24} />} label="Display" value={data.display} />
-            <SpecItem icon={<BiSolidError size={24} />} label="Issue" value={data.issue} />
+            {/* first filter out condition before mapping */}
+            {Object.entries(specs).filter(([key, value])=>key !== 'condition').map(([key, value])=>{
+                return (
+                    <SpecItem label={key} value={value} key={key}/>
+                )
+            })}
           </div>
       </div>
 
@@ -231,8 +245,8 @@ const ProductOverview = ({ details }) => {
         <p className="text-[#666666] font-medium text-2xl leading-relaxed">{details.ad.description}</p>
       </div>
 
-      {/* --- ADDED: Ratings & Reviews Section --- */}
-      <div className="border-t border-[#B7B7B7] my-10 pt-10"> {/* Added pt-10 */}
+      {/* ratings section */}
+      <div className="border-t border-[#B7B7B7] my-10 pt-10">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold text-gray-800">Ratings & Reviews</h2>
           <a href="#" className="text-sm font-medium text-blue-600 hover:underline">
@@ -260,7 +274,7 @@ const ProductOverview = ({ details }) => {
       {/* --- END: Ratings & Reviews Section --- */}
 
       {/* --- ADDED: Safety Tips Section --- */}
-      <div className="border-t border-[#B7B7B7] my-10 pt-10"> {/* Added pt-10 */}
+      <div className="border-t border-[#B7B7B7] my-10 pt-10"> 
         <h2 className="text-xl font-bold text-gray-800 mb-4">Safety Tips</h2>
         <ul className="space-y-3">
           {safetyTips.map((tip, index) => (
@@ -271,8 +285,14 @@ const ProductOverview = ({ details }) => {
           ))}
         </ul>
       </div>
+      {/* similar ad-section */}
+      <div ref={sectionRef}>
+        {isLoading && <LoadSpinner />}
 
-	  
+        {!isLoading && Array.isArray(similar) && similar.length > 0 && (
+          <AdSection title="Similar Ads" ads={similarAds} />
+        )}
+      </div>
 
     </div>
   );
@@ -281,6 +301,3 @@ const ProductOverview = ({ details }) => {
 export default ProductOverview;
 
 
-/*
-<AdSection  title="Similar Ads" ads={similarAds} />
-*/

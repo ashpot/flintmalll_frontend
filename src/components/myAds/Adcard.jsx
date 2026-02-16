@@ -8,16 +8,7 @@ import { cn } from '../../lib/Utils';
 import product from '/src/assets/images/g-shock.jpg';
 import { GoClock } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
-
- const formatPrice = (amount, decimals = 2) => {
-      if (!amount) return "0.00";
-
-      return Number(amount).toLocaleString('en-US', {
-        minimumFractionDigits: decimals,
-        maximumFractionDigits: decimals,
-      });
-    };
-
+import { formatPrice } from "../../lib/formatPrice";
 export const PublishedCard = ({ads, onDelete}) => {
     const conditionClass = 'px-3 py-[5px] text-xs rounded-full font-medium';
     const navigate = useNavigate();
