@@ -3,14 +3,19 @@ import { FaCheckCircle } from 'react-icons/fa'
 import profilePhoto from '../../assets/images/profilePhoto.png';
 import { MdOutlineReportProblem } from 'react-icons/md';
 import { useContext } from "react";
-import { OpenModalContext } from '../../pages/productDetails/Context';
+import { OpenModalContext, OpenReportModalContext } from '../../pages/productDetails/Context';
+
 
 const BusinessDetails = ({seller}) => {
     const isBusiness = seller.type && seller.type === 'Business';
     const { setIsOpen } = useContext(OpenModalContext);
+    const { setOpenReport } = useContext(OpenReportModalContext)
 
     const handleOpenModal = ()=>{
       setIsOpen(true);
+    }
+    const handleOpenReportModal = ()=>{
+      setOpenReport(true)
     }
     
   return (
@@ -58,6 +63,7 @@ const BusinessDetails = ({seller}) => {
           Contact Seller
         </button>
         <button 
+          onClick={handleOpenReportModal}
           className="border border-[#CC071E] flex justify-center items-center gap-2 mt-6 w-full hover:bg-[#CC071E] hover:text-white text-[#CC071E] font-semibold py-4 rounded-2xl transition">
           <MdOutlineReportProblem size={25} />
           Report Abuse

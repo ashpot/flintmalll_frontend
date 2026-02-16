@@ -7,12 +7,14 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { API_ENDPOINTS } from '../../services/api';
 import ContactSellerFlow from './ContactSellerFlow';
-import { OpenModalContext } from './Context';
+import { OpenModalContext, OpenReportModalContext } from './Context';
+import ReportModal from '../../components/modals/ReportModal';
 
 const ProductDetails = () => {
 	const [details, setDetails] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [isOpen, setIsOpen] = useState(false);
+	const [openReport, setOpenReport] = useState(false);
 	const {id} = useParams();
 	const token = localStorage.getItem("authToken");
 	useEffect(() => {
@@ -50,8 +52,22 @@ const ProductDetails = () => {
 			}
 		}, [details]);
 
+		// lock page scrolling when a modal is open
+		useEffect(() => {
+			const shouldLockScroll = openReport || isOpen;
+
+			if (shouldLockScroll) {
+				document.body.classList.add("overflow-hidden");
+			} else {
+				document.body.classList.remove("overflow-hidden");
+			}
+
+			return () => {
+				document.body.classList.remove("overflow-hidden");
+			};
+			}, [openReport, isOpen]);
+
   return (
-	<OpenModalContext.Provider value={{isOpen, setIsOpen}}>
 		<div className='relative'>
 		<Navbar 
 			rightContent={
@@ -66,7 +82,9 @@ const ProductDetails = () => {
 				</div>
 			}
 		/>
-		<div className='mt-10 space-y-6'>
+	<OpenReportModalContext.Provider value={{openReport, setOpenReport}}>
+	<OpenModalContext.Provider value={{isOpen, setIsOpen}}>
+		<div className='my-10 space-y-6'>
 			{loading ? (
 				<div className="w-full min-h-screen flex items-center justify-center">
 				<div className="animate-spin h-12 w-12 border-4 border-gray-300 border-t-secondary rounded-full"></div>
@@ -76,16 +94,18 @@ const ProductDetails = () => {
 				<p className='w-[85%] mx-auto mb-5 text-lg font-medium'>
 					Home/Vehicles/Cars/toy
 				</p>
-						<ProductOverview details={details} />
+					<ProductOverview details={details} />
 				</>
 			) : (
 				<p className="text-center mt-10">No product found.</p>
 			)}
 			</div>
-
-	  		{isOpen && <ContactSellerFlow info={details.ad.user}/>}
+	  			{isOpen && <ContactSellerFlow info={details.ad.user}/>}
+				{openReport && <ReportModal onClose={()=>setOpenReport(false)}/>}
+			</OpenModalContext.Provider>
+			</OpenReportModalContext.Provider>
+			
 	</div>
-	</OpenModalContext.Provider>
 	
   )
 }
