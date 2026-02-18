@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import Navbar from '../../components/layout/Navbar';
 import SmallFooter from '../../components/layout/SmallFooter';
-import EditPersonal from '../../components/layout/EditPersonal';
-import EditBusiness from '../../components/layout/EditBusiness';
+import EditPersonal from './EditPersonal';
+import EditBusiness from './EditBusiness';
 
 /*
 this components renders handles rendering of either the EditPersonal or EditBusiness

@@ -9,7 +9,7 @@ import SupportLayout from './components/layout/SupportLayout';
 import SettingsLayout from './components/layout/SettingsLayout';
 import EditProfile from './pages/editProfile/EditProfile';
 import SavedItems from './components/common/SavedItems';
-import MyAds from './components/common/MyAds';
+import MyAds from './components/myAds/MyAds';
 
 // --- Public Pages ---
 import LandingPage from './pages/home/LandingPage'
@@ -20,8 +20,7 @@ import SubcategoryDetails from './pages/home/SubcategoryDetails'
 import GadgetsLandingPage from './pages/gadgets/GadgetsLandingPage'
 import Phones from './pages/gadgets/Phones'
 import Laptops from './pages/gadgets/Laptops'
-import MyAdsPage from './pages/myAds/Adverts'
-import BoostAds from './pages/myAds/BoostAds'
+import BoostAds from './components/myAds/BoostAds'
 import PaymentMethod from './pages/payment/PaymentMethod'
 import ProfilePage from './pages/profile/ProfilePages'
 import PostAdFlow from './pages/postAds/PostAdFlow'
@@ -73,12 +72,12 @@ function App() {
         <Route path='/signup' element={<SignUp />} />
         <Route path='/add-phone-number' element={<AddPhoneNumber />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
+        <Route path='/manage-ads' element={<MyAds />} />
         <Route path='/category/:id' element={<CategoryDetails />} />
         <Route path='/subcategory/:id' element={<SubcategoryDetails />} />
         <Route path='/gadgets' element={<GadgetsLandingPage />} />
         <Route path='/gadgets/phones' element={<Phones />} />
         <Route path='/gadgets/laptops' element={<Laptops />} />
-        <Route path='/adverts' element={<MyAdsPage />} />
         <Route path='/boost-ad' element={<BoostAds />} />
         <Route path='/payment-method' element={<PaymentMethod />} />
         <Route path='/profile' element={<ProfilePage />} />
@@ -87,8 +86,14 @@ function App() {
         <Route path='/privacy-policy' element={<PrivacyPolicy />} />
         <Route path='/FAQ' element={<Faq />} />
         <Route path='/terms-of-service' element={<TermsOfService />} />
-        <Route path='/safety-tips' element={<SafetyTips />} />
-
+        <Route path='/safety-tips' element={<SafetyTips />} />  
+        <Route path='profile-settings' element={<ProfileSettings />} />
+        <Route path='/edit-profile' element={<EditProfile />} />
+        <Route path='/saved-items' element={<SavedItems />} />
+        <Route path='/promote-ads' element={<BoostAds />} />
+        <Route path='/payment-method' element={<PaymentMethod />} />
+        <Route path='/Notifications' element={<Notification />} />
+        <Route path='/Chats' element={<Chat />} />
         {/* DASHBOARD AUTH ROUTES  */}
         
         <Route path='/dashboard/signup' element={<SignupPage />} />
@@ -135,14 +140,7 @@ function App() {
          
         </Route>
         {/* other routes */}
-        <Route path='profile-settings' element={<ProfileSettings />} />
-        <Route path='/edit-profile' element={<EditProfile />} />
-        <Route path='/saved-items' element={<SavedItems />} />
-        <Route path='/manage-ads' element={<MyAds />} />
-        <Route path='/promote-ads' element={<BoostAds />} />
-        <Route path='/payment-method' element={<PaymentMethod />} />
-        <Route path='/Notifications' element={<Notification />} />
-        <Route path='/Chats' element={<Chat />} />
+        
       </Routes>
     </BrowserRouter>
   )

@@ -10,28 +10,28 @@ const PricingCard = ({
 }) => {
   const isFree = plan === "Basic";
 
-  const cardClasses = `p-8 rounded-2xl flex flex-col border-2 border-[#708CAF]/50 
+  const cardClasses = `h-full sm:p-8 p-5 px-4 rounded-2xl flex flex-col border-2 border-[#708CAF]/50 
   hover:bg-[#E5F9FE] ${isSelected ? "bg-[#E5F9FE]" : ""}`;
   
-  const featureDotClasses = `w-3 h-3 rounded-full mr-3 mt-1.5 flex-shrink-0 bg-[#708CAF]`;
+  const featureDotClasses = `sm:w-3 sm:h-3 h-2 w-2 rounded-full sm:mr-3 mr-2 mt-1.5 flex-shrink-0 bg-[#708CAF]`;
 
   return (
     <div className={cardClasses} onClick={onSelect}>
       <div className="text-center">
-        <h3 className="text-2xl font-semibold text-cyan-700">{plan}</h3>
-        <p className={`mt-4 text-4xl font-bold text-cyan-500`}>
+        <h3 className="sm:text-2xl text-xl font-semibold text-cyan-700">{plan}</h3>
+        <p className={`mt-4 sm:text-4xl text-3xl font-bold text-cyan-500`}>
           {isFree ? 'Free' : `₦${Number(price).toLocaleString()}.00`}
         </p>
       </div>
 
     
-        <p className="bg-[#B2ECFB] text-primaryLight rounded-full text-center font-semibold py-2 mt-6 mx-auto w-[65%]">
+        <p className="text-base bg-[#B2ECFB] text-primaryLight rounded-full text-center font-semibold sm:py-2 py-1.5 mt-6 mx-auto w-full sm:w-[65%]">
           {isFree ? "Unlimited" : `Duration: ${duration} days`}
         </p>
 
       <div className="flex-grow">
         <p className="font-semibold mt-7 mb-4">Features include:</p>
-        <ul className="space-y-3">
+        <ul className="space-y-3 sm:text-base text-sm">
           {/* check if features is an array before mapping */}
           {Array.isArray(features) && features.map((feature, index) => (
             <li key={index} className="flex">
@@ -50,12 +50,14 @@ const PricingCard = ({
 const Step4_Promote = ({ formData, setFormData, onNext }) => {
   const [adTypes, setAdTypes] = useState([]);
   const [loading, setLoading] = useState(false);
-  const buttonClasses = `w-full py-3 mt-8 rounded-2xl font-semibold transition-transform duration-200 
-  hover:scale-105 bg-secondary text-white`;
+  // const buttonClasses = `w-full py-3 mt-8 rounded-2xl font-semibold transition-transform duration-200 
+  //  bg-secondary text-white ${!formData.ad_type && 'opacity-50 cursor-not-allowed'}`;
+  const buttonClasses = `sm:w-4/5 w-full mt-8 bg-primary text-white text-base font-bold py-3 rounded-xl shadow-md 
+              transition-colors ${!formData.ad_type && "opacity-50 cursor-not-allowed"}`
+  
   useEffect(()=>{
     const token = localStorage.getItem("authToken");
     const localSavedTypes = JSON.parse(localStorage.getItem("adTypes"));
-    console.log(localSavedTypes)
       if (localSavedTypes !== null) {
             setAdTypes(localSavedTypes);
           } else {
@@ -87,18 +89,18 @@ const Step4_Promote = ({ formData, setFormData, onNext }) => {
     setFormData({ ...formData, ad_type: adType.id });
   };
   return (
-    <div className="bg-white p-6 sm:p-10 rounded-2xl shadow-lg my-10">
+    <div className="bg-white p-6 sm:p-10 my-10 rounded-2xl shadow-lg md:w-full lg:max-w-5xl w-full mx-auto">
       {loading ? (
         <div className="w-full min-h-screen flex items-center justify-center">
           <div className="animate-spin h-12 w-12 border-4 border-gray-300 border-t-secondary rounded-full"></div>
         </div>
       ) : (
         <>
-        <h2 className="text-2xl font-bold text-center text-primary">Promote Your Ad</h2>
-        <p className="text-center font-semibold text-lg text-[#666666] mb-10">
+        <h2 className="sm:text-2xl text-xl font-bold text-center text-primary">Promote Your Ad</h2>
+        <p className="text-center sm:text-lg text-base font-semibold text-primary text-[#666666] mb-10">
           Select how you'd like to promote your ad to reach more buyers
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
           {adTypes.map((adType)=>(
             <PricingCard 
               key={adType.id} 

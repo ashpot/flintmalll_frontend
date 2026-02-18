@@ -48,7 +48,6 @@ const SignIn = () => {
       }
 
       const data = await response.json();
-
       // Save token for future requests
       localStorage.setItem("authToken", data.token);
       localStorage.setItem("currentUser", JSON.stringify(data));

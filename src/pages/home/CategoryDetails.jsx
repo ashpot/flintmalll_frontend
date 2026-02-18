@@ -95,7 +95,7 @@ const CategoryDetails = () => {
           </span>
           {' '}/ {category?.title}
         </p>
-
+        {/* subcategory */}
         <CategoryCarousel
           title={category?.title}
           categories={subCategories}

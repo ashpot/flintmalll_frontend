@@ -10,8 +10,6 @@ import Step4_Promote from '../../components/postAd/Step4PromoteAd';
 import Step5_Review from '../../components/postAd/Step5Review';
 import Step_SubmissionSuccess from '../../components/postAd/StepSubmissionSuccess';
 import AccountDropdown from '../../components/layout/AccountDropdown';
-
-// ⭐ New Step1 Component
 import Step1_Category from '../../components/postAd/Step1Category';
 import { API_ENDPOINTS } from '../../services/api';
 
@@ -194,7 +192,7 @@ const PostAdFlow = () => {
       />
 
       {step !== 'submitted' && (
-        <div className="bg-white px-6 rounded-2xl shadow-sm my-8 py-8 max-w-4xl mx-auto w-full">
+        <div className="bg-white px-6 rounded-2xl shadow-sm my-8 py-8 max-w-5xl mx-auto w-full">
           
           <header className="flex justify-between items-center mb-6 font-bold">
             <button 
@@ -209,17 +207,17 @@ const PostAdFlow = () => {
               <MdOutlineArrowBackIos size={20} />
             </button>
 
-            <h1 className="text-[28px] text-primary">Post Ad</h1>
+            <h1 className="sm:text-[28px] text-2xl text-primary">Post Ad</h1>
 
             <button
               onClick={clearForm}
-              className="text-secondary text-lg hover:text-cyan-600"
+              className="text-secondary text-base sm:text-lg hover:text-cyan-600"
             >
               Clear
             </button>
           </header>
 
-          <p className="text-[#666666] font-medium text-lg mb-6">
+          <p className="text-[#666666] font-medium sm:text-lg text-base mb-6">
             Complete the steps below to list your item.
           </p>
 
