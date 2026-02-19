@@ -3,9 +3,11 @@ import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { cn } from "../../lib/Utils";
 import useChat from "./useChat";
+import { formatChatTime } from "../../lib/formatChatTime";
+import profileAvatar from "../../assets/images/profilePhoto.png"
 // Message Bubble Component
 const MessageBubble = ({ message, userId }) => {
-  const isSender = message.sender?.id === userId;
+  const isSender = (message.sender?.id === userId) || (message.sender === userId);
 
   return (
     <div
@@ -24,11 +26,9 @@ const MessageBubble = ({ message, userId }) => {
       </div>
 
       {/* Timestamp */}
-      {isSender && (
         <span className="text-[10px] text-gray-400 mt-1">
-          {message.timestamp} ·{" "}
+          {formatChatTime(message.date_added || message.created_at)} ·{" "}
         </span>
-      )}
     </div>
   );
 };
@@ -92,7 +92,15 @@ const Chat = () => {
                   onClick={() => loadMessages(conv)}
                   className="w-full p-4 hover:bg-gray-50 flex items-center gap-3"
                 >
-                  <div className="w-12 h-12 bg-gray-300 rounded-full" />
+                  {/* display photo, name and last message*/}
+                  <div className="w-12 h-12 bg-gray-300 rounded-full">
+                    <img 
+                      src={conv.user_one.photo_url || profileAvatar} 
+                      alt={conv.user_one.first_name}
+                      className="rounded-full"
+                       />
+                  </div>
+
                   <div className="text-left">
                     <p className="font-semibold">
                       {conv.user_one.first_name} {conv.user_one.last_name}
@@ -122,11 +130,14 @@ const Chat = () => {
 
             {/* Messages */}
             <div className="flex h-full flex-col overflow-y-auto p-4 bg-gray-50 rounded-lg">
-              <div className="flex-1">
-                {/* reverse the data gotten from the backend to old-new instead of new-old */}
-                {[...messages].reverse().map((msg) => (
+              <div className="flex-1 flex items-center justify-center">
+                {!activeConversation ?  (<p className="text-gray-400 text-sm">Click on a message to open</p>) 
+                : (<div className="w-full">
+                  {messages.map((msg) => (
                   <MessageBubble key={msg.id} message={msg} userId={CURRENT_USER_ID} />
                 ))}
+                </div>)}
+                
               </div>
 
               <footer>

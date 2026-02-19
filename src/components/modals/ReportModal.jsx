@@ -11,6 +11,7 @@ const ReportModal = ({onClose}) => {
         "Seller asks for prepayment",
         "User is unreachable",
         "This is illegal/fraudulent",
+        "This ad is spam",
         "The price is wrong",
         "Other",
     ];

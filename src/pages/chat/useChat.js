@@ -52,7 +52,7 @@ const useChat = (currentUserId) => {
 
       if (res.ok) {
         const data = await res.json();
-        setMessages(data.messages);
+        setMessages([...data.messages].reverse());
         console.log(data)
       }
     } catch (err) {

@@ -8,8 +8,17 @@ const AdSection = ({ title, ads, adType }) => {
       <div className="w-full mx-auto px-4 md:px-0">
       <h2 className="md:text-2xl font-bold text-primary mb-6">{title}</h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7">
-        {ads.map((ad) => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-7">
+        {ads.map((ad) => {
+          let spec;
+          try {
+          spec = JSON.parse(ad.attributes);
+        } catch (error) {
+          console.error("Failed to parse attributes:", error);
+          spec = {};
+        }
+
+         return(
           <ProductCard
             key={ad.id}
             id={ad.id}
@@ -18,14 +27,14 @@ const AdSection = ({ title, ads, adType }) => {
             price={ad.price}
             city={ad.city}
             state={ad.state}
-            condition={ad.condition || ""}
-            // condition={ad.attributes.condition || ""}
+            condition={spec.condition}
             timePosted={ad.date_added}
             views={ad.views}
             isVerified={ad.isVerified}
             adType={adType} 
           />
-        ))}
+         ) 
+      })}
       </div>
     </div>
     )}

@@ -2,6 +2,7 @@ import { HiOutlineCube, HiOutlineEye, HiOutlineHeart } from "react-icons/hi";
 import { HiOutlineMapPin } from "react-icons/hi2";
 import { formatPrice } from "../../lib/formatPrice";
 import { useNavigate } from "react-router-dom";
+import { FaCrown } from "react-icons/fa";
 
 const ProductCard = ({
     id,

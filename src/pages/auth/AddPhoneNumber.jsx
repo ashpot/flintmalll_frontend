@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import Navbar from '../../components/layout/Navbar';
 import SignInScreen from '../../assets/images/SignInScreen.png';
@@ -9,9 +8,11 @@ import Step_Complete from "../../components/addPhoneNumber/Step_Complete";
 import { useNavigate } from "react-router-dom";
 import { cn } from "../../lib/Utils";
 import SmallFooter from "../../components/layout/SmallFooter";
+import SkipModal from "../../components/modals/SkipModal";
 
 const AddPhoneNumber = () => {
   const [step, setStep] = useState('enterPhone'); 
+  const [openModal, setOpenModal] = useState(false);
   
   const [phoneNumber, setPhoneNumber] = useState('');
   const navigate = useNavigate();
@@ -32,6 +33,7 @@ const AddPhoneNumber = () => {
       case 'enterPhone':
         return (
           <Step_EnterPhone 
+            openModal={()=>{setOpenModal(true)}}
             onContinue={(phone) => {
               setPhoneNumber(phone);
               setStep('enterCode');
@@ -56,7 +58,7 @@ const AddPhoneNumber = () => {
   };
 
   return (
-    <div>
+    <div className="relative">
         <Navbar 
             rightContent={<a href="/signup" className='text-black text-lg font-medium'>Already have an account? <span className='text-primary'>Sign In</span></a>}
         />
@@ -76,7 +78,8 @@ const AddPhoneNumber = () => {
                   {renderStep()}
                 </div>
             </div>
-
+            {/* skip modal */}
+            {openModal && <SkipModal onClose={()=>setOpenModal(false)}/>}
             <SmallFooter />
         </div>
     </div>

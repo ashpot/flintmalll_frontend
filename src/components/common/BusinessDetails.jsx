@@ -9,7 +9,7 @@ import { OpenModalContext, OpenReportModalContext } from '../../pages/productDet
 const BusinessDetails = ({seller}) => {
     const isBusiness = seller.type && seller.type === 'Business';
     const { setIsOpen } = useContext(OpenModalContext);
-    const { setOpenReport } = useContext(OpenReportModalContext)
+    const { setOpenReport } = useContext(OpenReportModalContext);
 
     const handleOpenModal = ()=>{
       setIsOpen(true);

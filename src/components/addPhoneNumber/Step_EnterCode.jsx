@@ -54,11 +54,21 @@ const Step_EnterCode = ({ phoneNumber, onVerify, onBack }) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
-    if (response.ok) {
-      onVerify(); // Move to verifying/complete screen
-    } else {
-      setError('Invalid code. Please try again.');
-    }
+    
+    switch (response.status) {
+            case 200:
+                onVerify();
+                break;
+            case 409:
+                setError('Phone already used')
+                break;
+            case 400:
+                setError('Invalid or expired OTP')
+                break;
+            default:
+              setError('please try again later')
+              break
+          }
   } catch (err) {
     setError('Server error. Try again later.');
   }
@@ -75,17 +85,26 @@ const handleResendOtp = async (e) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ phone: phoneNumber })
       });
-      if (response.ok) {
-        setTimer(47);
-        setError('');  
-        setOtp(new Array(4).fill(''));
-    } else {
-      setError("Failed to resend code. Please Try again.");
-    }
+    switch (response.status) {
+            case 200:
+                setTimer(47);
+                setError('');  
+                setOtp(new Array(4).fill(''));
+                break;
+            case 404:
+                setError('User not found')
+                break;
+            case 500:
+                setError('Failed to resend code.')
+                break;
+            default:
+              setError('please try again later')
+              break;
+          }
     } catch (err) {
+      setError('please try again later')
       console.error("Failed to send OTP", err);
-    }
-    
+    } 
   };
 
   return (
