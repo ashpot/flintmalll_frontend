@@ -1,4 +1,3 @@
-import React from 'react'
 import { IoClose } from 'react-icons/io5'
 import { useNavigate } from 'react-router-dom'
 
@@ -27,13 +26,13 @@ const navigate = useNavigate()
             onClick={onClose}
             className="flex-1 py-3 bg-gray-200 rounded-lg"
             >
-            No
+                No
             </button>
             <button
             onClick={()=>navigate('/login')}
             className="flex-1 py-3 bg-red-500 text-white rounded-lg"
             >
-            Yes
+                Yes
             </button>
         </div>
         </div>
