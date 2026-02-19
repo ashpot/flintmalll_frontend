@@ -87,6 +87,7 @@ const ProductOverview = ({ details, id }) => {
     const [hasFetched, setHasFetched] = useState(false);
     const token = localStorage.getItem('authToken')
     const [similar, setSimilar] = useState(null)
+    
     useEffect(()=>{
       if(!sectionRef.current || hasFetched) return;
       const fetchSimilarAds = async ()=>{
@@ -253,14 +254,13 @@ const ProductOverview = ({ details, id }) => {
         {isLoading && <LoadSpinner />}
 
         {!isLoading && Array.isArray(similar) && similar.length > 0 && (
-          <AdSection title="Similar Ads" ads={similarAds} />
+          <AdSection title="Similar Ads" ads={similar} />
         )}
       </div>
 
     </div>
   );
 };
-
 export default ProductOverview;
 
 
