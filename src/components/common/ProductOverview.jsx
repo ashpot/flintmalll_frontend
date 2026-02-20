@@ -24,6 +24,7 @@ import { API_ENDPOINTS } from '../../services/api';
 import LoadSpinner from '../ui/LoadSpinner';
 import SpecItem from './SpecItem';
 import AdDetail from './AdDetail';
+import { formatKey } from '../../lib/formatKey';
 
 // For Star Rating Display
 const StarRating = ({ rating, size = 16 }) => {
@@ -226,7 +227,7 @@ const ProductOverview = ({ details, id }) => {
             {/* first filter out condition before mapping */}
             {Object.entries(specs).filter(([key, value])=>key !== 'condition').map(([key, value])=>{
                 return (
-                    <SpecItem label={key} value={value} key={key}/>
+                    <SpecItem label={formatKey(key)} value={value} key={key}/>
                 )
             })}
           </div>

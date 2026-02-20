@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { cn } from "../../lib/Utils";
 import useChat from "./useChat";
 import { formatChatTime } from "../../lib/formatChatTime";
@@ -37,9 +37,9 @@ const MessageBubble = ({ message, userId }) => {
 
 const Chat = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const CURRENT_USER_ID = currentUser.user.id;
-
   const {
     conversations,
     activeConversation,
@@ -50,6 +50,22 @@ const Chat = () => {
     sendMessage,
     isSending,
   } = useChat(CURRENT_USER_ID);
+//   useEffect(() => {
+//   if (!location.state?.openWithUserId || conversations.length === 0) return;
+
+//   const sellerId = location.state.openWithUserId;
+
+//   const existingConversation = conversations.find(
+//     (conv) =>
+//       conv.user_one.id === sellerId ||
+//       conv.user_two.id === sellerId
+//   );
+
+//   if (existingConversation) {
+//     loadMessages(existingConversation);
+//   }
+
+// }, [location.state, conversations]);
 
   return (
     <div className="sm:bg-[#F7F7F7]">

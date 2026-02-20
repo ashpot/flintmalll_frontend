@@ -46,11 +46,11 @@ const ProductDetails = () => {
 		fetchData();
 		}, [id]);
 		
-		useEffect(() => {
-			if (details) {
-				console.log("Updated details:", details);
-			}
-		}, [details]);
+		// useEffect(() => {
+		// 	if (details) {
+		// 		console.log("Updated details:", details);
+		// 	}
+		// }, [details]);
 
 		// lock page scrolling when a modal is open
 		useEffect(() => {
@@ -100,7 +100,12 @@ const ProductDetails = () => {
 				<p className="text-center mt-10">No product found.</p>
 			)}
 			</div>
-	  			{isOpen && <ContactSellerFlow info={details.ad.user}/>}
+	  			{isOpen && 
+					<ContactSellerFlow 
+						title={details.ad.title}
+						info={details.ad.user} 
+						negotiable={details.ad.is_negotiable} 
+						price={details.ad.price} />}
 				{openReport && <ReportModal onClose={()=>setOpenReport(false)}/>}
 			</OpenModalContext.Provider>
 			</OpenReportModalContext.Provider>

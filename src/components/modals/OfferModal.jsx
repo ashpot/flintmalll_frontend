@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
+import { formatPrice } from "../../lib/formatPrice";
 
-const OfferModal = ({ onClose, onSubmit, onBack }) => {
+const OfferModal = ({ onClose, onSubmit, onBack, price, isLoading }) => {
   const [amount, setAmount] = useState("");
-
-  const quickPrices = ["1,200,000", "1,000,000", "950,000"];
+  const percentages = [0.5, 0.75, 0.9];
+  const quickPrices = percentages.reduce((acc, percent) => {
+    acc[percent] = price * percent;
+    return acc;
+  }, {});
 
   return (
       <div className="relative bg-white rounded-3xl w-[90%] max-w-xl p-8">
@@ -32,13 +36,13 @@ const OfferModal = ({ onClose, onSubmit, onBack }) => {
 
         {/* Quick Prices */}
         <div className="flex justify-between gap-4 mb-6">
-          {quickPrices.map((price, i) => (
+          {Object.values(quickPrices).map((price, i) => (
             <button
               key={i}
-              onClick={() => setAmount(price.replace(/,/g, ""))}
+              onClick={() => setAmount(price)}
               className="flex-1 bg-gray-200 rounded-full py-3 font-medium hover:bg-gray-300 transition"
             >
-              {price}
+              {formatPrice(price)}
             </button>
           ))}
         </div>
@@ -62,7 +66,7 @@ const OfferModal = ({ onClose, onSubmit, onBack }) => {
         </div>
 
         {/* Submit */}
-        <button
+        {/* <button
           disabled={!amount}
           onClick={() => onSubmit(amount)}
           className={`w-full text-white py-4 rounded-2xl font-medium transition
@@ -70,6 +74,23 @@ const OfferModal = ({ onClose, onSubmit, onBack }) => {
           }
         >
           Make Offer
+        </button> */}
+
+        <button
+          disabled={!amount}
+          onClick={() => onSubmit(amount)}
+          className={`w-full text-white py-4 rounded-2xl font-medium transition
+            ${!amount ? 'bg-blue-900/60' : 'bg-blue-900 hover:bg-blue-800'}`
+          }
+        >
+          {isLoading ? (
+            <div className="flex justify-center items-center gap-2">
+              <div className="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full"></div>
+              Sending Offer to Vendor...
+            </div>
+          ) : (
+            "Make Offer"
+          )}
         </button>
       </div>
   );

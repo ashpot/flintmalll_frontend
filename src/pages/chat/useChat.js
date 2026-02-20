@@ -36,7 +36,10 @@ const useChat = (currentUserId) => {
   /* ---------------- LOAD MESSAGES ---------------- */
   const loadMessages = async (conversation) => {
     setActiveConversation(conversation);
-
+    const otherUserId =
+      conversation.user_one.id === currentUserId
+      ? conversation.user_two.id
+      : conversation.user_one.id;
     try {
       const res = await fetch(API_ENDPOINTS.GET_ALL_MESSAGES, {
         method: "POST",
@@ -46,7 +49,7 @@ const useChat = (currentUserId) => {
         },
         body: JSON.stringify({
           user_one: currentUserId,
-          user_two: conversation.user_one.id,
+          user_two: otherUserId,
         }),
       });
 

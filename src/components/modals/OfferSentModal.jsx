@@ -3,7 +3,7 @@ import { IoClose } from 'react-icons/io5'
 import offer_sent from "../../assets/images/offer_sent.png"
 import { IoIosArrowBack } from 'react-icons/io'
 
-
+{/* todo: add button to navigate to chat page of the recent sent offer */}
 const OfferSentModal = ({onClose, onBack}) => {
   return (
     <div className="relative bg-white rounded-3xl w-[90%] max-w-2xl p-10 text-center">

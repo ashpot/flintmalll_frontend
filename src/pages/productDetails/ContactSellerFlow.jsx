@@ -3,15 +3,53 @@ import ContactSellerModal from '../../components/modals/ContactSellerModal'
 import OfferModal from '../../components/modals/OfferModal'
 import OfferSentModal from '../../components/modals/OfferSentModal'
 import { OpenModalContext } from './Context'
+import { useNavigate } from "react-router-dom";
+import { API_ENDPOINTS } from '../../services/api'
+import { formatPrice } from '../../lib/formatPrice'
 
-const ContactSellerFlow = ({info}) => {
+const ContactSellerFlow = ({info, negotiable , price, title}) => {
+  const navigate = useNavigate();
+  const token = localStorage.getItem("authToken");
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const CURRENT_USER_ID = currentUser.user.id;
   const [step, setStep] = useState(1);
+  const [loading, setIsLoading] = useState(false);
   const { setIsOpen } = useContext(OpenModalContext)
   const prevStep = () => {
     if (step > 1 && step <= 3) {
       setStep(step - 1);
     }
   };
+  const handleDirectMessage = async (text) => {
+  try {
+    setIsLoading(true);
+    const res = await fetch(API_ENDPOINTS.SEND_MESSAGE, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
+      body: JSON.stringify({
+        sender: CURRENT_USER_ID,
+        receiver: info.id, // seller id
+        text,
+      }),
+    });
+
+    if (!res.ok) throw new Error("Failed");
+    setStep(3)
+
+    // After sending, go to chat
+    // navigate("/chat", {
+    //   state: { openWithUserId: info.id },
+    // });
+
+  } catch (err) {
+    console.error("Error starting conversation");
+  }finally{
+    setIsLoading(false);
+  }
+};
   const renderStep = ()=>{
     switch (step) {
       case 1:
@@ -20,14 +58,20 @@ const ContactSellerFlow = ({info}) => {
             onClose={()=>setIsOpen(false)}
             onNext={()=>setStep(2)}
             seller={info}
+            negotiable={negotiable}
           />
         )
         case 2:
         return(
           <OfferModal
+            isLoading={loading}
             onClose={()=>setIsOpen(false)}
-            onSubmit={()=>setStep(3)}
+            onSubmit={(amount)=>{
+              const text = `I am making an offer of ₦${formatPrice(amount, 0)} for your ad:${title}`
+              handleDirectMessage(text)
+            }}
             onBack={prevStep}
+            price={price}
           />
         )
         case 3:

@@ -51,9 +51,8 @@ const LandingPage = () => {
         setPremiumAds(data.premium_ads || []);
         setTrendingAds(data.trending_ads || []);
         setNotifications(data.notification_items)
-        console.log(data.trending_ads)
       } catch (error) {
-        console.error("Error loading home data:", error);
+        console.error("Error loading home data");
       } finally {
         setLoading(false);
       }
