@@ -8,8 +8,10 @@ import { OpenModalContext, OpenReportModalContext } from '../../pages/productDet
 
 const BusinessDetails = ({seller}) => {
     const isBusiness = seller.type && seller.type === 'Business';
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'))
+    const isCurrentUserPost = currentUser.user.id === seller.id
     const { setIsOpen } = useContext(OpenModalContext);
-    const { setOpenReport } = useContext(OpenReportModalContext)
+    const { setOpenReport } = useContext(OpenReportModalContext);
 
     const handleOpenModal = ()=>{
       setIsOpen(true);
@@ -57,7 +59,9 @@ const BusinessDetails = ({seller}) => {
         </div>
 
         {/* Contact Button */}
-        <button 
+        {!isCurrentUserPost && 
+        <>
+          <button 
           onClick={handleOpenModal}
           className="mt-6 w-full bg-blue-900 hover:bg-blue-800 text-white font-semibold py-4 rounded-2xl transition">
           Contact Seller
@@ -68,6 +72,8 @@ const BusinessDetails = ({seller}) => {
           <MdOutlineReportProblem size={25} />
           Report Abuse
         </button>
+        </>}
+        
       </div>
 
   )

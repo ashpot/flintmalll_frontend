@@ -2,6 +2,7 @@ import { HiOutlineCube, HiOutlineEye, HiOutlineHeart } from "react-icons/hi";
 import { HiOutlineMapPin } from "react-icons/hi2";
 import { formatPrice } from "../../lib/formatPrice";
 import { useNavigate } from "react-router-dom";
+import { FaCrown } from "react-icons/fa";
 
 const ProductCard = ({
     id,
@@ -30,14 +31,14 @@ const ProductCard = ({
       <div className="relative">
         <img 
           src={image}
-          alt="MacBook Pro" 
+          alt="MacBook Pro book" 
           className="w-full h-72 object-contain rounded-[1.3rem]"
         />
         
         {/* Verified Badge */}
         {isVerified && (
              <div className="absolute top-3 left-2 bg-[#D6F8FF] text-[#00C2F3] px-5 py-2 rounded-full text-xs font-semibold">
-          Verified
+              Verified
         </div>
         )}
        

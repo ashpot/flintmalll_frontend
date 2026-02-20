@@ -7,7 +7,7 @@ import '../../css/phoneInput.css';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '../../lib/Utils';
 
-const Step_EnterPhone = ({ onContinue }) => {
+const Step_EnterPhone = ({ onContinue, openModal }) => {
   const navigate = useNavigate();
   const inputClasses = cn("mt-1 w-full px-4 py-3 font-medium sm:text-lg text-base text-[#708CAF] border border-white", 
                                 "focus:ring-2 focus:ring-secondary placeholder:text-[#708CAF] outline-none rounded-xl sm:rounded-2xl ")
@@ -35,12 +35,11 @@ const Step_EnterPhone = ({ onContinue }) => {
   };
 
   return (
-    <div className="pt-5">
+    <div className="pt-5 relative">
 		<div className='relative fle justify-between items-center'>
 			<button 
 				className="absolute text-base sm:text-lg font-bold -top-10 text-[#708CAF] p-2 hover:underline hover:cursor-pointer" 
-        onClick={()=>navigate("/")}
-				disabled
+        onClick={openModal}
 			>
 				Skip
 			</button>

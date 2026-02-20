@@ -87,6 +87,7 @@ const ProductOverview = ({ details, id }) => {
     const [hasFetched, setHasFetched] = useState(false);
     const token = localStorage.getItem('authToken')
     const [similar, setSimilar] = useState(null)
+    
     useEffect(()=>{
       if(!sectionRef.current || hasFetched) return;
       const fetchSimilarAds = async ()=>{
@@ -132,16 +133,8 @@ const ProductOverview = ({ details, id }) => {
     display: 'Super Retina XDR 120Hz',
     issue: 'None',
     description: "Neatly used iPhone 13 Pro in great condition. Phone has no major issues, all functions work perfectly. Lightly used, clean body with minor signs of handling. Face ID and cameras are fully functional. Comes with original box and charger.",
-    // Added Mock Reviews Data
-    rating: 4.8,
-    reviewCount: 189,
-    reviews: [
-      { id: 1, name: 'Michael Adebayo', rating: 5, date: '3 days ago', comment: 'Great experience buying from TechHub Store. Fast delivery and genuine product. Highly recommended!', avatarUrl: null },
-      { id: 2, name: 'Michael Adebayo', rating: 5, date: '3 days ago', comment: 'Great experience buying from TechHub Store. Fast delivery and genuine product. Highly recommended!', avatarUrl: null },
-      { id: 3, name: 'Michael Adebayo', rating: 5, date: '3 days ago', comment: 'Great experience buying from TechHub Store. Fast delivery and genuine product. Highly recommended!', avatarUrl: null },
-    ],
   };
-  
+
   const data = mockFormData;
   // const imagesToShow = Array.isArray(images) && images.length > 0 ? images : [];
   const imagesToShow = Array.isArray(data.images) && data.images.length > 0 ? data.images : [];
@@ -167,11 +160,11 @@ const ProductOverview = ({ details, id }) => {
   ];
   return (
     // Your main container styles
-    <div className=" bg-white p-7 sm:p-10 rounded-2xl shadow-lg w-full md:w-[85%] mx-auto my-10"> {/* Added my-10 */}
+    <div className=" bg-white p-7 sm:p-10 rounded-2xl shadow-lg w-full md:w-[85%] mx-auto my-10">
       
       {/* --- Main Ad Preview Section --- */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* ... (Image Gallery - No changes needed) ... */}
+        
           <div className="space-y-3">
              <div className="relative w-full h-[400px] bg-gray-100 rounded-2xl overflow-hidden">
              {imagesToShow.length > 0 ? (
@@ -244,35 +237,6 @@ const ProductOverview = ({ details, id }) => {
         <h2 className="text-[28px] text-[#1E1E1E] font-bold mt-10 mb-4">Description</h2>
         <p className="text-[#666666] font-medium text-2xl leading-relaxed">{details.ad.description}</p>
       </div>
-
-      {/* ratings section */}
-      <div className="border-t border-[#B7B7B7] my-10 pt-10">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold text-gray-800">Ratings & Reviews</h2>
-          <a href="#" className="text-sm font-medium text-blue-600 hover:underline">
-            See all reviews
-          </a>
-        </div>
-        
-        <div className="flex items-center space-x-2 mb-6">
-          <span className="text-4xl font-bold text-gray-800">{data.rating?.toFixed(1) || 'N/A'}</span>
-          <StarRating rating={data.rating || 0} size={20} />
-          <span className="text-sm text-gray-500">({data.reviewCount || 0} reviews)</span>
-        </div>
-
-        {/* List of Reviews */}
-        <div>
-          {data.reviews?.length > 0 ? (
-            data.reviews.map((review) => (
-              <ReviewItem key={review.id} review={review} />
-            ))
-          ) : (
-            <p className="text-sm text-gray-500">No reviews yet.</p> 
-          )}
-        </div>
-      </div>
-      {/* --- END: Ratings & Reviews Section --- */}
-
       {/* --- ADDED: Safety Tips Section --- */}
       <div className="border-t border-[#B7B7B7] my-10 pt-10"> 
         <h2 className="text-xl font-bold text-gray-800 mb-4">Safety Tips</h2>
@@ -290,14 +254,13 @@ const ProductOverview = ({ details, id }) => {
         {isLoading && <LoadSpinner />}
 
         {!isLoading && Array.isArray(similar) && similar.length > 0 && (
-          <AdSection title="Similar Ads" ads={similarAds} />
+          <AdSection title="Similar Ads" ads={similar} />
         )}
       </div>
 
     </div>
   );
 };
-
 export default ProductOverview;
 
 
