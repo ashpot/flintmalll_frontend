@@ -6,9 +6,14 @@ import { OpenModalContext } from './Context'
 import { useNavigate } from "react-router-dom";
 import { API_ENDPOINTS } from '../../services/api'
 import { formatPrice } from '../../lib/formatPrice'
+import MessageSellerModal from '../../components/modals/MessageSellerModal'
 
 const ContactSellerFlow = ({info, negotiable , price, title}) => {
   const navigate = useNavigate();
+  const name = {
+    firstName: info.first_name,
+    lastName: info.last_name
+  }
   const token = localStorage.getItem("authToken");
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const CURRENT_USER_ID = currentUser.user.id;
@@ -16,9 +21,7 @@ const ContactSellerFlow = ({info, negotiable , price, title}) => {
   const [loading, setIsLoading] = useState(false);
   const { setIsOpen } = useContext(OpenModalContext)
   const prevStep = () => {
-    if (step > 1 && step <= 3) {
-      setStep(step - 1);
-    }
+    setStep((prev) => (prev > 1 ? prev - 1 : prev));
   };
   const handleDirectMessage = async (text) => {
   try {
@@ -37,7 +40,7 @@ const ContactSellerFlow = ({info, negotiable , price, title}) => {
     });
 
     if (!res.ok) throw new Error("Failed");
-    setStep(3)
+    setStep(4)
 
     // After sending, go to chat
     // navigate("/chat", {
@@ -56,7 +59,8 @@ const ContactSellerFlow = ({info, negotiable , price, title}) => {
         return(
           <ContactSellerModal
             onClose={()=>setIsOpen(false)}
-            onNext={()=>setStep(2)}
+            onNextOffer={()=>setStep(2)}
+            onNextMessage={()=>setStep(3)}
             seller={info}
             negotiable={negotiable}
           />
@@ -76,14 +80,25 @@ const ContactSellerFlow = ({info, negotiable , price, title}) => {
         )
         case 3:
         return(
+          <MessageSellerModal
+            name={name}
+            onClose={()=>setIsOpen(false)}
+            onBack={()=>setStep(1)}
+            onSubmit={(text)=>{
+              handleDirectMessage(text)
+            }}
+            isLoading={loading}
+          />
+        )
+        case 4:
+        return(
           <OfferSentModal
             onClose={()=>setIsOpen(false)}
             onBack={prevStep}
           />
         )
-    
-      default:
-        break;
+        
+
     }
   }
   return (

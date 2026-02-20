@@ -26,7 +26,7 @@ const OfferSentModal = ({onClose, onBack}) => {
         </div>
 
         <h2 className="text-4xl font-bold text-blue-900 mb-4">
-          Offer Sent
+          Message Sent
         </h2>
 
         <p className="text-lg text-gray-500">

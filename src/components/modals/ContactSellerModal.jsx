@@ -4,7 +4,7 @@ import { FiMessageSquare } from "react-icons/fi";
 import { TbHandClick } from "react-icons/tb";
 import avatar from "../../assets/images/profilePhoto.png"
 
-const ContactSellerModal = ({seller, onClose, onNext, negotiable}) => {
+const ContactSellerModal = ({seller, onClose, onNextOffer, onNextMessage, negotiable}) => {
   const isBusiness = seller.type === 'Business';
   
   return (
@@ -53,13 +53,15 @@ const ContactSellerModal = ({seller, onClose, onNext, negotiable}) => {
             Call Seller
           </button> */}
 
-          <button className="w-full flex items-center justify-center gap-3 bg-cyan-500 text-white py-4 rounded-2xl font-medium hover:bg-cyan-400 transition">
-            <FiMessageSquare />
-            Message Seller
+          <button 
+            onClick={onNextMessage}
+            className="w-full flex items-center justify-center gap-3 bg-cyan-500 text-white py-4 rounded-2xl font-medium hover:bg-cyan-400 transition">
+              <FiMessageSquare />
+              Message Seller
           </button>
             {negotiable && 
               <button
-                onClick={onNext} 
+                onClick={onNextOffer} 
                 className="w-full flex items-center justify-center gap-3 bg-blue-200 text-blue-900 py-4 rounded-2xl font-medium hover:bg-blue-300 transition"
                 >
                   <TbHandClick />

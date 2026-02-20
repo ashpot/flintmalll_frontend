@@ -198,9 +198,6 @@ const Footer = () => {
                 <a href="https://x.com/flintmall" target='_blank' className="bg-primaryLight p-2 rounded-full text-white">
                   <FaXTwitter size={30} />
                 </a>
-                {/* <a href="" className="bg-primaryLight p-2 rounded-full text-white">
-                  <FaLinkedin size={30} />
-                </a> */}
               </div>
             </div>
           </div>
