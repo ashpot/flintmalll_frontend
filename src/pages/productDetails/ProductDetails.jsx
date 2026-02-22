@@ -9,12 +9,14 @@ import { API_ENDPOINTS } from '../../services/api';
 import ContactSellerFlow from './ContactSellerFlow';
 import { OpenModalContext, OpenReportModalContext } from './Context';
 import ReportModal from '../../components/modals/ReportModal';
+import { lockScroll } from '../../lib/LockScroll';
 
 const ProductDetails = () => {
 	const [details, setDetails] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [isOpen, setIsOpen] = useState(false);
 	const [openReport, setOpenReport] = useState(false);
+	const shouldLockScroll = isOpen || openReport;
 	const {id} = useParams();
 	const token = localStorage.getItem("authToken");
 	useEffect(() => {
@@ -54,18 +56,8 @@ const ProductDetails = () => {
 
 		// lock page scrolling when a modal is open
 		useEffect(() => {
-			const shouldLockScroll = openReport || isOpen;
-
-			if (shouldLockScroll) {
-				document.body.classList.add("overflow-hidden");
-			} else {
-				document.body.classList.remove("overflow-hidden");
-			}
-
-			return () => {
-				document.body.classList.remove("overflow-hidden");
-			};
-			}, [openReport, isOpen]);
+			lockScroll(shouldLockScroll)
+		}, [openReport, isOpen]);
 
   return (
 		<div className='relative'>

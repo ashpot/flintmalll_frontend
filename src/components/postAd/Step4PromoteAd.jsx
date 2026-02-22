@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { API_ENDPOINTS } from '../../services/api';
+import PaymentModal from '../modals/PaymentModal';
 const PricingCard = ({
   plan,
   price,
@@ -52,7 +53,7 @@ const Step4_Promote = ({ formData, setFormData, onNext }) => {
   const [loading, setLoading] = useState(false);
   // const buttonClasses = `w-full py-3 mt-8 rounded-2xl font-semibold transition-transform duration-200 
   //  bg-secondary text-white ${!formData.ad_type && 'opacity-50 cursor-not-allowed'}`;
-  const buttonClasses = `sm:w-4/5 w-full mt-8 bg-primary text-white text-base font-bold py-3 rounded-xl shadow-md 
+  const buttonClasses = `w-full mt-8 bg-primary text-white text-base font-bold py-3 rounded-xl shadow-md 
               transition-colors ${!formData.ad_type && "opacity-50 cursor-not-allowed"}`
   
   useEffect(()=>{
@@ -115,7 +116,8 @@ const Step4_Promote = ({ formData, setFormData, onNext }) => {
           
         </div>
         <button 
-          onClick={onNext} 
+          // onClick={onNext} 
+          onClick={onNext}
           disabled={!formData.ad_type}
           className={buttonClasses}
         >

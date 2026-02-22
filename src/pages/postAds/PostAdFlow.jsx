@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MdOutlineArrowBackIos } from 'react-icons/md';
 import Stepper from '../../components/postAd/Stepper';
 import Navbar from '../../components/layout/Navbar';
@@ -12,6 +12,8 @@ import Step_SubmissionSuccess from '../../components/postAd/StepSubmissionSucces
 import AccountDropdown from '../../components/layout/AccountDropdown';
 import Step1_Category from '../../components/postAd/Step1Category';
 import { API_ENDPOINTS } from '../../services/api';
+import { lockScroll } from '../../lib/LockScroll';
+import PaymentModal from '../../components/modals/PaymentModal';
 
 
 // Full form data now includes Step1 fields
@@ -34,14 +36,15 @@ const initialFormData = {
 };
 
 const PostAdFlow = () => {
-
   const [step, setStep] = useState(1); 
   const [formData, setFormData] = useState(initialFormData);
+  const [paymentOpen, setPaymentOpen] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   // --- Navigation Logic ---
   const nextStep = () => {
     if (step === 5) {
-      handleSubmitForm();
+      checkAdType(formData.ad_type)
     } else if (step < 5) {
       window.scrollTo(0, 0);
       setStep(step + 1);
@@ -91,6 +94,7 @@ const PostAdFlow = () => {
       });
 
     try {
+      setLoading(true)
       const res = await fetch(API_ENDPOINTS.CREATE_AD, {
         method: "POST",
         headers: {
@@ -104,17 +108,25 @@ const PostAdFlow = () => {
         alert("post added successfully")
         setStep('submitted');
         window.scrollTo(0, 0);
-      } else{alert("network issue")}
+      } else{alert("internal error")}
     } catch (error) {
-      alert('internal error')
-    } 
+      alert('network issue')
+    } finally{
+      setLoading(false)
+    }
   };
-
+  const checkAdType = (adType)=>{
+    if(typeof adType !== 'number') return;
+    if(adType !== 1){
+      setPaymentOpen(true)
+    }else{
+      handleSubmitForm()
+    }
+    
+  }
   // --- Render Step Components ---
   const renderStep = () => {
     switch (step) {
-
-      // Integrate the new Step1 here
       case 1:
         return (
            
@@ -162,6 +174,7 @@ const PostAdFlow = () => {
             onBack={prevStep}
             goToStep={goToStep}
             formData={formData}
+            isLoading={loading}
           />
         );
 
@@ -229,7 +242,17 @@ const PostAdFlow = () => {
       <main className="max-w-7xl mx-auto px-6 flex-grow w-full">
         {renderStep()}
       </main>
-
+      {paymentOpen && 
+        <PaymentModal 
+          onSubmit={()=>{
+            handleSubmitForm()
+            setPaymentOpen(false)
+          }} 
+          dependency={paymentOpen}
+          onClose={setPaymentOpen}
+          adType={formData.ad_type}
+        />
+        }
       <Footer />
     </div>
   );
