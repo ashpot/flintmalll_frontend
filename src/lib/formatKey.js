@@ -1,0 +1,1 @@
+export const formatKey = (key)=>key.replace(/_/g, " ") // replace underscore to spaces

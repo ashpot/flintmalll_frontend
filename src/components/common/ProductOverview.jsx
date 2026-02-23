@@ -24,6 +24,8 @@ import { API_ENDPOINTS } from '../../services/api';
 import LoadSpinner from '../ui/LoadSpinner';
 import SpecItem from './SpecItem';
 import AdDetail from './AdDetail';
+import { formatKey } from '../../lib/formatKey';
+import { cn } from '../../lib/Utils';
 
 // For Star Rating Display
 const StarRating = ({ rating, size = 16 }) => {
@@ -87,6 +89,8 @@ const ProductOverview = ({ details, id }) => {
     const [hasFetched, setHasFetched] = useState(false);
     const token = localStorage.getItem('authToken')
     const [similar, setSimilar] = useState(null)
+
+    const headerClasses = 'sm:text-[28px] text-2xl font-bold text-gray-800'
     
     useEffect(()=>{
       if(!sectionRef.current || hasFetched) return;
@@ -160,7 +164,7 @@ const ProductOverview = ({ details, id }) => {
   ];
   return (
     // Your main container styles
-    <div className=" bg-white p-7 sm:p-10 rounded-2xl shadow-lg w-full md:w-[85%] mx-auto my-10">
+    <div className=" bg-white px-4 py-7 sm:p-10 rounded-2xl shadow-lg w-full md:w-[85%] mx-auto my-10">
       
       {/* --- Main Ad Preview Section --- */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -178,10 +182,10 @@ const ProductOverview = ({ details, id }) => {
              )}
              {imagesToShow.length > 1 && (
                <>
-                 <button onClick={prevImage} className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/70 rounded-full p-2 hover:bg-white focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                 <button onClick={prevImage} className="hidden sm:block absolute left-3 top-1/2 -translate-y-1/2 bg-white/70 rounded-full p-2 hover:bg-white focus:outline-none focus:ring-2 focus:ring-cyan-500">
                    <MdChevronLeft size={24} />
                  </button>
-                 <button onClick={nextImage} className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/70 rounded-full p-2 hover:bg-white focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                 <button onClick={nextImage} className="hidden sm:block absolute right-3 top-1/2 -translate-y-1/2 bg-white/70 rounded-full p-2 hover:bg-white focus:outline-none focus:ring-2 focus:ring-cyan-500">
                    <MdChevronRight size={24} />
                  </button>
                </>
@@ -193,14 +197,14 @@ const ProductOverview = ({ details, id }) => {
              </button>
            </div>
            {imagesToShow.length > 1 && (
-             <div className="flex flex-wrap gap-2"> 
+             <div className="flex flex-wrap sm:gap-2 gap-1"> 
                {imagesToShow.map((imgSrc, index) => (
                  <img
                    key={index}
                    src={imgSrc}
                    alt={`thumbnail ${index + 1}`}
                    onClick={() => setCurrentImageIndex(index)}
-                   className={`w-[calc(20%-0.4rem)] h-20 object-cover rounded-lg cursor-pointer border-2 ${ 
+                   className={`sm:w-[calc(20%-0.4rem)] w-[calc(25%-0.5rem)] h-16 object-cover rounded-lg cursor-pointer border-2 ${ 
                      index === currentImageIndex ? 'border-cyan-500' : 'border-transparent'
                    }`}
                  />
@@ -221,12 +225,12 @@ const ProductOverview = ({ details, id }) => {
 
       {/* --- About this Product --- */}
       <div className='border-t border-[#B7B7B7] my-10'>
-          <h2 className="text-[28px] font-bold text-[#1E1E1E] mt-10 mb-6">About this Product</h2>
+          <h2 className={cn(headerClasses, 'mt-10 mb-6')}>About this Product</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-8">
             {/* first filter out condition before mapping */}
             {Object.entries(specs).filter(([key, value])=>key !== 'condition').map(([key, value])=>{
                 return (
-                    <SpecItem label={key} value={value} key={key}/>
+                    <SpecItem label={formatKey(key)} value={value} key={key}/>
                 )
             })}
           </div>
@@ -234,12 +238,12 @@ const ProductOverview = ({ details, id }) => {
 
       {/* --- Description --- */}
       <div className='border-t border-[#B7B7B7] my-10'>
-        <h2 className="text-[28px] text-[#1E1E1E] font-bold mt-10 mb-4">Description</h2>
-        <p className="text-[#666666] font-medium text-2xl leading-relaxed">{details.ad.description}</p>
+        <h2 className={cn(headerClasses, "mt-10 mb-4")}>Description</h2>
+        <p className="text-[#666666] font-medium sm:text-xl text-lg leading-relaxed">{details.ad.description}</p>
       </div>
-      {/* --- ADDED: Safety Tips Section --- */}
+      {/* --- Safety Tips Section --- */}
       <div className="border-t border-[#B7B7B7] my-10 pt-10"> 
-        <h2 className="text-xl font-bold text-gray-800 mb-4">Safety Tips</h2>
+        <h2 className={cn(headerClasses, 'mb-4')}>Safety Tips</h2>
         <ul className="space-y-3">
           {safetyTips.map((tip, index) => (
             <li key={index} className="flex items-center text-sm text-gray-700">

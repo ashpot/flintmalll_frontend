@@ -136,17 +136,14 @@ const Footer = () => {
                 services.
               </p>
               <div className="md:flex justify-start my-8 space-x-10 hidden ">
-                <a href="" className="bg-primaryLight p-2 rounded-full text-white">
+                <a href="https://facebook.com/Flintmallonline" target='_blank' className="bg-primaryLight p-2 rounded-full text-white">
                   <FaFacebook size={20} />
                 </a>
-                <a href="" className="bg-primaryLight p-2 rounded-full text-white">
+                <a href="https://instagram.com/flintmallonline" target='_blank' className="bg-primaryLight p-2 rounded-full text-white">
                   <FaInstagram size={20} />
                 </a>
-                <a href="" className="bg-primaryLight p-2 rounded-full text-white">
+                <a href="https://x.com/flintmall" target='_blank' className="bg-primaryLight p-2 rounded-full text-white">
                   <FaXTwitter size={20} />
-                </a>
-                <a href="" className="bg-primaryLight p-2 rounded-full text-white">
-                  <FaLinkedin size={20} />
                 </a>
               </div>
             </div>
@@ -189,17 +186,14 @@ const Footer = () => {
                 </p>
               </div>
               <div className="flex justify-center gap-6 pt-7 md:hidden">
-                <a href="" className="bg-primaryLight p-2 rounded-full text-white">
+                <a href="https://facebook.com/Flintmallonline" target='_blank' className="bg-primaryLight p-2 rounded-full text-white">
                   <FaFacebook size={30} />
                 </a>
-                <a href="" className="bg-primaryLight p-2 rounded-full text-white">
+                <a href="https://instagram.com/flintmallonline" target='_blank' className="bg-primaryLight p-2 rounded-full text-white">
                   <FaInstagram size={30} />
                 </a>
-                <a href="" className="bg-primaryLight p-2 rounded-full text-white">
+                <a href="https://x.com/flintmall" target='_blank' className="bg-primaryLight p-2 rounded-full text-white">
                   <FaXTwitter size={30} />
-                </a>
-                <a href="" className="bg-primaryLight p-2 rounded-full text-white">
-                  <FaLinkedin size={30} />
                 </a>
               </div>
             </div>

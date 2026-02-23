@@ -25,7 +25,7 @@ const ProductCard = ({
     return (
     <div 
         onClick={handleCardClick}
-        className="max-w-sm bg-white rounded-[1.3rem] border-2 border-[#00C2F3] overflow-hidden font-sans shadow-sm"
+        className="max-w-sm bg-white rounded-[1.3rem] border-2 border-[#00C2F3] overflow-hidden font-sans shadow-sm hover:cursor-pointer"
     >
       {/* Image Container */}
       <div className="relative">

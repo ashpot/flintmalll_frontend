@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MdOutlinePhoneIphone, MdOutlineStorage } from "react-icons/md";
 import { RiRam2Fill } from "react-icons/ri";
 import { BiSolidError } from "react-icons/bi";
@@ -14,8 +14,10 @@ import Beauty from '../../assets/images/Health and beauty.png';
 import profilePhoto from '../../assets/images/profilePhoto.png';
 import { PiTagSimpleFill } from 'react-icons/pi';
 import SpecItem from '../common/SpecItem';
+import { formatKey } from '../../lib/formatKey';
+import { cn } from '../../lib/Utils';
 
-const Step5_Review = ({ onNext, goToStep, formData }) => { 
+const Step5_Review = ({ onNext, goToStep, formData, isLoading }) => {
   const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
   const userInformation = JSON.parse(localStorage.getItem('currentUser')) || [];
   const seller = userInformation.user;
@@ -181,7 +183,7 @@ const Step5_Review = ({ onNext, goToStep, formData }) => {
         <div className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-8">
           {Object.entries(data.product_details).map(([key, value])=>{
             return (
-              <SpecItem label={key} value={value} key={key}/>
+              <SpecItem label={formatKey(key)} value={value} key={key}/>
             )
           })}
         </div>
@@ -222,9 +224,18 @@ const Step5_Review = ({ onNext, goToStep, formData }) => {
       <div className="pt-6 sm:w-[60%] mx-auto">
         <button
           onClick={onNext}
-          className="w-full bg-primary text-white font-semibold py-3 rounded-xl hover:bg-primaryLight transition-colors"
+          className={cn("w-full bg-primary text-white font-semibold py-3 rounded-xl hover:bg-primaryLight transition-colors",
+            isLoading ? 'bg-primaryLight cursor-not-allowed' : 'bg-primary'
+          )}
         >
-          Publish Ad
+          {isLoading ? (
+            <div className="flex justify-center items-center gap-2">
+              <div className="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full"></div>
+                Publishing...
+            </div>
+          ) : (
+            "Publish Ad"
+          )}
         </button>
       </div>
     </div>

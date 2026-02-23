@@ -102,7 +102,7 @@ const CategoryDetails = () => {
           basePath={`/category/${id}`}
         />
 
-        <div className="space-y-10 mb-10">
+      <div className="space-y-10 mb-10 w-full md:w-[85%] mx-auto px-4">
           <AdSection title="Premium Ads" ads={premiumAds} adType="premium" />
           <AdSection title="Recent Ads" ads={trendingAds} adType="trending" />
         </div>

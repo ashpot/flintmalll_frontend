@@ -38,7 +38,7 @@ const HeroSearch = () => {
       <div className="max-w-5xl mx-auto bg-white border border-[#F2F2F2] rounded-2xl shadow-lg p-2">
         <form
           onSubmit={handleSearch}
-          className="flex flex-col md:flex-row md:items-center divide-y md:divide-y-0 md:divide-x divide-gray-200"
+          className=" flex flex-col lg:flex-row lg:items-center divide-y lg:divide-y-0 lg:divide-x divide-gray-200"
         >
           <div className="flex-1 p-3">
             <input

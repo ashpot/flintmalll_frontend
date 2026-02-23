@@ -9,12 +9,14 @@ import { API_ENDPOINTS } from '../../services/api';
 import ContactSellerFlow from './ContactSellerFlow';
 import { OpenModalContext, OpenReportModalContext } from './Context';
 import ReportModal from '../../components/modals/ReportModal';
+import { lockScroll } from '../../lib/LockScroll';
 
 const ProductDetails = () => {
 	const [details, setDetails] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [isOpen, setIsOpen] = useState(false);
 	const [openReport, setOpenReport] = useState(false);
+	const shouldLockScroll = isOpen || openReport;
 	const {id} = useParams();
 	const token = localStorage.getItem("authToken");
 	useEffect(() => {
@@ -45,27 +47,11 @@ const ProductDetails = () => {
 
 		fetchData();
 		}, [id]);
-		
-		useEffect(() => {
-			if (details) {
-				console.log("Updated details:", details);
-			}
-		}, [details]);
 
 		// lock page scrolling when a modal is open
 		useEffect(() => {
-			const shouldLockScroll = openReport || isOpen;
-
-			if (shouldLockScroll) {
-				document.body.classList.add("overflow-hidden");
-			} else {
-				document.body.classList.remove("overflow-hidden");
-			}
-
-			return () => {
-				document.body.classList.remove("overflow-hidden");
-			};
-			}, [openReport, isOpen]);
+			lockScroll(shouldLockScroll)
+		}, [openReport, isOpen]);
 
   return (
 		<div className='relative'>
@@ -97,10 +83,15 @@ const ProductDetails = () => {
 					<ProductOverview details={details} id={id} />
 				</>
 			) : (
-				<p className="text-center mt-10">No product found.</p>
+				<p className="text-center mt-10">No products found.</p>
 			)}
 			</div>
-	  			{isOpen && <ContactSellerFlow info={details.ad.user}/>}
+	  			{isOpen && 
+					<ContactSellerFlow 
+						title={details.ad.title}
+						info={details.ad.user} 
+						negotiable={details.ad.is_negotiable} 
+						price={details.ad.price} />}
 				{openReport && <ReportModal onClose={()=>setOpenReport(false)}/>}
 			</OpenModalContext.Provider>
 			</OpenReportModalContext.Provider>

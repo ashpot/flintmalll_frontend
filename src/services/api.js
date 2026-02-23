@@ -3,8 +3,6 @@ export const API_TEST_URL = "https://billwev.pythonanywhere.com/api/v1";
 export const API_BASE_URL = API_LIVE_URL;
 
 export const API_ENDPOINTS = {
-  // -------- 1. STATIC ENDPOINTS -----------
-
   // --- AUTHENTICATION & VERIFICATION (POST) ---
   SIGNUP: `${API_BASE_URL}/auth/register/`,
   LOGIN: `${API_BASE_URL}/auth/login/`,
@@ -43,9 +41,8 @@ export const API_ENDPOINTS = {
   GET_ALL_MESSAGES: `${API_BASE_URL}/conversations/messages/`,
   SEND_MESSAGE: `${API_BASE_URL}/messages/send/`, 
   MARK_NOTIFICATIONS_READ: `${API_BASE_URL}/notifications/read-all/`, 
+  GET_COMPANY_DETAILS: `${API_BASE_URL}/company/`,
 
-
-  // -------- 2. DYNAMIC ENDPOINTS ----------
 
   // --- CATEGORY DETAILS ---
   // Load details of a particular category
