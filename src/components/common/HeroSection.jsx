@@ -48,8 +48,7 @@ const Hero = () => {
           backgroundSize: 'cover',
           backgroundPosition: 'top',
           minHeight: '100vh',
-          paddingTop: '20px',
-          paddingBottom: '20px',
+          paddingTop: '50px',
         }}
       >
         <div className="text-left relative text-white">
