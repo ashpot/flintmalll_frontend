@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import heroImageBuyers from '../../assets/images/Hero Frame 1.png';
-import heroImageSellers from '../../assets/images/Hero Frame 2.png';
+import heroImageBuyers from '../../assets/images/HeroFrame_1.webp';
+import heroImageSellers from '../../assets/images/HeroFrame_2.webp';
 import { HashLink as Link } from 'react-router-hash-link';
 
 const slides = [
@@ -10,7 +10,7 @@ const slides = [
     title: 'Find Anything You Need',
     subtitle: 'Discover thousands of items for sale from your local community.',
     buttonText: 'Start Browsing',
-    buttonLink: '#adSection', 
+    buttonLink: '#ads', 
   },
   {
     image: heroImageSellers,
@@ -41,7 +41,7 @@ const Hero = () => {
     <section id="home" className="relative md:my-10">
       <div
         className="relative w-full md:w-[85%] mx-auto bg-no-repeat sm:rounded-b-[30px] md:rounded-3xl flex items-center justify-start transition-all duration-500"
-        loading="lazy"
+        loading="eager"
         style={{
           backgroundImage: `url(${slide.image})`,
           backgroundBlendMode: 'overlay',

@@ -107,7 +107,7 @@ const LandingPage = () => {
         basePath="category"
       />
 
-      <div className="space-y-10 mb-10 w-full md:w-[85%] mx-auto px-4">
+      <div className="space-y-10 mb-10 w-full md:w-[85%] mx-auto px-4 flex flex-col items-center" id="ads">
         <AdSection title="Premium Ads" ads={premiumAds} adType="premium" />
         <AdSection title="Trending Ads" ads={trendingAds} adType="trending" />
       </div>

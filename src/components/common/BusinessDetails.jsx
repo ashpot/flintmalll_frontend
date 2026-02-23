@@ -34,7 +34,7 @@ const BusinessDetails = ({seller}) => {
           {/* Seller Info */}
           <div className="flex-1">
             <div className="flex items-center gap-3">
-              <h2 className="text-2xl font-bold text-gray-800 capitalize">
+              <h2 className="sm:text-2xl text-xl font-bold text-gray-800 capitalize">
                 {isBusiness ? seller.business_name : `${seller.first_name} ${seller.last_name}`}
               </h2>
 
@@ -50,8 +50,8 @@ const BusinessDetails = ({seller}) => {
 
             {/* Response Time */}
             <div className="flex items-center gap-2 text-green-600 mt-2">
-              <span className="w-3 h-3 bg-green-600 rounded-full"></span>
-              <span className="font-medium">
+              <span className="hidden sm:block w-3 h-3 bg-green-600 rounded-full" />
+              <span className="font-medium sm:text-base text-sm">
                 Typically replies in a few minutes.
               </span>
             </div>

@@ -47,12 +47,6 @@ const ProductDetails = () => {
 
 		fetchData();
 		}, [id]);
-		
-		// useEffect(() => {
-		// 	if (details) {
-		// 		console.log("Updated details:", details);
-		// 	}
-		// }, [details]);
 
 		// lock page scrolling when a modal is open
 		useEffect(() => {
@@ -89,7 +83,7 @@ const ProductDetails = () => {
 					<ProductOverview details={details} id={id} />
 				</>
 			) : (
-				<p className="text-center mt-10">No product found.</p>
+				<p className="text-center mt-10">No products found.</p>
 			)}
 			</div>
 	  			{isOpen && 
