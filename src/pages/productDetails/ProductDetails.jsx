@@ -47,7 +47,7 @@ const ProductDetails = () => {
 
 		fetchData();
 		}, [id]);
-
+		
 		// lock page scrolling when a modal is open
 		useEffect(() => {
 			lockScroll(shouldLockScroll)

@@ -55,6 +55,7 @@ const Step_EnterCode = ({ phoneNumber, onVerify, onBack }) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
+    console.log(response)
     switch (response.status) {
         case 200:
             onVerify();
