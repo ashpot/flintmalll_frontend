@@ -123,7 +123,7 @@ const ProductOverview = ({ details, id }) => {
       observer.observe(sectionRef.current);
       return () => observer.disconnect();
     }, [hasFetched, id, token])
-    // images = [details.ad.cover_photo, details.photos.ad.photo_url]
+    const images = [details.ad.cover_photo, details.photos.photo]
   // --- Mock Data ---
   const mockFormData = {
     images: [
@@ -140,8 +140,8 @@ const ProductOverview = ({ details, id }) => {
   };
 
   const data = mockFormData;
-  // const imagesToShow = Array.isArray(images) && images.length > 0 ? images : [];
-  const imagesToShow = Array.isArray(data.images) && data.images.length > 0 ? data.images : [];
+  const imagesToShow = Array.isArray(images) && images.length > 0 ? images : [];
+  // const imagesToShow = Array.isArray(data.images) && data.images.length > 0 ? data.images : [];
   // --- End Mock Data ---
 
   // Image Carousel Functions

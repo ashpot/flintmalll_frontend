@@ -47,7 +47,11 @@ const ProductDetails = () => {
 
 		fetchData();
 		}, [id]);
-		
+		useEffect(() => {
+			if (details) {
+				console.log("Updated details:", details);
+			}
+		}, [details]);
 		// lock page scrolling when a modal is open
 		useEffect(() => {
 			lockScroll(shouldLockScroll)
@@ -92,7 +96,7 @@ const ProductDetails = () => {
 						info={details.ad.user} 
 						negotiable={details.ad.is_negotiable} 
 						price={details.ad.price} />}
-				{openReport && <ReportModal onClose={()=>setOpenReport(false)}/>}
+				{openReport && <ReportModal onClose={setOpenReport} adType={details.ad.ad_type.id}/>}
 			</OpenModalContext.Provider>
 			</OpenReportModalContext.Provider>
 			

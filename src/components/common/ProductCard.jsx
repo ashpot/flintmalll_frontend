@@ -33,6 +33,7 @@ const ProductCard = ({
       {/* Image Container */}
       <div className="relative">
         <img 
+        loading="lazy"
           src={image}
           alt="MacBook Pro book" 
           className="w-full h-72 object-cover rounded-[1.3rem]"

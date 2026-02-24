@@ -42,6 +42,7 @@ export const API_ENDPOINTS = {
   SEND_MESSAGE: `${API_BASE_URL}/messages/send/`, 
   MARK_NOTIFICATIONS_READ: `${API_BASE_URL}/notifications/read-all/`, 
   GET_COMPANY_DETAILS: `${API_BASE_URL}/company/`,
+  REPORT_AD: `${API_BASE_URL}/reports`,
 
 
   // --- CATEGORY DETAILS ---
