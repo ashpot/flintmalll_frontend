@@ -3,6 +3,7 @@ import { HiOutlineMapPin } from "react-icons/hi2";
 import { formatPrice } from "../../lib/formatPrice";
 import { useNavigate } from "react-router-dom";
 import { FaCrown } from "react-icons/fa";
+import { cn } from "../../lib/Utils";
 
 const ProductCard = ({
     id,
@@ -25,14 +26,17 @@ const ProductCard = ({
     return (
     <div 
         onClick={handleCardClick}
-        className="max-w-sm bg-white rounded-[1.3rem] border-2 border-[#00C2F3] overflow-hidden font-sans shadow-sm hover:cursor-pointer"
+        className={cn("max-w-sm bg-white rounded-[1.3rem] border-2 overflow-hidden font-sans shadow-sm hover:cursor-pointer",
+          is_premium ? 'border-[#FDB813]' : 'border-[#00C2F3]'
+        )}
     >
       {/* Image Container */}
       <div className="relative">
         <img 
+        loading="lazy"
           src={image}
           alt="MacBook Pro book" 
-          className="w-full h-72 object-contain rounded-[1.3rem]"
+          className="w-full h-72 object-cover rounded-[1.3rem]"
         />
         
         {/* Verified Badge */}
@@ -44,17 +48,17 @@ const ProductCard = ({
        
 
         {/* Heart Icon */}
-        {/* <button className="absolute top-1 right-2 bg-white p-3 rounded-full shadow-lg text-gray-800 hover:scale-110 transition-transform flex items-center justify-center">
+        <button className="absolute top-1 right-2 bg-white p-3 rounded-full shadow-lg text-gray-800 hover:scale-110 transition-transform flex items-center justify-center">
           <HiOutlineHeart size={28} strokeWidth={2} />
-        </button> */}
+        </button>
 
         {/* crown for isPremium */}
         {is_premium && (
             <div
-                className="bg-[#FDF4E1] rounded-full p-2 shadow"
+                className="absolute top-16 right-2 bg-[#FDF4E1] p-3 rounded-full shadow-lg text-gray-800 hover:scale-110 transition-transform flex items-center justify-center"
                 aria-label="Premium Ad"
             >
-                <FaCrown className="w-5 h-5 text-[#FDB813]" />
+                <FaCrown className="text-[#FDB813]" size={27} />
             </div>
         )}
         
@@ -66,7 +70,9 @@ const ProductCard = ({
           {title}
         </h2>
         
-        <div className="text-xl font-bold text-[#00C2F3] mt-1 mb-2.5">
+        <div className={cn("text-xl font-bold mt-1 mb-2.5", 
+          is_premium ? 'text-[#FDB813]' : 'text-[#00C2F3]'
+        )}>
           ₦{formatPrice(price)}
         </div>
 

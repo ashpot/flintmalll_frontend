@@ -83,7 +83,7 @@ const HeroSearch = () => {
           <div className="p-2">
             <button
               type="submit"
-              className="w-full md:w-auto bg-secondary text-white p-3 rounded-2xl hover:bg-secondaryLight transition-colors flex items-center justify-center"
+              className="w-full lg:w-auto bg-secondary text-white p-3 rounded-2xl hover:bg-secondaryLight transition-colors flex items-center justify-center"
               aria-label="Search"
             >
               <IoSearch className="w-6 h-6" />

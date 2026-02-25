@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { IoChevronDown, IoClose } from 'react-icons/io5';
 import { cn } from '../../lib/Utils';
+import { API_ENDPOINTS } from '../../services/api';
 
-const ReportModal = ({onClose}) => {
+const ReportModal = ({onClose, adType}) => {
     const [des, setDes] = useState('');
     const [isOpen, setIsOpen] = useState(false);
     const [selectedReason, setSelectedReason] = useState("")
+    const [isLoading, setIsLoading] = useState(false);
     const reasons = [
         "Wrong Category",
         "Seller asks for prepayment",
@@ -15,13 +17,63 @@ const ReportModal = ({onClose}) => {
         "The price is wrong",
         "Other",
     ];
+    const handleReport = async()=>{
+        const token = localStorage.getItem('authToken');
+        const payload = {
+            reason: selectedReason,
+            description: des,
+            ad: adType
+        }
+        try {
+            setIsLoading(true)
+            const response = await fetch(API_ENDPOINTS.REPORT_AD, {
+                method: 'POST',
+                headers:{
+                    'Content-Type': 'application/json',
+                    Authorization: `Token ${token}`
+                },
+                body: JSON.stringify(payload)
+            })
+            
+            let data;
+            try {
+                data = await response.json()
+            } catch (parseError) {
+                data = {message: 'Unable to parse server Response'}
+            }
+
+            switch (response.status) {
+                case 200:
+                    alert(data.message || 'Report submitted successfully')
+                    onClose(false)
+                    break;
+                case 400:
+                    alert(data.message || 'Bad request. Please check your input.')
+                    break;
+                case 401:
+                    alert('Login to place a report')
+                    break;
+                case 500:
+                    alert('Server error, please try again later')
+                    break;
+                default:
+                    alert(data.message || `Unexpected error: ${response.status}. Please try again.`)
+                    break;
+            }
+        } catch (error) {
+            alert('Network error. Please check your connection.')
+        }
+        finally{
+            setIsLoading(false)
+        }
+    }
   return (
     // modal overlay
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
     {/* modal container */}
     <div className='relative bg-white rounded-3xl w-[90%] max-w-md p-8 space-y-7'>
         <button
-            onClick={onClose}
+            onClick={()=>onClose(false)}
             className="absolute top-6 right-6 text-gray-300 hover:text-gray-500"
         >
             <IoClose size={30} />
@@ -61,10 +113,20 @@ const ReportModal = ({onClose}) => {
             />
             <p className="text-xs text-right text-gray-400">{des?.length || 0}/500 characters</p>
         </div>
-
-        <button 
-            className="w-full bg-[#CC071E] hover:bg-[#CC071E]/80 text-white font-semibold py-4 rounded-2xl transition">
-            Report Abuse
+        <button
+            onClick={()=>handleReport()}
+            disabled={isLoading}
+            className={`w-full bg-[#CC071E] hover:bg-[#CC071E]/80 text-white font-semibold py-4 rounded-2xl transition
+                disabled:cursor-not-allowed`}
+            >
+            {isLoading ? (
+                <div className="flex justify-center items-center gap-2">
+                <div className="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full"></div>
+                Reporting...
+                </div>
+            ) : (
+                "Report Abuse"
+            )}
         </button>
          {/* Dropdown */}
         {isOpen && (

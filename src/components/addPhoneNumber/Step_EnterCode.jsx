@@ -4,7 +4,7 @@ import { API_ENDPOINTS } from '../../services/api';
 
 const Step_EnterCode = ({ phoneNumber, onVerify, onBack }) => {
   const [otp, setOtp] = useState(new Array(4).fill(''));
-  const [timer, setTimer] = useState(47); // From your screenshot
+  const [timer, setTimer] = useState(47); 
   const [error, setError] = useState('');
   const [resend, setResend] = useState(false)
   const inputsRef = useRef([]);
@@ -42,11 +42,12 @@ const Step_EnterCode = ({ phoneNumber, onVerify, onBack }) => {
   const handleSubmit = async (e) => {
   e.preventDefault();
   const code = otp.join('');
-  const userId = localStorage.getItem('currentUser')
+  const storedUser = localStorage.getItem("currentUser")
+  const userId = storedUser ? JSON.parse(storedUser) : null;
   try {
     const payload = {
       phone: phoneNumber,
-      user_id: userId.user.id,
+      user_id: userId,
       otp: code,
     }
     const response = await fetch(API_ENDPOINTS.VERIFY_PHONE_OTP, {
@@ -54,21 +55,22 @@ const Step_EnterCode = ({ phoneNumber, onVerify, onBack }) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
-    
+    console.log(response)
     switch (response.status) {
-            case 200:
-                onVerify();
-                break;
-            case 409:
-                setError('Phone already used')
-                break;
-            case 400:
-                setError('Invalid or expired OTP')
-                break;
-            default:
-              setError('please try again later')
-              break
-          }
+        case 200:
+            onVerify();
+            break;
+        case 409:
+            setError('Phone already used')
+            break;
+        case 400:
+            setError('Invalid or expired OTP')
+            break;
+        default:
+          setError('please try again later')
+          break
+      }
+
   } catch (err) {
     setError('Server error. Try again later.');
   }
@@ -119,7 +121,7 @@ const handleResendOtp = async (e) => {
         Please enter the code we sent to {phoneNumber}.
       </p>
 
-      <form className="space-y-6" onSubmit={handleSubmit}>
+      <form className="space-y-6" onSubmit={(e)=>handleSubmit(e)}>
         {/* OTP Boxes */}
         <div className="flex space-x-5 items-center justify-center">
           {otp.map((data, index) => (
