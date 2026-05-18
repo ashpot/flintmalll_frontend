@@ -438,7 +438,6 @@ const PostAdFlow = () => {
 
   const renderStep = () => {
     switch(step){
-
       case 1:
         return(
           <Step1_Category
@@ -506,6 +505,7 @@ const PostAdFlow = () => {
   return (
     <div className="bg-[#F7F7F7] min-h-screen flex flex-col">
       <title>Flintmall - Post Ad</title>
+
       <Navbar
         rightContent={
           <div className='flex items-center gap-4 text-lg font-medium cursor-pointer'>
@@ -528,6 +528,11 @@ const PostAdFlow = () => {
             >
               <MdOutlineArrowBackIos size={20}/>
             </button>
+
+            <h1 className="sm:text-[28px] text-2xl text-primary">
+              Post Ad
+            </h1>
+
             <h1 className="sm:text-[28px] text-2xl text-primary">
               Post Ad
             </h1>
@@ -537,6 +542,7 @@ const PostAdFlow = () => {
             >
               Clear
             </button>
+
           </header>
           <p className="text-[#666666] font-medium sm:text-lg text-base mb-6">
             Complete the steps below to list your item.
