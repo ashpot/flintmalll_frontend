@@ -2,15 +2,16 @@ import React, { useState } from 'react';
 import logo from '../../../assets/images/Logo.png';
 import forgotPassword from '../../../assets/images/forgotpassword.png';
 import { IoIosArrowBack } from "react-icons/io";
-// import { adminForgetPassword } from "../../services/authService";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { adminForgotPassword } from '../../../services/adminAuthService';
+import Alert from '../../../components/ui/Alert';
 
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-//   const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setEmail(e.target.value);
@@ -23,33 +24,32 @@ const ForgotPasswordPage = () => {
     setMessage("");
     setError("");
 
-    // try {
-    //   const data = await adminForgetPassword({ email });
+    if (!email.trim()) {
+      setError("Email is required");
+      setIsLoading(false);
+      return;
+    }
 
-    //   if (data.success) {
-    //     setMessage(data.message || "Password reset link sent!");
-    //     // store token temporarily if backend gives it (dev only)
-    //     if (data.token) {
-    //       localStorage.setItem("admin_reset_token", data.token);
-    //     }
-    //     // redirect to CheckEmail screen
-    //     navigate("/dashboard/check-email");
-    //   }
-    // } catch (err) {
-    //   setError(err.message || "Failed to send reset link");
-    // } finally {
-    //   setIsLoading(false);
-    // }
+    try {
+      await adminForgotPassword({ email });
+      setMessage("Reset code sent to your email.");
+      setTimeout(() => {
+        navigate('/dashboard/check-email', { state: { email } });
+      }, 800);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className="min-h-screen p-4 w-[90%] mx-auto">
       <div className="flex mb-6">
-          <img src={logo} alt="Flintmall Logo" className="h-10" />
+		    <img src={logo} alt="Flintmall Logo" className="h-10" />
       </div>
 
       <div className="max-w-md w-full mx-auto items-center justify-center">
-        
 
         <div className="flex justify-center mb-6">
 			    <img src={forgotPassword} alt="Forgot Password" className='w-[50%]' />
@@ -72,7 +72,6 @@ const ForgotPasswordPage = () => {
               }`}
               disabled={isLoading}
             />
-            {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
           </div>
           <button
             type="submit"
@@ -87,12 +86,13 @@ const ForgotPasswordPage = () => {
 
         {/* Back to Login */}
         <a
-          href="/dashboard/login"
+          href="/dashboard/signin"
           className="flex justify-center items-center font-semibold text-[18.99px] mt-4 p-3 rounded-md bg-[#F7F7F7] text-[#666666] hover:text-secondary "
         > <IoIosArrowBack className='mr-7'/> Back to login
         </a>
 
-        {message && <p className="text-center text-green-500 mt-4">{message}</p>}
+        <Alert type="success" message={message} onClose={() => setMessage('')} />
+        <Alert type="error" message={error} onClose={() => setError('')} />
       </div>
     </div>
   );

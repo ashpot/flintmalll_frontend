@@ -69,4 +69,26 @@ export const API_ENDPOINTS = {
   SAVE_AD: (id) => `${API_BASE_URL}/ads/${id}/save/`,
   // Check if an ad is already saved by the user
   CHECK_AD_SAVED: (id) => `${API_BASE_URL}/ads/${id}/saved/`,
+
+
+  // --- ADMIN AUTH (POST) ---
+  ADMIN_REGISTER: `${API_BASE_URL}/admin/auth/register/`,
+  ADMIN_LOGIN: `${API_BASE_URL}/admin/auth/login/`,
+  ADMIN_FORGOT_PASSWORD: `${API_BASE_URL}/admin/auth/password/forgot/`,
+  ADMIN_CONFIRM_RESET_OTP: `${API_BASE_URL}/admin/auth/password/otp/confirm/`,
+  ADMIN_RESET_PASSWORD: `${API_BASE_URL}/admin/auth/password/reset/`,
+
+  // --- ADMIN DASHBOARD (GET) ---
+  ADMIN_DASHBOARD: `${API_BASE_URL}/admin/dashboard/`, // append ?period=day|week|month
+
+  // --- ADMIN USER MANAGEMENT ---
+  ADMIN_USERS_LIST: `${API_BASE_URL}/admin/users/`,
+  ADMIN_USER_DETAILS: (id) => `${API_BASE_URL}/admin/users/${id}/`,
+  ADMIN_BLOCK_USER: (id) => `${API_BASE_URL}/admin/users/${id}/block/`,
+
+  // --- ADMIN AD MANAGEMENT ---
+  ADMIN_ADS_LIST: `${API_BASE_URL}/admin/ads/`,
+  ADMIN_AD_DETAILS: (id) => `${API_BASE_URL}/admin/ads/${id}/`,
+  ADMIN_APPROVE_AD: (id) => `${API_BASE_URL}/admin/ads/${id}/approve/`,
+  ADMIN_REJECT_AD: (id) => `${API_BASE_URL}/admin/ads/${id}/reject/`,
 };

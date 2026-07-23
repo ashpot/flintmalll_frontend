@@ -2,7 +2,7 @@ import './css/styles.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 // --- Layouts ---
-import DashboardLayout from './components/layout/DashboardLayout'; 
+import DashboardLayout from './components/layout/DashboardLayout';
 import AdManagementLayout from './components/layout/AdManagement';
 import PaymentsLayout from './components/layout/PaymentLayout';
 import SupportLayout from './components/layout/SupportLayout';
@@ -59,6 +59,8 @@ import AdminRoles from './pages/dashboard/Settings/AdminRoles';
 import ProfileSettings from './pages/dashboard/ProfileSettings';
 import Notification from './pages/Notification/Notification';
 import Chat from './pages/chat/Chat';
+import SigninPage from './pages/dashboard/auth/Signin';
+import ProtectedRoute from './components/auth/ProtectedRoute';
 
 
 function App() {
@@ -66,7 +68,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        
+
         <Route index element={<LandingPage />} />
         <Route path='/login' element={<SignIn />} />
         <Route path='/signup' element={<SignUp />} />
@@ -86,7 +88,7 @@ function App() {
         <Route path='/privacy-policy' element={<PrivacyPolicy />} />
         <Route path='/FAQ' element={<Faq />} />
         <Route path='/terms-of-service' element={<TermsOfService />} />
-        <Route path='/safety-tips' element={<SafetyTips />} />  
+        <Route path='/safety-tips' element={<SafetyTips />} />
         <Route path='profile-settings' element={<ProfileSettings />} />
         <Route path='/edit-profile' element={<EditProfile />} />
         <Route path='/saved-items' element={<SavedItems />} />
@@ -95,26 +97,26 @@ function App() {
         <Route path='/Notifications' element={<Notification />} />
         <Route path='/Chats' element={<Chat />} />
         {/* DASHBOARD AUTH ROUTES  */}
-        
+
         <Route path='/dashboard/signup' element={<SignupPage />} />
-        <Route path='/dashboard/login' element={<LoginPage />} />
+        <Route path='/dashboard/signin' element={<SigninPage />} />
         <Route path='/dashboard/forgot-password' element={<ForgotPasswordPage />} />
         <Route path='/dashboard/check-email' element={<CheckEmail />} />
         <Route path='/dashboard/reset-password' element={<ResetPassword />} />
         <Route path='/dashboard/secured-password' element={<SecuredPassword />} />
 
         {/* MAIN DASHBOARD ROUTES  */}
-            
-        <Route path="/dashboard" element={<DashboardLayout />}>
-          
-          <Route index element={<Overview />} /> 
-          
-          <Route path="overview" element={<Overview />} /> 
+
+        <Route path="/dashboard" element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
+          <Route index element={<Overview />} />
+
+          <Route path="overview" element={<Overview />} />
 
           <Route path="user-management" element={<UserManagement />} />
 
           <Route path="ad-management" element={<AdManagementLayout />}>
             <Route index element={<PendingAds />} />
+            <Route path="pending" element={<PendingAds />} />
             <Route path="active" element={<ActiveAds />} />
             <Route path="reported" element={<ReportedAds />} />
           </Route>
@@ -137,10 +139,10 @@ function App() {
             <Route index element={<Categories />} />
             <Route path="roles" element={<AdminRoles />} />
           </Route>
-         
+
         </Route>
         {/* other routes */}
-        
+
       </Routes>
     </BrowserRouter>
   )

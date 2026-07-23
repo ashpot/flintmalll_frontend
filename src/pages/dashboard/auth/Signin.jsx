@@ -4,8 +4,9 @@ import signupImage from '../../../assets/images/signupImage.png';
 import { FaEyeSlash } from 'react-icons/fa';
 import { IoEyeSharp } from 'react-icons/io5';
 import { useNavigate } from "react-router-dom";
+import { adminLogin } from '../../../services/adminAuthService';
 
-const LoginPage = () => {
+const SigninPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({ username: '', password: '' });
   const [message, setMessage] = useState('');
@@ -40,7 +41,7 @@ const LoginPage = () => {
     setError("");
     setFieldErrors({});
 
-    //client-side validation
+    // client-side validation
     const errors = validateFormClientSide();
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors);
@@ -48,7 +49,15 @@ const LoginPage = () => {
       return;
     }
 
-    
+    try {
+      await adminLogin({ username: formData.username, password: formData.password });
+      setMessage("Login successful. Redirecting...");
+      setTimeout(() => navigate('/dashboard'), 800);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -56,7 +65,7 @@ const LoginPage = () => {
       <div onClick={() => navigate('/')} className="cursor-pointer mb-10">
 		<img src={logo} alt="Logo" className="w-32 md:w-[20%]" />
 	  </div>
-     
+
       <div className="flex justify-between gap-14 h-full">
         {/* Left Side - Login Form */}
         <div className="w-1/2 py-10">
@@ -147,4 +156,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default SigninPage;
