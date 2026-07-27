@@ -1,9 +1,11 @@
-
 import React, { useState } from 'react';
 import logo from '../../../assets/images/Logo.png';
 import resetPassword from '../../../assets/images/resetpassword.png';
 import { IoEyeSharp } from 'react-icons/io5';
 import { FaEyeSlash } from 'react-icons/fa';
+import { useNavigate, useLocation } from "react-router-dom";
+import { adminResetPassword } from '../../../services/adminAuthService';
+import Alert from '../../../components/ui/Alert';
 
 const ResetPassword = () => {
   const [password, setPassword] = useState('');
@@ -13,10 +15,10 @@ const ResetPassword = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-//   const navigate = useNavigate();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  // get token from URL param: /resetpassword/:token
-//   const { token } = useParams();
+  const email = location.state?.email;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,7 +26,12 @@ const ResetPassword = () => {
     setMessage('');
     setError('');
 
-    // Client-side validation
+    if (!email) {
+      setError('Missing email. Please restart the password reset process.');
+      setIsLoading(false);
+      return;
+    }
+
     if (!password.trim() || !confirmPassword.trim()) {
       setError('Both password and confirm password are required');
       setIsLoading(false);
@@ -35,7 +42,20 @@ const ResetPassword = () => {
       setIsLoading(false);
       return;
     }
-  }
+
+    try {
+      await adminResetPassword({ email, password, password2: confirmPassword });
+      setMessage('Password reset successfully.');
+      setTimeout(() => {
+        navigate('/dashboard/secured-password');
+      }, 800);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen p-4 w-[90%] mx-auto">
       <div className="flex mb-6">
@@ -64,6 +84,7 @@ const ResetPassword = () => {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="New Password"
               className="w-full p-3 text-[16.61px] border-[#E7ECF2] bg-[#F7F7F7] text-[#666666] font-medium text-base rounded-xl focus:outline-none focus:ring-2 focus:ring-secondaryLight placeholder:text-[#666666] pr-10"
+              disabled={isLoading}
             />
             <button
               type="button"
@@ -82,6 +103,7 @@ const ResetPassword = () => {
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Re-enter Password"
               className="w-full p-3 text-[16.61px] border-[#E7ECF2] bg-[#F7F7F7] text-[#666666] font-medium text-base rounded-xl focus:outline-none focus:ring-2 focus:ring-secondaryLight placeholder:text-[#666666] pr-10"
+              disabled={isLoading}
             />
             <button
               type="button"
@@ -104,8 +126,8 @@ const ResetPassword = () => {
           </button>
         </form>
 
-        {message && <p className="text-center text-green-500 mt-4">{message}</p>}
-        {error && <p className="text-center text-red-500 mt-4">{error}</p>}
+        <Alert type="success" message={message} onClose={() => setMessage('')} />
+        <Alert type="error" message={error} onClose={() => setError('')} />
       </div>
     </div>
   );

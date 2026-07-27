@@ -7,7 +7,7 @@ const SecuredPassword = () => {
   const navigate = useNavigate();
 
   const handleGoToLogin = () => {
-    navigate("/dashboard/login");
+    navigate("/dashboard/signin");
   };
 
   return (
