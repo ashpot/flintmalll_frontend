@@ -63,8 +63,8 @@ const SigninPage = () => {
   return (
     <div className="min-h-screen max-w-5xl mx-auto my-9">
       <div onClick={() => navigate('/')} className="cursor-pointer mb-10">
-		<img src={logo} alt="Logo" className="w-32 md:w-[20%]" />
-	  </div>
+        <img src={logo} alt="Logo" className="w-32 md:w-[20%]" />
+      </div>
 
       <div className="flex justify-between gap-14 h-full">
         {/* Left Side - Login Form */}
@@ -82,9 +82,8 @@ const SigninPage = () => {
                 value={formData.username}
                 onChange={handleChange}
                 placeholder="Username or Email"
-                className={`w-full p-3 border border-[#E7ECF2] bg-[#F7F7F7] text-[#666666] font-medium text-base rounded-xl focus:outline-none focus:ring-2 focus:ring-secondaryLight placeholder:text-[#666666] ${
-                  fieldErrors.username ? 'border-red-500' : 'border-[#E5E5E5]'
-                }`}
+                className={`w-full p-3 border border-[#E7ECF2] bg-[#F7F7F7] text-[#666666] font-medium text-base rounded-xl focus:outline-none focus:ring-2 focus:ring-secondaryLight placeholder:text-[#666666] ${fieldErrors.username ? 'border-red-500' : 'border-[#E5E5E5]'
+                  }`}
                 required
                 disabled={isLoading}
               />
@@ -101,9 +100,8 @@ const SigninPage = () => {
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="Password"
-                  className={`w-full p-3 border border-[#E7ECF2] bg-[#F7F7F7] text-[#666666] font-medium text-base rounded-xl focus:outline-none focus:ring-2 focus:ring-secondaryLight placeholder:text-[#666666] ${
-                    fieldErrors.password ? 'border-red-500' : 'border-[#E5E5E5]'
-                  }`}
+                  className={`w-full p-3 border border-[#E7ECF2] bg-[#F7F7F7] text-[#666666] font-medium text-base rounded-xl focus:outline-none focus:ring-2 focus:ring-secondaryLight placeholder:text-[#666666] ${fieldErrors.password ? 'border-red-500' : 'border-[#E5E5E5]'
+                    }`}
                   required
                   disabled={isLoading}
                 />
@@ -129,20 +127,13 @@ const SigninPage = () => {
             </div>
             <button
               type="submit"
-              className={`w-full py-3 bg-primary text-white text-lg font-semibold rounded-xl hover:bg-[#F5F5F5] hover:text-primary ${
-                isLoading ? 'opacity-50 cursor-not-allowed' : ''
-              }`}
+              className={`w-full py-3 bg-primary text-white text-lg font-semibold rounded-xl hover:bg-[#F5F5F5] hover:text-primary ${isLoading ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
               disabled={isLoading}
             >
               {isLoading ? 'Signing In...' : 'Login'}
             </button>
           </form>
-          <p className="text-sm font-semibold text-[#666666] mt-4">
-            Don't have an account?{' '}
-            <a href="/dashboard/signup" className="text-primary ml-2 hover:underline">
-              Create Account
-            </a>
-          </p>
           {message && <p className="text-center text-green-500 mt-4">{message}</p>}
           {error && <p className="text-center text-red-500 mt-4">{error}</p>}
         </div>

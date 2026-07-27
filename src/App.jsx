@@ -34,7 +34,6 @@ import SafetyTips from './pages/home/SafetyTips';
 
 
 // --- Dashboard Auth Pages (No Sidebar) ---
-import SignupPage from './pages/dashboard/auth/Signup'
 import LoginPage from './pages/dashboard/auth/Signin'
 import ForgotPasswordPage from './pages/dashboard/auth/ForgotPassword'
 import CheckEmail from './pages/dashboard/auth/CheckEmail'
@@ -98,7 +97,6 @@ function App() {
         <Route path='/Chats' element={<Chat />} />
         {/* DASHBOARD AUTH ROUTES  */}
 
-        <Route path='/dashboard/signup' element={<SignupPage />} />
         <Route path='/dashboard/signin' element={<SigninPage />} />
         <Route path='/dashboard/forgot-password' element={<ForgotPasswordPage />} />
         <Route path='/dashboard/check-email' element={<CheckEmail />} />
