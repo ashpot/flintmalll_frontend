@@ -33,6 +33,7 @@ const OL = ({ children }) => (
 const PrivacyPolicy = () => {
   return (
     <div className="bg-white min-h-screen text-[#1E1E1E]">
+      <title>Flintmall - Privacy Policy</title>
       <Navbar />
 
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">

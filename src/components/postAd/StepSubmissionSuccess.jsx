@@ -38,7 +38,7 @@ const Step_SubmissionSuccess = () => {
       {/* Action Buttons */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
         <button
-          onClick={() => navigate('/adverts')} // Navigate to My Ads page
+          onClick={() => navigate('/manage-ads')} // Navigate to My Ads page
           className="w-full bg-secondary text-white text-lg border font-bold py-3 rounded-xl hover:bg-secondaryLight transition-colors"
         >
           View My Ads

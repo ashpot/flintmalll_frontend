@@ -40,7 +40,7 @@ const SignInModal = ({ onClose }) => {
     
           // Save token for future requests
           localStorage.setItem("authToken", data.token);
-          localStorage.setItem("currentUser", JSON.stringify(data.user));
+          localStorage.setItem("currentUser", JSON.stringify(data));
            onClose(); // close modal after login
            window.location.reload();
     

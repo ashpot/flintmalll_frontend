@@ -12,6 +12,7 @@ import { TbTag } from "react-icons/tb";
 import { API_ENDPOINTS } from "../../services/api";
 import SignInModal from "../../components/modals/SignInModal";
 import { useNavigate } from "react-router-dom";
+import { cn } from "../../lib/Utils";
         
 
 const LandingPage = () => {
@@ -19,44 +20,46 @@ const LandingPage = () => {
   const [premiumAds, setPremiumAds] = useState([]);
   const [trendingAds, setTrendingAds] = useState([]);
   const [loading, setLoading] = useState(true);
-  const token = localStorage.getItem("authToken"); 
-  const isAuthenticated = token !== null;
   const [showSignInModal, setShowSignInModal] = useState(false);
+  const [notifications, setNotifications] = useState(0)
   const navigate = useNavigate();
 
 
-  // Fetch home data: categories + premium_ads + trending_ads
   useEffect(() => {
-    const fetchHomeData = async () => {
+      const fetchHomeData = async () => {
+      const token  =  localStorage.getItem('authToken');
+      const headers = { "Content-Type": "application/json" }
+      if (token) {
+        headers["Authorization"] = `Token ${token}`;
+      }
+      const url = token ? API_ENDPOINTS.HOME_DATA_AUTH : API_ENDPOINTS.HOME_DATA_GUEST;
       try {
-        
-        const response = await fetch(API_ENDPOINTS.HOMEDATA_OFFLINE, {
+      const response = await fetch(
+        url, 
+        {
           method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-           },
-        });
-      
+          headers: headers,
+        }
+      );
 
         if (!response.ok) {
           throw new Error("Failed to load home data");
         }
 
         const data = await response.json();
-
         setCategories(data.categories || []);
         setPremiumAds(data.premium_ads || []);
         setTrendingAds(data.trending_ads || []);
-
+        setNotifications(data.notification_items)
       } catch (error) {
-        console.error("Error loading home data:", error);
+        console.error("Error loading home data");
       } finally {
         setLoading(false);
       }
     };
-
+    
     fetchHomeData();
-  }, []);
+    }, []);
 
   // Loading spinner
   if (loading) {
@@ -72,23 +75,25 @@ const LandingPage = () => {
       <Navbar
         rightContent={
           <div className="flex items-center gap-4 md:space-x-4 text-xs md:text-lg font-medium cursor-pointer">
-            <IoIosNotifications size={27} className="text-[#B7B7B7]" />
+            <div className="relative">
+              {(notifications > 0) &&  <span className={cn("block absolute h-2 w-2 bg-secondary rounded-full", 
+              "top-[15%] -translate-y-[15%] translate-x-[15%] right-[15%]")}></span>}
+              <IoIosNotifications size={28} className="text-[#B7B7B7]" onClick={()=> navigate('/Notifications')}/>
+            </div>
             <AccountDropdown />
             <button
-  onClick={() => {
-    const user = JSON.parse(localStorage.getItem("currentUser"));
-    if (!user) {
-      // Show Sign-in modal
-      setShowSignInModal(true);
-    } else {
-      // Navigate to post ad page
-      navigate("/post-ad");
-    }
-  }}
-  className="bg-secondary hover:bg-secondaryLight text-white px-3 py-2 font-medium md:text-lg rounded-2xl flex items-center gap-3"
->
-  <TbTag size={18} /> Post Ad
-</button>
+              onClick={() => {
+                const user = JSON.parse(localStorage.getItem("currentUser"));
+                if (!user) {
+                  setShowSignInModal(true);
+                } else {
+                  navigate("/post-ad");
+                }
+              }}
+              className="bg-secondary hover:bg-secondaryLight text-white px-3 py-2 font-medium md:text-lg rounded-2xl flex items-center gap-3"
+            >
+              <TbTag size={18} /> Post Ad
+            </button>
           </div>
         }
       />
@@ -102,12 +107,12 @@ const LandingPage = () => {
         basePath="category"
       />
 
-      <div id="adSection" className="space-y-10 mb-10">
+      <div className="space-y-10 mb-10 w-full md:w-[85%] mx-auto px-4 flex flex-col items-center" id="ads">
         <AdSection title="Premium Ads" ads={premiumAds} adType="premium" />
         <AdSection title="Trending Ads" ads={trendingAds} adType="trending" />
       </div>
 
-      <Button buttonTitle="Loading More Ads" linkTo="/product-details" />
+      {/* <Button buttonTitle="Loading More Ads" /> */}
       <Footer />
       {showSignInModal && (
         <SignInModal onClose={() => setShowSignInModal(false)} />

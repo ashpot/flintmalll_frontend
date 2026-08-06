@@ -3,23 +3,26 @@ import profilePhoto from '../../assets/images/profilePhoto.png';
 import { FaUser } from "react-icons/fa6";
 import { IoIosNotifications } from "react-icons/io";
 import { MdVerified, MdMessage } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
+import UserAvatar from '../../assets/images/profilePhoto.png';
+
 
 const ProfileHeader = ({ user }) => {
-  const isBusiness = user.accountType === 'personal';
-
+  const navigate = useNavigate();
+  const isBusiness = user.type === 'Business';
   return (
     <div className="bg-white p-6 rounded-2xl shadow-sm 
       flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4"
     >
       <div className="flex flex-col sm:flex-row items-center sm:space-x-4 gap-2 sm:gap-0">
         <img 
-          src={user.photo_url} 
+          src={user.photo_url || UserAvatar} 
           alt={user.first_name} 
           className="w-16 h-16 rounded-full" 
         />
         <div className="text-center sm:text-left">
-          <div className="flex flex-col sm:flex-row items-center sm:space-x-2 gap-1 sm:gap-0">
-            <h1 className="text-2xl sm:text-[28px] font-semibold text-[#1E1E1E]">
+          <div className="flex flex-row items-center sm:space-x-2 gap-3 sm:gap-0">
+            <h1 className="text-2xl sm:text-[28px] font-semibold text-[#1E1E1E] capitalize">
               {user.first_name} {user.last_name}
             </h1>
             {isBusiness ? (
@@ -34,20 +37,20 @@ const ProfileHeader = ({ user }) => {
               </span>
             )} 
           </div>
-          <p className="text-base sm:text-lg font-medium text-[#666666]">
+          {/* <p className="text-base sm:text-lg font-medium text-[#666666]">
             {user.subtitle}
-          </p>
+          </p> */}
         </div>
       </div>
 
       <div className="flex space-x-4 justify-center sm:justify-normal">
-        <button className="p-3 bg-[#E7ECF2] rounded-full hover:bg-gray-200 relative">
+        <button onClick={()=>navigate('/Notifications')} className="p-3 bg-[#E7ECF2] rounded-full hover:bg-gray-200 relative">
           <IoIosNotifications size={28} className="text-[#285386]" />
           {user.notifications > 0 && (
             <span className="absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"></span>
           )}
         </button>
-        <button className="p-3 bg-[#E7ECF2] rounded-full hover:bg-gray-200 relative">
+        <button onClick={()=>navigate('/Chats')} className="p-3 bg-[#E7ECF2] rounded-full hover:bg-gray-200 relative">
           <MdMessage size={28} className="text-[#285386]" />
           {user.messages > 0 && (
              <span className="absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"></span>

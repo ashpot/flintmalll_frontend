@@ -35,7 +35,7 @@ export default function PricingConfiguration() {
       <div className='bg-white p-5 border border-[#E5E5E5] rounded-xl shadow-sm'>
         <h3 className="text-2xl text-[#1E1E1E] font-semibold">Promotion Pricing Configuration</h3>
         <p className="text-lg font-medium text-[#666666]">Manage promotional offering prices and features</p>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-4">
           <PricingCard
             plan="Basic"
@@ -109,7 +109,7 @@ export default function PricingConfiguration() {
           <li>Consider seasonal pricing adjustments for peak periods (Black Friday, Christmas).</li>
         </ul>
       </div>
-      
+
     </div>
   );
 }

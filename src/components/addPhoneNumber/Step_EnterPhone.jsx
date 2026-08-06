@@ -1,42 +1,59 @@
 import React, { useState } from 'react';
+import { API_ENDPOINTS } from '../../services/api';
 import { MdOutlineArrowBackIos } from 'react-icons/md'; 
 import PhoneInput from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
 import '../../css/phoneInput.css';
+import { useNavigate } from 'react-router-dom';
+import { cn } from '../../lib/Utils';
 
-const Step_EnterPhone = ({ onContinue }) => {
+const Step_EnterPhone = ({ onContinue, openModal }) => {
+  const navigate = useNavigate();
+  const inputClasses = cn("mt-1 w-full px-4 py-3 font-medium sm:text-lg text-base text-[#708CAF] border border-white", 
+                                "focus:ring-2 focus:ring-secondary placeholder:text-[#708CAF] outline-none rounded-xl sm:rounded-2xl ")
   const [phone, setPhone] = useState('');
   
   const isValid = phone && phone.length > 10; 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isValid) {
-      const lastFour = phone.slice(-4);
-      const formattedPhone = `+${phone.slice(0, -10)} *** *** ${lastFour}`;
-      onContinue(formattedPhone);
+    try {
+      const response = await fetch(API_ENDPOINTS.SEND_PHONE_OTP, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone: phone })
+      });
+
+      if (response.ok) {
+        const formattedPhone = `${phone}`;
+        onContinue(formattedPhone);
+      }
+    } catch (err) {
+      console.error("Failed to send OTP", err);
     }
+    
   };
 
   return (
-    <div className="">
-		<div className='relative flex justify-center items-center'>
-			{/* Position the button absolutely on the left */}
+    <div className="pt-5 relative">
+		<div className='relative fle justify-between items-center'>
 			<button 
-				className="absolute left-0 text-[#708CAF] bg-white p-2 rounded-full cursor-not-allowed" 
-				disabled
+				className="absolute text-base sm:text-lg font-bold -top-10 text-[#708CAF] p-2 hover:underline hover:cursor-pointer" 
+        onClick={openModal}
 			>
-				<MdOutlineArrowBackIos size={20} />
+				Skip
 			</button>
 			
 			{/* The title will now be centered in the remaining space */}
-			<h2 className="text-[28px] font-bold text-primary mb-3 text-center">
+			<h2 className="sm:text-3xl text-xl font-bold text-center text-primary mb-7 text-center">
 				Add your phone number
 			</h2>
+      <div></div>
 		</div>
       
       <p className="text-primaryLight font-medium text-base text-left mb-6">
-        We’ll text a code to your phone number to finish setting up your account.
+        By selecting Continue, you agree to receive a text message with a security code. 
+        Standard rates may apply.
       </p>
 
       <form className="space-y-4" onSubmit={handleSubmit}>
@@ -48,7 +65,7 @@ const Step_EnterPhone = ({ onContinue }) => {
             placeholder="Phone Number" 
             value={phone}
             onChange={setPhone}
-            className="w-full font-medium text-lg text-primary placeholder:text-gray-400 outline-none" 
+            className="w-full font-medium sm:text-base text-sm text-primary placeholder:text-gray-400 outline-none" 
           />
         </div>
 

@@ -1,34 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { API_ENDPOINTS } from "../../services/api";
+import { cn } from "../../lib/Utils";
 
 const Step1_Category = ({ formData, setFormData, onNext }) => {
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
   const token = localStorage.getItem("authToken");
-
-  
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedSubcategory, setSelectedSubcategory] = useState("");
-  const [stateRegion, setStateRegion] = useState("");
-  const [city, setCity] = useState("");
-  const [fields, setCategoryParameters] = useState([]);
-
   const [loadingCategories, setLoadingCategories] = useState(true);
   const [loadingSubcategories, setLoadingSubcategories] = useState(false);
-
-
+   // input classes 
+   const inputClasses = "w-full p-3 sm:p-3 px-1.5 py-2 border border-[#CFD9E4] text-[#666666] sm:text-lg text-base font-semibold sm:rounded-2xl rounded-xl"
+    const labelClass = "block sm:text-lg text-base font-medium text-primary mb-2";
   // Load categories on mount
   useEffect(() => {
     async function loadCategories() {
       setLoadingCategories(true);
       try {
-        const res = await fetch(API_ENDPOINTS.CATEGORIES,{
+        const res = await fetch(API_ENDPOINTS.CATEGORIES_LIST,{
           headers: {
             "Content-Type": "application/json",
             Authorization: `Token ${token}`,
           }});
         const data = await res.json();
         setCategories(data.categories);
+
       } catch (error) {
         console.error("Error loading categories", error);
       }
@@ -42,12 +37,16 @@ const Step1_Category = ({ formData, setFormData, onNext }) => {
   // Load subcategories when category changes
   const handleCategoryChange = async (e) => {
     const categoryId = e.target.value;
-    const selectedCategory = e.target.value;
-
+    //logic to find match category name.
+    const selectedCategory = categories.find(
+      (cat) => String(cat.id) === String(categoryId)
+    );
+    const url = API_ENDPOINTS.CATEGORY_PARAMETERS(categoryId)
     setFormData({
-                  ...formData,
-                  category: selectedCategory,
-                  subcategory: ""
+        ...formData,
+        category: categoryId,
+        preview_category: selectedCategory?.title || '',
+        sub_category: ""
     });
 
     if (!selectedCategory) return;
@@ -55,7 +54,7 @@ const Step1_Category = ({ formData, setFormData, onNext }) => {
     setLoadingSubcategories(true);
 
     try {
-      const res = await fetch(`${API_ENDPOINTS.CATEGORY_PARAMETERS}${categoryId}/`, {
+      const res = await fetch(url, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Token ${token}`,
@@ -64,8 +63,7 @@ const Step1_Category = ({ formData, setFormData, onNext }) => {
 
       const data = await res.json();
       setSubcategories(data.sub_categories || []);
-	    setCategoryParameters(data.fields || []);
-      localStorage.setItem("parameters", JSON.stringify(data.fields));
+      localStorage.setItem("parameters", JSON.stringify(data.fields || []));
     } catch (error) {
       console.error("Error loading subcategories:", error);
     } finally {
@@ -77,8 +75,9 @@ const Step1_Category = ({ formData, setFormData, onNext }) => {
   
   const handleNext = () => {
     if (
+      !formData.title ||
       !formData.category ||
-      !formData.subcategory ||
+      !formData.sub_category ||
       !formData.state ||
       !formData.city
     ) {
@@ -91,28 +90,39 @@ const Step1_Category = ({ formData, setFormData, onNext }) => {
 
 
   return (
-     <div className="bg-white px-6 rounded-2xl shadow-sm my-8 py-8 max-w-4xl mx-auto w-full">
+      <div className="bg-white/80 px-6 backdrop-blur-md my-8 py-8 rounded-2xl shadow-sm md:w-full lg:max-w-5xl w-full mx-auto">
       <div className="space-y-6 max-w-4xl mx-auto">
-        <h2 className="text-2xl font-bold text-center text-primary mb-10">
+        <h2 className="sm:text-2xl text-xl font-bold text-center text-primary mb-10">
           Select Category and Location
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="md:grid flex flex-col md:grid-cols-2 gap-6 auto-rows-auto">
+          <div className="col-span-2">
+              <label className={labelClass}>
+                Title *
+              </label>
+              <textarea
+                rows="2"
+                maxLength="100"
+                value={formData.title}
+                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                placeholder="Write a title"
+                className={cn("w-full border border-[#CFD9E4] text-[#666666] sm:text-lg text-base font-semibold sm:rounded-2xl resize-none capitalize",
+                  "focus:ring-2 focus:ring-secondary outline-none rounded-xl p-3 sm:p-3 px-1.5 py-2"
+                )}
+              />  
+          </div>
 
           
-          <div>
-            <label className="block text-lg font-medium text-primary mb-2">
+          <div className="">
+            <label className={labelClass}>
               Main Category *
             </label>
 
             <select
-              className="w-full p-3 border border-[#CFD9E4] text-[#666666] text-lg font-semibold rounded-2xl"
-              /*
-              value={selectedCategory}
-              onChange={handleCategoryChange}
-              */
-             value={formData.category}
-          onChange= {handleCategoryChange}
+              className={`${inputClasses} outline-none`}
+              value={formData.category}
+              onChange= {handleCategoryChange}
             >
               <option value="">Select category</option>
 
@@ -130,22 +140,26 @@ const Step1_Category = ({ formData, setFormData, onNext }) => {
 
           
           <div>
-            <label className="block text-lg font-medium text-primary mb-2">
+            <label className={labelClass}>
               Subcategory *
             </label>
 
             <select
-              className="w-full p-3 border border-[#CFD9E4] text-[#666666] text-lg font-semibold rounded-2xl"
-             value={formData.subcategory}
-              /*
-               value={selectedSubcategory}
-              onChange={(e) => setSelectedSubcategory(e.target.value)}
-              disabled={!selectedCategory}
-              */
-             onChange={(e) =>
-            setFormData({ ...formData, subcategory: e.target.value })
-          }
-          disabled={!formData.category}
+            className={`${inputClasses} outline-none`}
+              value={formData.sub_category}
+             onChange={(e) => {
+                const subId = e.target.value;
+                const selectedSub = subcategories.find(
+                  (sub) => String(sub.id) === String(subId)
+                );
+
+                setFormData({
+                  ...formData,
+                  sub_category: subId,
+                  preview_subcategory: selectedSub?.title || "",
+                });
+              }}
+              disabled={!formData.category}
             >
               <option value="">
                 {loadingSubcategories ? "Loading..." : "Select subcategory"}
@@ -161,7 +175,7 @@ const Step1_Category = ({ formData, setFormData, onNext }) => {
 
           
           <div>
-            <label className="block text-lg font-medium text-primary mb-2">
+            <label className={labelClass}>
               State / Region *
             </label>
             <input
@@ -169,13 +183,13 @@ const Step1_Category = ({ formData, setFormData, onNext }) => {
               value={formData.state}
               onChange={(e) => setFormData({ ...formData, state: e.target.value })}
               placeholder="Enter your state"
-              className="w-full p-3 border border-[#CFD9E4] text-[#666666] text-lg font-semibold rounded-2xl"
+              className={cn(inputClasses, "focus:ring-2 focus:ring-secondary outline-none")}
             />
           </div>
 
           
           <div>
-            <label className="block text-lg font-medium text-primary mb-2">
+            <label className={labelClass}>
               City *
             </label>
             <input
@@ -183,7 +197,7 @@ const Step1_Category = ({ formData, setFormData, onNext }) => {
               value={formData.city}
               onChange={(e) => setFormData({ ...formData, city: e.target.value })}
               placeholder="Enter your city"
-              className="w-full p-3 border border-[#CFD9E4] text-[#666666] text-lg font-semibold rounded-2xl"
+              className={cn(inputClasses, "focus:ring-2 focus:ring-secondary outline-none")}
             />
           </div>
 
@@ -194,15 +208,17 @@ const Step1_Category = ({ formData, setFormData, onNext }) => {
           <button
             onClick={handleNext}
             disabled={
+              !formData.title || 
               !formData.category ||
-              !formData.subcategory ||
+              !formData.sub_category ||
               !formData.state ||
               !formData.city
             }
-            className={`w-4/5 bg-primary text-white text-base font-bold py-3 rounded-xl shadow-md 
+            className={`sm:w-4/5 w-full bg-primary text-white text-base font-bold py-3 rounded-xl shadow-md 
               transition-colors ${
+                !formData.title ||
                 !formData.category ||
-                !formData.subcategory ||
+                !formData.sub_category ||
                 !formData.state ||
                 !formData.city
                   ? "opacity-50 cursor-not-allowed"

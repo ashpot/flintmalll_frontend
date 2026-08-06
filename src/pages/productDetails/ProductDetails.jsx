@@ -1,16 +1,64 @@
-import React from 'react'
 import Navbar from '../../components/layout/Navbar'
-import { LuCircleUserRound } from "react-icons/lu";
 import { IoIosNotifications } from "react-icons/io";
 import { TbTag } from "react-icons/tb";
 import ProductOverview from '../../components/common/ProductOverview';
 import AccountDropdown from '../../components/layout/AccountDropdown';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { API_ENDPOINTS } from '../../services/api';
+import ContactSellerFlow from './ContactSellerFlow';
+import { OpenModalContext, OpenReportModalContext } from './Context';
+import ReportModal from '../../components/modals/ReportModal';
+import { lockScroll } from '../../lib/LockScroll';
 
 const ProductDetails = () => {
-	
+	const [details, setDetails] = useState(null);
+	const [loading, setLoading] = useState(false);
+	const [isOpen, setIsOpen] = useState(false);
+	const [openReport, setOpenReport] = useState(false);
+	const shouldLockScroll = isOpen || openReport;
+	const {id} = useParams();
+	const token = localStorage.getItem("authToken");
+	useEffect(() => {
+		if (!id) return;
+
+		const fetchData = async () => {
+			try {
+			setLoading(true);
+
+			const res = await fetch(API_ENDPOINTS.AD_DETAILS(id), {
+				headers: {
+				"Content-Type": "application/json",
+				Authorization: `Token ${token}`,
+				},
+			});
+
+			const data = await res.json();
+
+			if (res.ok) {
+				setDetails(data);
+			}
+			} catch (err) {
+			console.log("Network error");
+			} finally {
+			setLoading(false);
+			}
+		};
+
+		fetchData();
+		}, [id]);
+		useEffect(() => {
+			if (details) {
+				console.log("Updated details:", details);
+			}
+		}, [details]);
+		// lock page scrolling when a modal is open
+		useEffect(() => {
+			lockScroll(shouldLockScroll)
+		}, [openReport, isOpen]);
 
   return (
-	<div>
+		<div className='relative'>
 		<Navbar 
 			rightContent={
 				<div className='flex items-center gap-4 space-x-4 text-lg font-medium cursor-pointer'>
@@ -24,13 +72,36 @@ const ProductDetails = () => {
 				</div>
 			}
 		/>
-		<div className='mt-10 space-y-6'>
-			<p className='w-[85%] mx-auto mb-5 text-lg font-medium'>Home/Vehicles/Cars/Innoson </p>
-			<ProductOverview />
+	<OpenReportModalContext.Provider value={{openReport, setOpenReport}}>
+	<OpenModalContext.Provider value={{isOpen, setIsOpen}}>
+		<div className='my-10 space-y-6'>
+			{loading ? (
+				<div className="w-full min-h-screen flex items-center justify-center">
+				<div className="animate-spin h-12 w-12 border-4 border-gray-300 border-t-secondary rounded-full"></div>
+				</div>
+			) : details ? (
+				<>
+				<p className='w-[85%] mx-auto mb-5 text-lg font-medium'>
+					Home/{details.ad.category.title}/{details.ad.sub_category.title}/{details.ad.title}
+				</p>
+					<ProductOverview details={details} id={id} />
+				</>
+			) : (
+				<p className="text-center mt-10">No products found.</p>
+			)}
+			</div>
+	  			{isOpen && 
+					<ContactSellerFlow 
+						title={details.ad.title}
+						info={details.ad.user} 
+						negotiable={details.ad.is_negotiable} 
+						price={details.ad.price} />}
+				{openReport && <ReportModal onClose={setOpenReport} adType={details.ad.ad_type.id}/>}
+			</OpenModalContext.Provider>
+			</OpenReportModalContext.Provider>
 			
-		</div>
-	  
 	</div>
+	
   )
 }
 

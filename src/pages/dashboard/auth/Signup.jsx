@@ -1,11 +1,10 @@
-
 import React, { useState } from 'react';
 import logo from '../../../assets/images/Logo.png'
 import signupImage from '../../../assets/images/signupImage.png';
 import { FaEyeSlash } from 'react-icons/fa';
 import { IoEyeSharp } from 'react-icons/io5';
-// import { emailSignup } from '../../services/authService';
 import { useNavigate } from "react-router-dom";
+import { adminRegister } from '../../../services/adminAuthService';
 
 const SignupPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -15,7 +14,7 @@ const SignupPage = () => {
     username: '',
     email: '',
     password: '',
-    password2: '',
+    password2: ''
   });
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
@@ -32,19 +31,7 @@ const SignupPage = () => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    //console.log(e.target.name);
-    //console.log(e.target.value)
   };
-
-  /*const validateForm = () => {
-    if (!formData.fullname.trim()) return 'Full name is required';
-    if (!formData.username.trim()) return 'Username is required';
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) return 'Invalid email format';
-    if (formData.password.length < 6) return 'Password must be at least 6 characters';
-    if (formData.password !== formData.confirmPassword) return 'Passwords do not match';
-    return '';
-  };
-  */
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -58,33 +45,16 @@ const SignupPage = () => {
       return;
     }
 
-    // try {
-    //   const response = await emailSignup({
-    //     full_name: formData.full_name,
-    //     username: formData.username,
-    //     email: formData.email,
-    //     password: formData.password,
-    //     password2: formData.password2,
-    //   });
-      
-    //   console.log("Response status:", response.status);
-    //   console.log("Response data:", response.data);
-    //   if (response.status === 201) {
-    //     setMessage("Verification email sent!");
-    //     console.log("Signup successful:", response.data);
-    //     localStorage.setItem("signup_user_id", response.data.user_id);
-    //     localStorage.setItem("signup_email", formData.email);
-
-    //     // ✅ Navigate to login after signup
-    //     navigate("/login");
-    //   }
-    // } catch (err) {
-    //   setError(err.message);
-    // } finally {
-    //   setIsLoading(false);
-    // }
+    try {
+      await adminRegister(formData);
+      setMessage("Account created. Redirecting to sign in...");
+      setTimeout(() => navigate('/dashboard/signin'), 1000);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
-
 
   return (
     <div className="min-h-screen max-w-5xl mx-auto my-9">
@@ -119,6 +89,7 @@ const SignupPage = () => {
                 onChange={handleChange}
                 placeholder="Username"
                 className="w-full p-3 border border-[#E7ECF2] bg-[#F7F7F7] text-[#666666] font-medium text-base rounded-xl focus:outline-none focus:ring-2 focus:ring-secondaryLight placeholder:text-[#666666]"
+                required
                 disabled={isLoading}
               />
             </div>
@@ -128,7 +99,6 @@ const SignupPage = () => {
                 id="email"
                 name="email"
                 value={formData.email}
-                onBlur={handleChange}
                 onChange={handleChange}
                 placeholder="Email"
                 className="w-full p-3 border border-[#E7ECF2] bg-[#F7F7F7] text-[#666666] font-medium text-base rounded-xl focus:outline-none focus:ring-2 focus:ring-secondaryLight placeholder:text-[#666666]"
@@ -146,6 +116,7 @@ const SignupPage = () => {
                   onChange={handleChange}
                   placeholder="Password"
                   className="w-full p-3 border border-[#E7ECF2] bg-[#F7F7F7] text-[#666666] font-medium text-base rounded-xl focus:outline-none focus:ring-2 focus:ring-secondaryLight placeholder:text-[#666666]"
+                  required
                   disabled={isLoading}
                 />
                 <button
@@ -195,7 +166,7 @@ const SignupPage = () => {
           </form>
           <p className="text-sm font-semibold text-[#666666] mt-4">
             Already an admin?{' '}
-            <a href="/dashboard/login" className="text-primary ml-2 hover:underline">
+            <a href="/dashboard/signin" className="text-primary ml-2 hover:underline">
               Sign in
             </a>
           </p>

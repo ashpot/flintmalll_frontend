@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Navbar from "../../components/layout/Navbar";
+import { cn } from "../../lib/Utils";
 import { FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import SignInScreen from "../../assets/images/SignInScreen.png";
-
 import { API_ENDPOINTS } from "../../services/api";
+import { Link } from "react-router-dom";
+import SmallFooter from "../../components/layout/SmallFooter";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -17,6 +19,11 @@ const SignIn = () => {
 
   // Loading State
   const [loading, setLoading] = useState(false);
+
+  // General classes
+  const inputClasses = cn("mt-1 w-full px-4 py-3 font-medium sm:text-lg text-base text-[#708CAF] border border-white", 
+                          "focus:ring-2 focus:ring-secondary placeholder:text-[#708CAF] outline-none rounded-xl sm:rounded-2xl ")
+  const iconWrapper = cn("w-full flex items-center justify-center gap-2 border border-black px-8 py-2 rounded-xl hover:bg-white hover:text-[#666666]") 
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -41,11 +48,9 @@ const SignIn = () => {
       }
 
       const data = await response.json();
-
       // Save token for future requests
       localStorage.setItem("authToken", data.token);
-      localStorage.setItem("currentUser", JSON.stringify(data.user));
-      alert(JSON.stringify(data.user));
+      localStorage.setItem("currentUser", JSON.stringify(data));
       navigate("/");
 
     } catch (error) {
@@ -58,6 +63,7 @@ const SignIn = () => {
 
   return (
     <div>
+      <title>Flintmall - SignIn</title>
       <Navbar 
         rightContent={
           <a href="/signup" className="text-black text-lg font-medium">
@@ -73,9 +79,11 @@ const SignIn = () => {
         }}
       >
         <div className="flex flex-1 items-center justify-center px-4">
-          <div className="bg-white/80 backdrop-blur-md rounded-2xl shadow-xl w-[50%] mx-auto p-8">
+          <div className={cn("bg-white/80 backdrop-blur-md rounded-2xl shadow-xl lg:w-[50%] md:w-[60%] sm:w-[70%] w-full mx-auto",
+            "md:p-8 md:px-5 py-6 px-4 "
+          )}>
 
-            <h2 className="text-4xl font-bold text-center text-primary mb-7">
+            <h2 className="sm:text-4xl text-2xl font-bold text-center text-primary mb-7">
               Sign into your account
             </h2>
 
@@ -86,8 +94,7 @@ const SignIn = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email"
-                  className="mt-1 w-full px-4 py-3 font-medium text-lg text-[#708CAF] border border-white rounded-2xl 
-                             focus:ring-2 focus:ring-secondary placeholder:text-[#708CAF] outline-none"
+                  className={inputClasses}
                   required
                 />
               </div>
@@ -98,21 +105,17 @@ const SignIn = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Password"
-                  className="mt-1 w-full px-4 py-3 font-medium text-lg text-[#708CAF] border border-white rounded-2xl 
-                             focus:ring-2 focus:ring-secondary placeholder:text-[#708CAF] outline-none"
+                  className={inputClasses}
                   required
                 />
-                <div className="flex justify-between items-center my-4 font-medium text-lg">
-                  <label className="flex items-center gap-2">
+                <div className="flex justify-between sm:flex-row flex-col items-center my-4 gap-2 font-medium sm:text-lg">
+                  <label className="flex items-center justify-center gap-2 w-full">
                     Stay signed in
                     <input type="checkbox" className="accent-secondary" />
                   </label>
-                  <a
-                    href="/forgotpassword"
-                    className="text-primary hover:text-primaryLight hover:no-underline"
-                  >
+                  <Link to='/forgot-password' className="flex justify-center items-center text-primary hover:text-primaryLight hover:no-underline w-full">
                     Forgot Password?
-                  </a>
+                  </Link>
                 </div>
               </div>
 
@@ -138,32 +141,24 @@ const SignIn = () => {
                 <hr className="flex-1 border-[#B7B7B7]" />
               </div>
 
-              <div className="flex justify-center gap-4 text-lg font-bold text-[#1E1E1E]">
+              <div className="flex flex-col sm:flex-row justify-center gap-4 sm:text-lg text-base font-bold text-[#1E1E1E] w-full">
                 <button
                   type="button"
-                  className="flex items-center gap-2 border border-white px-8 py-2 rounded-xl hover:bg-white hover:text-[#666666]"
+                  className={iconWrapper}
                 >
                   <FcGoogle size={25} /> Google
                 </button>
-                <button
+                {/* <button
                   type="button"
-                  className="flex items-center gap-2 border border-white px-8 py-2 rounded-xl hover:bg-white hover:text-[#666666]"
+                  className={iconWrapper}
                 >
                   <FaFacebook size={25} className="text-[#1877F2]" /> Facebook
-                </button>
+                </button> */}
               </div>
             </form>
           </div>
         </div>
-
-        <footer className="flex justify-between w-[85%] mx-auto font-medium text-lg text-white my-4">
-          <p>&copy; 2025 FlintMall. All Rights Reserved.</p>
-          <div className="flex justify-center gap-3 mt-1">
-            <a href="/privacy-policy" className="hover:underline">Privacy Policy</a>
-            <span>|</span>
-            <a href="#" className="hover:underline">Terms of Service</a>
-          </div>
-        </footer>
+        <SmallFooter/>
       </div>
     </div>
   );

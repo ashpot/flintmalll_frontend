@@ -136,17 +136,14 @@ const Footer = () => {
                 services.
               </p>
               <div className="md:flex justify-start my-8 space-x-10 hidden ">
-                <a href="" className="bg-primaryLight p-2 rounded-full text-white">
+                <a href="https://facebook.com/Flintmallonline" target='_blank' className="bg-primaryLight p-2 rounded-full text-white">
                   <FaFacebook size={20} />
                 </a>
-                <a href="" className="bg-primaryLight p-2 rounded-full text-white">
+                <a href="https://instagram.com/flintmallonline" target='_blank' className="bg-primaryLight p-2 rounded-full text-white">
                   <FaInstagram size={20} />
                 </a>
-                <a href="" className="bg-primaryLight p-2 rounded-full text-white">
+                <a href="https://x.com/flintmall" target='_blank' className="bg-primaryLight p-2 rounded-full text-white">
                   <FaXTwitter size={20} />
-                </a>
-                <a href="" className="bg-primaryLight p-2 rounded-full text-white">
-                  <FaLinkedin size={20} />
                 </a>
               </div>
             </div>
@@ -171,8 +168,8 @@ const Footer = () => {
                 </h4>
                 <ul className="space-y-2 md:space-y-4 font-medium text-xs md:text-lg">
                   <li><a href="">Help Center</a></li>
-                  <li><a href="">Safety Tips</a></li>
-                  <li><a href="">FAQs</a></li>
+                  <li><a href="/safety-tips">Safety Tips</a></li>
+                  <li><a href="/FAQ">FAQs</a></li>
                   <li><a href="">Report Abuse</a></li>
                 </ul>
               </div>
@@ -189,17 +186,14 @@ const Footer = () => {
                 </p>
               </div>
               <div className="flex justify-center gap-6 pt-7 md:hidden">
-                <a href="" className="bg-primaryLight p-2 rounded-full text-white">
+                <a href="https://facebook.com/Flintmallonline" target='_blank' className="bg-primaryLight p-2 rounded-full text-white">
                   <FaFacebook size={30} />
                 </a>
-                <a href="" className="bg-primaryLight p-2 rounded-full text-white">
+                <a href="https://instagram.com/flintmallonline" target='_blank' className="bg-primaryLight p-2 rounded-full text-white">
                   <FaInstagram size={30} />
                 </a>
-                <a href="" className="bg-primaryLight p-2 rounded-full text-white">
+                <a href="https://x.com/flintmall" target='_blank' className="bg-primaryLight p-2 rounded-full text-white">
                   <FaXTwitter size={30} />
-                </a>
-                <a href="" className="bg-primaryLight p-2 rounded-full text-white">
-                  <FaLinkedin size={30} />
                 </a>
               </div>
             </div>
@@ -214,7 +208,7 @@ const Footer = () => {
             </p>
             <div className="font-normal text-xs md:text-sm space-x-5 mt-4 md:mt-0">
               <a href="/privacy-policy">Privacy Policy</a>
-              <a href="">Terms of Service</a>
+              <a href="/terms-of-service">Terms of Service</a>
             </div>
           </div>
         </div>

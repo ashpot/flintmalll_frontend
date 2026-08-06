@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { MdOutlineArrowBackIos } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
+import SmallFooter from '../layout/SmallFooter';
 
 const PricingCard = ({
   plan,
@@ -12,6 +13,7 @@ const PricingCard = ({
   onDurationChange,
 }) => {
   const isFree = price === 'Free';
+  const navigate = useNavigate();
 
   const cardClasses = `
     p-6 sm:p-8 rounded-2xl flex flex-col 
@@ -90,7 +92,7 @@ const PricingCard = ({
         </ul>
       </div>
 
-      <button className={buttonClasses}>Continue</button>
+      <button className={buttonClasses} onClick={()=>navigate('/payment-method')}>Continue</button>
     </div>
   );
 };
@@ -178,13 +180,7 @@ const BoostAds = () => {
         </div>
       </main>
 
-      <footer className='max-w-[90%] mx-auto w-full pt-9 pb-6 flex flex-col md:flex-row justify-between items-center text-center md:text-left'>
-        <p className='font-medium text-sm mb-4 md:mb-0'>&copy; 2025 Flintmall. All Rights Reserved</p>
-        <div className='font-medium text-sm space-x-5'>
-          <a href="/privacy-policy" className="hover:underline">Privacy Policy</a>
-          <a href="#" className="hover:underline">Terms of Service</a>
-        </div>
-      </footer>
+      <SmallFooter/>
 
     </div>
   )

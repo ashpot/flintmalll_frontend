@@ -10,12 +10,12 @@ const Step_Verifying = () => {
         We're verifying your code
       </p>
       
-      {/* 6 Boxes with a dot in each */}
-      <div className="flex justify-between my-10">
-        {[...Array(6)].map((_, i) => (
+      {/* 4 Boxes with a dot in each */}
+      <div className="flex space-x-5 items-center justify-center my-10">
+        {[...Array(4)].map((_, i) => (
           <div 
             key={i} 
-            className="w-12 h-12 relative rounded-xl bg-white shadow flex items-center justify-center"
+            className="w-12 h-12 sm:w-16 sm:h-16 relative rounded-xl bg-white shadow flex items-center justify-center"
           >
             {/* The Dot */}
             <span className="w-3 h-3 bg-secondary rounded-full"></span>

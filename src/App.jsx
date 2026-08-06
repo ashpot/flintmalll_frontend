@@ -1,13 +1,15 @@
-import React from 'react'
 import './css/styles.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 // --- Layouts ---
-import DashboardLayout from './components/layout/DashboardLayout'; 
+import DashboardLayout from './components/layout/DashboardLayout';
 import AdManagementLayout from './components/layout/AdManagement';
 import PaymentsLayout from './components/layout/PaymentLayout';
 import SupportLayout from './components/layout/SupportLayout';
 import SettingsLayout from './components/layout/SettingsLayout';
+import EditProfile from './pages/editProfile/EditProfile';
+import SavedItems from './components/common/SavedItems';
+import MyAds from './components/myAds/MyAds';
 
 // --- Public Pages ---
 import LandingPage from './pages/home/LandingPage'
@@ -18,8 +20,7 @@ import SubcategoryDetails from './pages/home/SubcategoryDetails'
 import GadgetsLandingPage from './pages/gadgets/GadgetsLandingPage'
 import Phones from './pages/gadgets/Phones'
 import Laptops from './pages/gadgets/Laptops'
-import MyAdsPage from './pages/myAds/Adverts'
-import BoostAds from './pages/myAds/BoostAds'
+import BoostAds from './components/myAds/BoostAds'
 import PaymentMethod from './pages/payment/PaymentMethod'
 import ProfilePage from './pages/profile/ProfilePages'
 import PostAdFlow from './pages/postAds/PostAdFlow'
@@ -27,6 +28,10 @@ import AddPhoneNumber from './pages/auth/AddPhoneNumber'
 import ForgotPassword from './pages/auth/ForgotPassword'
 import ProductDetails from './pages/productDetails/ProductDetails'
 import PrivacyPolicy from './pages/home/PrivacyPolicy'
+import Faq from './pages/home/Faq';
+import TermsOfService from './pages/home/TermsOfService';
+import SafetyTips from './pages/home/SafetyTips';
+
 import PaymentSuccessful from './pages/payment/paymentSuccessful'
 
 // --- Dashboard Auth Pages (No Sidebar) ---
@@ -53,53 +58,67 @@ import ActionHistory from './pages/dashboard/Support/ActionHistory';
 import Categories from './pages/dashboard/Settings/Categories';
 import AdminRoles from './pages/dashboard/Settings/AdminRoles';
 import ProfileSettings from './pages/dashboard/ProfileSettings';
+import Notification from './pages/Notification/Notification';
+import Chat from './pages/chat/Chat';
+import SigninPage from './pages/dashboard/auth/Signin';
+import ProtectedRoute from './components/auth/ProtectedRoute';
+
 
 function App() {
 
   return (
     <BrowserRouter>
       <Routes>
-        
+
         <Route index element={<LandingPage />} />
         <Route path='/login' element={<SignIn />} />
         <Route path='/signup' element={<SignUp />} />
         <Route path='/add-phone-number' element={<AddPhoneNumber />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
+        <Route path='/manage-ads' element={<MyAds />} />
         <Route path='/category/:id' element={<CategoryDetails />} />
-        <Route path='/sucategory/:id' element={<SubcategoryDetails />} />
+        <Route path='/subcategory/:id' element={<SubcategoryDetails />} />
         <Route path='/gadgets' element={<GadgetsLandingPage />} />
         <Route path='/gadgets/phones' element={<Phones />} />
         <Route path='/gadgets/laptops' element={<Laptops />} />
-        <Route path='/adverts' element={<MyAdsPage />} />
         <Route path='/boost-ad' element={<BoostAds />} />
         <Route path='/payment-method' element={<PaymentMethod />} />
         <Route path='/profile' element={<ProfilePage />} />
         <Route path='/post-ad' element={<PostAdFlow />} />
         <Route path='/product-details/:id' element={<ProductDetails />} />
-        <Route path='privacy-policy' element={<PrivacyPolicy />} />
+        <Route path='/privacy-policy' element={<PrivacyPolicy />} />
         <Route path='payment/successful' element={<PaymentSuccessful />} />
-
+        <Route path='/FAQ' element={<Faq />} />
+        <Route path='/terms-of-service' element={<TermsOfService />} />
+        <Route path='/safety-tips' element={<SafetyTips />} />
+        <Route path='profile-settings' element={<ProfileSettings />} />
+        <Route path='/edit-profile' element={<EditProfile />} />
+        <Route path='/saved-items' element={<SavedItems />} />
+        <Route path='/promote-ads' element={<BoostAds />} />
+        <Route path='/payment-method' element={<PaymentMethod />} />
+        <Route path='/Notifications' element={<Notification />} />
+        <Route path='/Chats' element={<Chat />} />
         {/* DASHBOARD AUTH ROUTES  */}
-        
+
         <Route path='/dashboard/signup' element={<SignupPage />} />
-        <Route path='/dashboard/login' element={<LoginPage />} />
+        <Route path='/dashboard/signin' element={<SigninPage />} />
         <Route path='/dashboard/forgot-password' element={<ForgotPasswordPage />} />
         <Route path='/dashboard/check-email' element={<CheckEmail />} />
         <Route path='/dashboard/reset-password' element={<ResetPassword />} />
         <Route path='/dashboard/secured-password' element={<SecuredPassword />} />
 
         {/* MAIN DASHBOARD ROUTES  */}
-            
-        <Route path="/dashboard" element={<DashboardLayout />}>
-          
-          <Route index element={<Overview />} /> 
-          
-          <Route path="overview" element={<Overview />} /> 
+
+        <Route path="/dashboard" element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
+          <Route index element={<Overview />} />
+
+          <Route path="overview" element={<Overview />} />
 
           <Route path="user-management" element={<UserManagement />} />
 
           <Route path="ad-management" element={<AdManagementLayout />}>
             <Route index element={<PendingAds />} />
+            <Route path="pending" element={<PendingAds />} />
             <Route path="active" element={<ActiveAds />} />
             <Route path="reported" element={<ReportedAds />} />
           </Route>
@@ -123,9 +142,9 @@ function App() {
             <Route path="roles" element={<AdminRoles />} />
           </Route>
 
-         
         </Route>
-        <Route path='profile-settings' element={<ProfileSettings />} />
+        {/* other routes */}
+
       </Routes>
     </BrowserRouter>
   )
