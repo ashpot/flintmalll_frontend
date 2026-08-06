@@ -27,6 +27,7 @@ import AddPhoneNumber from './pages/auth/AddPhoneNumber'
 import ForgotPassword from './pages/auth/ForgotPassword'
 import ProductDetails from './pages/productDetails/ProductDetails'
 import PrivacyPolicy from './pages/home/PrivacyPolicy'
+import PaymentSuccessful from './pages/payment/paymentSuccessful'
 
 // --- Dashboard Auth Pages (No Sidebar) ---
 import SignupPage from './pages/dashboard/auth/Signup'
@@ -76,6 +77,7 @@ function App() {
         <Route path='/post-ad' element={<PostAdFlow />} />
         <Route path='/product-details/:id' element={<ProductDetails />} />
         <Route path='privacy-policy' element={<PrivacyPolicy />} />
+        <Route path='payment/successful' element={<PaymentSuccessful />} />
 
         {/* DASHBOARD AUTH ROUTES  */}
         
